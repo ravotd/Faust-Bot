@@ -1,0 +1,3 @@
+"""
+mainfile, initializes everything
+"""
