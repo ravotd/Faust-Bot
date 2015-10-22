@@ -15,4 +15,7 @@ class ConnectionDateils(object):
         """
         :return: the channel connected into
         """
-        return "#FaustBot"
+        return "#pallaber-bot"
+
+    def get_port(self):
+        return 6667
