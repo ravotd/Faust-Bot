@@ -3,19 +3,20 @@ mainfile, initializes everything
 """
 
 # function declarations
-from Communication import Connection
-from Model import ConnectionDetails
+from Communication.Connection import Connection
+from Model.ConnectionDetails import ConnectionDateils
 
-conn = None
 
 def setup():
-    dets = ConnectionDetails.ConnectionDateils()
-    conn = Connection.Connection()
-    conn.establish(dets)
+    connection = Connection(ConnectionDateils())
+    connection.establish()
+    return connection
 
-def run():
+
+def run(connection: Connection):
     while True:
-        data = conn.receive()
+        data = connection.receive()
+
 
 def cleanup():
     pass
@@ -23,8 +24,9 @@ def cleanup():
 
 # starting of bot
 
-setup()
+def main():
+    connection = setup()
+    run(connection)
+    cleanup()
 
-run()
-
-cleanup()
+main()

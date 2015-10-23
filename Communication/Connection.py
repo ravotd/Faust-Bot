@@ -1,9 +1,10 @@
 import socket
+import re
 from Model import ConnectionDetails
 
 class Connection(object):
 
-    condets = None
+    details = None
     irc = None
 
     def send(self):
@@ -12,26 +13,56 @@ class Connection(object):
         :return:
         """
 
+    def raw_send(self, message):
+        self.irc.send(message.encode() + '\r\n'.encode())
+
     def receive(self):
         """
         receive from Network
         """
-        data = self.irc.recv(4096)
+        data = self.irc.recv(4096).decode('UTF-8')
         data = data.rstrip()
-        print(data.decode(encoding='UTF-8'))
+        if data.find('PING') == 1:
+            self.raw_send(self, "PONG" + data.split()[1])
+        formatted_data = {}
+        who = re.match('^:.*!', data)
+        if who:
+            who = who.group(0)
+            who = who[1:-1]
+        formatted_data['who'] = who
+        where = re.search('PRIVMSG .* :', data)
+        if where:
+            where = where.group(0)
+            where = where[8:-2]
+            if who and where == details.get_nick():
+                where = who
+        formatted_data['where'] = where
+        tmp = re.match('PRIVMSG .* :.*', data)
+        if tmp:
+            message = re.match(':.*', tmp.group(1))
+            if message:
+                message = message.group(0)
+                message = message[1,-0]
+        else:
+            message = None
+        formatted_data['message'] = message
+        print(formatted_data)
+        print(data)
+        return formatted_data
 
-
-
-    def establish(self, dets: ConnectionDetails):
+    def establish(self):
         """
         establish the connection
         """
-        self.condets = dets
+        global details
         self.irc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-        self.irc.connect((dets.get_server(), dets.get_port()))
+        self.irc.connect((details.get_server(), details.get_port()))
         print(self.irc.recv(4096))
-        self.irc.send("NICK ".encode() + dets.get_nick().encode() + "\r\n".encode())
+        self.irc.send("NICK ".encode() + details.get_nick().encode() + "\r\n".encode())
         self.irc.send("USER botty botty botty :IRC Bot\r\n".encode())
-        self.irc.send("JOIN ".encode() + dets.get_channel().encode() + '\r\n'.encode())
+        self.irc.send("JOIN ".encode() + details.get_channel().encode() + '\r\n'.encode())
 
+    def __init__(self, set_details: ConnectionDetails):
+        global details
+        details = set_details
