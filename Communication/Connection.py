@@ -22,8 +22,10 @@ class Connection(object):
         """
         data = self.irc.recv(4096).decode('UTF-8')
         data = data.rstrip()
-        if data.find('PING') == 1:
-            self.raw_send(self, "PONG" + data.split()[1])
+        print(data)
+        if data.find('PING') == 0:
+            msg = "PONG " + data.split()[1]
+            self.raw_send(msg)
         formatted_data = {}
         who = re.match('^:.*!', data)
         if who:
@@ -47,7 +49,6 @@ class Connection(object):
             message = None
         formatted_data['message'] = message
         print(formatted_data)
-        print(data)
         return formatted_data
 
     def establish(self):
