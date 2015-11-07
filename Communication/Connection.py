@@ -1,5 +1,7 @@
 import socket
 import re
+
+from Communication.PingObservable import PingObservable
 from Model import ConnectionDetails
 
 class Connection(object):
@@ -24,8 +26,8 @@ class Connection(object):
         data = data.rstrip()
         print(data)
         if data.find('PING') == 0:
-            msg = "PONG " + data.split()[1]
-            self.raw_send(msg)
+            PingObservable._input(data.split()[1])
+            return
         formatted_data = {}
         who = re.match('^:.*!', data)
         if who:
@@ -67,3 +69,10 @@ class Connection(object):
     def __init__(self, set_details: ConnectionDetails):
         global details
         details = set_details
+
+    def observePing(self, observer):
+        """
+        add observer to the observers of the ping-observable
+        :param observer: observer to add
+        """
+        PingObservable.addObserver(self, observer)

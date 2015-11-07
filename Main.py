@@ -4,12 +4,17 @@ mainfile, initializes everything
 
 # function declarations
 from Communication.Connection import Connection
+from Controler import ModulePing
 from Model.ConnectionDetails import ConnectionDateils
 
 
 def setup():
     connection = Connection(ConnectionDateils())
     connection.establish()
+
+    ping = ModulePing.ModulePing()
+    Connection.observePing(connection, ping)
+
     return connection
 
 
