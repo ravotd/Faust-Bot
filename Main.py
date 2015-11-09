@@ -12,7 +12,7 @@ def setup():
     connection = Connection(ConnectionDateils())
     connection.establish()
 
-    ping = ModulePing.ModulePing()
+    ping = ModulePing.ModulePing(connection)
     Connection.observePing(connection, ping)
 
     return connection

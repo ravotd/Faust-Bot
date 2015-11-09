@@ -1,4 +1,4 @@
-from Communication import Connection
+from Communication.Connection import Connection
 
 
 class ModulePing(object):
@@ -6,11 +6,8 @@ class ModulePing(object):
     A Class only reacting to pings
     """
     def update(self, data):
-        print('im module!!!!!!')
-        msg = "PONG " + data['server']
-        print('msg: ' + msg)
-        Connection.raw_send(msg)
-        print(msg + 'ping sent via observable')
+        msg = 'PONG ' + data['server']
+        self.connection.raw_send(msg)
 
-    def __init__(self):
-        pass
+    def __init__(self, source):
+        self.connection = source

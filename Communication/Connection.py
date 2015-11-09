@@ -8,7 +8,6 @@ class Connection(object):
 
     details = None
     irc = None
-    ping = PingObservable()
 
     def send(self):
         """
@@ -27,7 +26,7 @@ class Connection(object):
         data = data.rstrip()
         print(data)
         if data.find('PING') != -1:
-            self.ping.input(data)
+            self._ping.input(data)
 
     def establish(self):
         """
@@ -52,4 +51,4 @@ class Connection(object):
         add observer to the observers of the ping-observable
         :param observer: observer to add
         """
-        PingObservable.addObserver(self._ping, observer)
+        self._ping.addObserver(observer)
