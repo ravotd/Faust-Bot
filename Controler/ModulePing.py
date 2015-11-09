@@ -1,7 +1,7 @@
-from Communication.Connection import Connection
+from Controler.ModulePrototype import ModuleProtoype
 
 
-class ModulePing(object):
+class ModulePing(ModuleProtoype):
     """
     A Class only reacting to pings
     """
@@ -9,5 +9,3 @@ class ModulePing(object):
         msg = 'PONG ' + data['server']
         self.connection.raw_send(msg)
 
-    def __init__(self, source):
-        self.connection = source
