@@ -2,20 +2,15 @@ class Observable(object):
     
     def __init__(self):
         self._observers = []
-        self._data = []
 
     def addObserver(self, observer):
         self._observers.append(observer)
-
-    def notifyObservers(self):
+    
+    #data has to be a dictionary matching the structure of the query
+    def notifyObservers(self, data):
         for observer in self._observers:
-            observer.update(self._data)
+            observer.update(data)
 
     def input(self, data):
         # here implement some data handling. Fill self._data with the data received
         raise NotImplementedError("Some Observable doesn't know what to do with its input data")
-
-
-    def __init__(self):
-        self._observers = []
-        self._data = []
