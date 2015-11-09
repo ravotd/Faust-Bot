@@ -1,24 +1,13 @@
-class PingObservable(object):
+from Communication.Observable import Observable
 
-    _observers = None
-    _data = None
 
-    def addObserver(self, observer):
-        print(observer)
-        if (self._observers == None):
-            self._observers = {observer}
-        else:
-            self._observers = self._observers + observer
+class PingObservable(Observable):
 
-    def notifyObservers(self):
-        for observer in self._observers:
-            observer.update(self._data)
-
-    def _input(self, data):
+    def input(self, data):
         self._data = data
         # hier kann noch gecheckt werden, ob data wirklich ein server ist, der ping haben will, oder sonstwas
+        # finde heraus, wer zurückgepingt werden muss, und ob das überhaupt ein ping-request ist oder ein user sich
+        # einen spass erlaubt hat
+        self._data = data
         self.notifyObservers()
-
-    def __init__(self):
-        self._observers = None
-        self._data = None
+        print(data)

@@ -8,7 +8,7 @@ class Connection(object):
 
     details = None
     irc = None
-    ping = None
+    ping = PingObservable()
 
     def send(self):
         """
@@ -26,33 +26,8 @@ class Connection(object):
         data = self.irc.recv(4096).decode('UTF-8')
         data = data.rstrip()
         print(data)
-        if data.find('PING') == 0:
-            PingObservable._input(data.split()[1])
-            return
-        formatted_data = {}
-        who = re.match('^:.*!', data)
-        if who:
-            who = who.group(0)
-            who = who[1:-1]
-        formatted_data['who'] = who
-        where = re.search('PRIVMSG .* :', data)
-        if where:
-            where = where.group(0)
-            where = where[8:-2]
-            if who and where == details.get_nick():
-                where = who
-        formatted_data['where'] = where
-        tmp = re.match('PRIVMSG .* :.*', data)
-        if tmp:
-            message = re.match(':.*', tmp.group(1))
-            if message:
-                message = message.group(0)
-                message = message[1,-0]
-        else:
-            message = None
-        formatted_data['message'] = message
-        print(formatted_data)
-        return formatted_data
+        if data.find('PING'):
+            self.ping.input(data)
 
     def establish(self):
         """
