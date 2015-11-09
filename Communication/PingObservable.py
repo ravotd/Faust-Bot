@@ -4,7 +4,7 @@ from Communication.Observable import Observable
 class PingObservable(Observable):
 
     def input(self, raw_data):
-        data = []
+        data = {}
         data['raw'] = raw_data
         if (raw_data.find('PING') == 0):
             data['server'] = raw_data.split('PING ')[1]

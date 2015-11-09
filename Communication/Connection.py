@@ -26,7 +26,7 @@ class Connection(object):
         data = self.irc.recv(4096).decode('UTF-8')
         data = data.rstrip()
         print(data)
-        if data.find('PING'):
+        if data.find('PING') != -1:
             self.ping.input(data)
 
     def establish(self):
