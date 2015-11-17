@@ -4,10 +4,16 @@ import re
 from Communication.PingObservable import PingObservable
 from Model import ConnectionDetails
 
+
 class Connection(object):
 
     details = None
     irc = None
+    instance = None
+
+    @staticmethod
+    def singleton():
+        return Connection.instance;
 
     def send(self):
         """
@@ -45,6 +51,9 @@ class Connection(object):
         global details
         details = set_details
         self._ping = PingObservable()
+        if Connection.instance != None:
+            raise ReferenceError("Only one connection is supported, don't create a new one as long as one still exists!")
+        Connection.instance = self
 
     def observePing(self, observer):
         """

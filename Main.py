@@ -12,15 +12,12 @@ def setup():
     connection = Connection(ConnectionDateils())
     connection.establish()
 
-    ping = ModulePing.ModulePing(connection)
-    Connection.observePing(connection, ping)
+    ping = ModulePing.ModulePing()
+    Connection.singleton().observePing(ping)
 
-    return connection
-
-
-def run(connection: Connection):
+def run():
     while True:
-        data = connection.receive()
+        Connection.singleton().receive()
 
 
 def cleanup():
@@ -30,8 +27,8 @@ def cleanup():
 # starting of bot
 
 def main():
-    connection = setup()
-    run(connection)
+    setup()
+    run()
     cleanup()
 
 main()

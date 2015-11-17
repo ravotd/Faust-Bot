@@ -39,5 +39,6 @@ class UserProvider(object):
         :param user: user to ask permission for
         :param percent: percent needed for permission
         :return: True or False
+        http://stackoverflow.com/questions/1682920/determine-if-a-user-is-idented-on-irc
         """
         return True
