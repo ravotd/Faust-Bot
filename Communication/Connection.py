@@ -2,6 +2,7 @@ import socket
 import re
 
 from Communication.PingObservable import PingObservable
+from Communication.PrivmsgObservable import PrivmsgObservable
 from Model import ConnectionDetails
 
 
@@ -33,6 +34,8 @@ class Connection(object):
         print(data)
         if data.find('PING') != -1:
             self._ping.input(data)
+        if data.find('PRIVMSG') == 0:
+            self._privmsg.input(data)
 
     def establish(self):
         """
@@ -51,6 +54,7 @@ class Connection(object):
         global details
         details = set_details
         self._ping = PingObservable()
+        self._privmsg = PrivmsgObservable()
         if Connection.instance != None:
             raise ReferenceError("Only one connection is supported, don't create a new one as long as one still exists!")
         Connection.instance = self
@@ -61,3 +65,10 @@ class Connection(object):
         :param observer: observer to add
         """
         self._ping.addObserver(observer)
+
+    def observePrivmsg(self, observer):
+        """
+        add observer to the observers of the ping-observable
+        :param observer: observer to add
+        """
+        self._privmsg.addObserver(observer)
