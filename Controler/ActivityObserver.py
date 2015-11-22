@@ -4,7 +4,7 @@ from Model.UserProvider import UserProvider
 from Controler.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 
 
-class ModulePing(PingObserverPrototype):
+class AcitivityObserver(PrivMsgObserverPrototype):
     """
     A Class only reacting to pings
     """
