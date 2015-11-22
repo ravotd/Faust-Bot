@@ -15,3 +15,7 @@ class PrivmsgObservable(Observable):
 
 
         self.notifyObservers(data)
+
+    def notifyObservers(self, data):
+         for observer in self._observers:
+            observer.update_on_priv_msg(data)

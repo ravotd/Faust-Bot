@@ -15,3 +15,7 @@ class PingObservable(Observable):
         # finde heraus, wer zurückgepingt werden muss, und ob das überhaupt ein ping-request ist oder ein user sich
         # einen spass erlaubt hat
         self.notifyObservers(data)
+
+    def notifyObservers(self, data):
+        for observer in self._observers:
+            observer.update_on_ping(data)

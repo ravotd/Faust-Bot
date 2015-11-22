@@ -8,8 +8,8 @@ class Observable(object):
     
     #data has to be a dictionary matching the structure of the query
     def notifyObservers(self, data):
-        for observer in self._observers:
-            observer.update(data)
+        # here implement some data handling. Fill self._data with the data received
+        raise NotImplementedError("Some Observable doesn't know what to do with its input data")
 
     def input(self, raw_data):
         # here implement some data handling. Fill self._data with the data received

@@ -4,7 +4,7 @@ mainfile, initializes everything
 
 # function declarations
 from Communication.Connection import Connection
-from Controler import ModulePing
+from Controler import PingAnswerObserver
 from Model.ConnectionDetails import ConnectionDateils
 
 
@@ -12,7 +12,7 @@ def setup():
     connection = Connection(ConnectionDateils())
     connection.establish()
 
-    Connection.singleton().observePing(ModulePing.ModulePing())
+    Connection.singleton().observePing(PingAnswerObserver.ModulePing())
 
 def run():
     while True:
