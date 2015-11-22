@@ -7,7 +7,7 @@ class UserProvider(object):
     """
 
     instances = {}
-    @static
+    @staticmethod
     def get_instance(name):
         if UserProvider.instance.get(name, None) is None:
             UserProvider.instance[name] = UserProvider()

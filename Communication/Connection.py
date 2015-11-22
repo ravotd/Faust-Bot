@@ -10,10 +10,11 @@ class Connection(object):
 
     details = None
     irc = None
-    instance = None
 
     @staticmethod
     def singleton():
+        if Connection.instance.get('einzigstes', None) == None:
+            Connection.instance['einzigstes'] = Connection(ConnectionDetails())
         return Connection.instance;
 
     def send(self):

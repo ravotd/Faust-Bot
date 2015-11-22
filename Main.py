@@ -9,8 +9,7 @@ from Model.ConnectionDetails import ConnectionDateils
 
 
 def setup():
-    connection = Connection(ConnectionDateils())
-    connection.establish()
+    Connection.singleton().establish()
 
     Connection.singleton().observePing(PingAnswerObserver.ModulePing())
 
