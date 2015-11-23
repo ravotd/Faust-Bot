@@ -5,17 +5,7 @@ class UserProvider(object):
     """
     Provides information about the users
     """
-<<<<<<< HEAD
 
-    instances = {}
-    @staticmethod
-    def get_instance(name):
-        if UserProvider.instance.get(name, None) is None:
-            UserProvider.instance[name] = UserProvider()
-        return UserProvider.instance[name]
-
-=======
->>>>>>> refs/remotes/origin/Threaded-Modules
     def __init__(self):
         self.database_connection = sqlite3.connect('faust_bot.db')
         cursor = self.database_connection.cursor()
