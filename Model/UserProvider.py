@@ -5,6 +5,7 @@ class UserProvider(object):
     """
     Provides information about the users
     """
+<<<<<<< HEAD
 
     instances = {}
     @staticmethod
@@ -13,6 +14,8 @@ class UserProvider(object):
             UserProvider.instance[name] = UserProvider()
         return UserProvider.instance[name]
 
+=======
+>>>>>>> refs/remotes/origin/Threaded-Modules
     def __init__(self):
         self.database_connection = sqlite3.connect('faust_bot.db')
         cursor = self.database_connection.cursor()
@@ -62,7 +65,6 @@ class UserProvider(object):
             self._create_user(name)
             id = self._get_id(name)
         for chars in cursor.execute("SELECT characters FROM user_stats WHERE id = ?", (id,)):
-            print(chars)
             chars = chars[0]
             chars += number
             cursor.execute("UPDATE user_stats SET characters = ? WHERE id = ?" ,(chars, id,))
@@ -109,3 +111,6 @@ class UserProvider(object):
         cursor.execute("INSERT INTO user_stats(id, characters) VALUES (?, 0)",( id,))
         cursor.execute("INSERT INTO last_seen (id, last_seen) VALUES (?, 0)",(id,))
         self.database_connection.commit()
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        self.database_connection.close()

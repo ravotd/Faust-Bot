@@ -1,5 +1,6 @@
-from Communication.Observable import Observable
+import _thread
 
+from Communication.Observable import Observable
 
 class PrivmsgObservable(Observable):
 
@@ -18,4 +19,4 @@ class PrivmsgObservable(Observable):
 
     def notifyObservers(self, data):
          for observer in self._observers:
-            observer.update_on_priv_msg(data)
+            _thread.start_new_thread(observer.__class__.update_on_priv_msg, (observer, data))

@@ -9,13 +9,13 @@ class ConnectionDateils(object):
         """
         :return: own nick
         """
-        return "FaustBot"
+        return "FaustBot74"
 
     def get_channel(self):
         """
         :return: the channel connected into
         """
-        return "#pallaber-bot"
+        return "#faust-bot"
 
     def get_port(self):
         return 6667
