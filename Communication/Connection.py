@@ -16,11 +16,12 @@ class Connection(object):
     def singleton():
         return Connection.instance;
 
-    def send(self):
+    def send_channel(self, text):
         """
-        Send to network
+        Send to channel
         :return:
         """
+        print(text)
 
     def raw_send(self, message):
         self.irc.send(message.encode() + '\r\n'.encode())
