@@ -19,5 +19,4 @@ class PrivmsgObservable(Observable):
 
     def notifyObservers(self, data):
          for observer in self._observers:
-            print('12')
             _thread.start_new_thread(observer.__class__.update_on_priv_msg, (observer, data))

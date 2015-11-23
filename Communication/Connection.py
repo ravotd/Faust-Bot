@@ -34,7 +34,7 @@ class Connection(object):
         print(data)
         if data.find('PING') != -1:
             self._ping.input(data)
-        if data.find('PRIVMSG') == 0:
+        if data.find('PRIVMSG') != -1:
             self._privmsg.input(data)
 
     def establish(self):
