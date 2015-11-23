@@ -1,3 +1,5 @@
+import _thread
+
 from Communication.Observable import Observable
 
 
@@ -18,4 +20,4 @@ class PingObservable(Observable):
 
     def notifyObservers(self, data):
         for observer in self._observers:
-            observer.update_on_ping(data)
+            _thread.start_new_thread(update_on_ping, observer, data)
