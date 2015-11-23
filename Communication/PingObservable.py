@@ -20,4 +20,5 @@ class PingObservable(Observable):
 
     def notifyObservers(self, data):
         for observer in self._observers:
-            _thread.start_new_thread(update_on_ping, observer, data)
+            print('12')
+            _thread.start_new_thread(observer.__class__.update_on_ping, (observer, data))
