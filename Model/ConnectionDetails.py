@@ -9,7 +9,7 @@ class ConnectionDateils(object):
         """
         :return: own nick
         """
-        return "FaustBot74"
+        return "FaustBot"
 
     def get_channel(self):
         """
