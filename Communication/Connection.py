@@ -21,7 +21,16 @@ class Connection(object):
         Send to channel
         :return:
         """
-        print(text)
+        global details
+        self.raw_send("PRIVMSG " + details.get_channel() + " :" + text[0:])
+        print (text)
+
+    def send_to_user(self, user, text):
+        """
+        Send to user
+        :return:
+        """
+        self.raw_send('PRIVMSG ' + user + ' :' + text)
 
     def raw_send(self, message):
         self.irc.send(message.encode() + '\r\n'.encode())

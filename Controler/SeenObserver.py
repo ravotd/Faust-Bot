@@ -11,4 +11,4 @@ class SeenObserver(PrivMsgObserverPrototype):
         userProvider = UserProvider()
         activity = userProvider.get_activity(who)
         delta = time.time()-activity
-        Connection.instance.send_channel(data['nick']+":"+who+" sah ich zuletzt vor "+str(datetime.timedelta(seconds=delta)))
+        Connection.instance.send_channel(data['nick']+': '+who+' sah ich zuletzt vor '+str(datetime.timedelta(seconds=delta)))
