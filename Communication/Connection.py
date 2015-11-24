@@ -30,7 +30,7 @@ class Connection(object):
         """
         receive from Network
         """
-        data = self.irc.recv(4096).decode('UTF-8', errors='backslashreplace')
+        data = self.irc.recv(4096) #.decode('UTF-8', errors='backslashreplace')
         data = data.rstrip()
         print(data)
         if data.find('PING') != -1:
