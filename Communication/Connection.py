@@ -40,13 +40,18 @@ class Connection(object):
         receive from Network
         """
         data = self.irc.recv(4096)
+        self.data = data
         data = data.decode('UTF-8', errors='replace')
+        self.data = data
         data = data.rstrip()
         print(data)
         if data.find('PING') != -1:
             self._ping.input(data)
         if data.find('PRIVMSG') != -1:
             self._privmsg.input(data)
+
+    def last_data(self):
+        return self.data
 
     def establish(self):
         """
