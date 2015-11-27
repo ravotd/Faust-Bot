@@ -25,8 +25,10 @@ def setup():
     Connection.singleton().observePrivmsg(SeenObserver.SeenObserver())
 
 def run():
-    while True:
-        Connection.singleton().receive()
+    running = True
+    while running:
+        if Connection.singleton().receive() == False:
+            return
 
 
 def cleanup():
