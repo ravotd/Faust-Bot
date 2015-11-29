@@ -39,27 +39,14 @@ class Connection(object):
         """
         receive from Network
         """
-        error = False
-        try:
-            data = self.irc.recv(4096)
-            self.data = data
-            if len(data) == 0:
-                print ("KEINE DATA!!!!!!!!!!!")
-                return False
-        except socket.timeout:
-            return False
+        data = self.irc.recv(4096)
         data = data.decode('UTF-8', errors='replace')
-        self.data = data
         data = data.rstrip()
         print(data)
         if data.find('PING') != -1:
             self._ping.input(data)
         if data.find('PRIVMSG') != -1:
             self._privmsg.input(data)
-        return True
-
-    def last_data(self):
-        return self.data
 
     def establish(self):
         """
