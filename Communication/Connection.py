@@ -21,7 +21,16 @@ class Connection(object):
         Send to channel
         :return:
         """
-        print(text)
+        global details
+        self.raw_send("PRIVMSG " + details.get_channel() + " :" + text[0:])
+        print (text)
+
+    def send_to_user(self, user, text):
+        """
+        Send to user
+        :return:
+        """
+        self.raw_send('PRIVMSG ' + user + ' :' + text)
 
     def raw_send(self, message):
         self.irc.send(message.encode() + '\r\n'.encode())
@@ -30,13 +39,27 @@ class Connection(object):
         """
         receive from Network
         """
-        data = self.irc.recv(4096).decode('UTF-8')
+        error = False
+        try:
+            data = self.irc.recv(4096)
+            self.data = data
+            if len(data) == 0:
+                print ("KEINE DATA!!!!!!!!!!!")
+                return False
+        except socket.timeout:
+            return False
+        data = data.decode('UTF-8', errors='replace')
+        self.data = data
         data = data.rstrip()
         print(data)
         if data.find('PING') != -1:
             self._ping.input(data)
         if data.find('PRIVMSG') != -1:
             self._privmsg.input(data)
+        return True
+
+    def last_data(self):
+        return self.data
 
     def establish(self):
         """

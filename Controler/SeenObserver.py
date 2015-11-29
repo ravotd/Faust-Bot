@@ -12,9 +12,13 @@ class SeenObserver(PrivMsgObserverPrototype):
         userProvider = UserProvider()
         activity = userProvider.get_activity(who)
         delta = time.time()-activity
+<<<<<<< HEAD
         i18n_server = i18n()
         replacements = {}
         replacements['user'] = who
         replacements['time'] = str(datetime.timedelta(seconds=delta))
         output = i18n_server.get_text('seen', replacements)
         Connection.instance.send_channel(output)
+=======
+        Connection.instance.send_channel(data['nick']+': '+who+' sah ich zuletzt vor '+str(datetime.timedelta(seconds=delta)))
+>>>>>>> origin/master
