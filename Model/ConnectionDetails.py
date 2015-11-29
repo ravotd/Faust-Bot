@@ -32,7 +32,6 @@ class ConnectionDateils(object):
         self.data = {}
         data = txt.readline()
         while (data != ''):
-            # TODO ERROR next line won't work with /r/n as line end in config file! that has to be fixed before release!
-            self.data[data.split(': ')[0]] = data.split(': ')[1][0:-1]
+            self.data[data.split(': ')[0]] = data.split(': ')[1].rstrip('\n').rstrip('\r')
             data = txt.readline()
         print(self.data)
