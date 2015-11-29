@@ -19,3 +19,6 @@ class ConnectionDateils(object):
 
     def get_port(self):
         return 6667
+
+    def get_lang(self):
+        return "de-de"

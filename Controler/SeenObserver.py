@@ -1,6 +1,7 @@
 from Communication.Connection import Connection
 import datetime
 import time
+from Model.i18n import i18n
 from Controler.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 from Model.UserProvider import UserProvider
 class SeenObserver(PrivMsgObserverPrototype):
@@ -11,4 +12,9 @@ class SeenObserver(PrivMsgObserverPrototype):
         userProvider = UserProvider()
         activity = userProvider.get_activity(who)
         delta = time.time()-activity
-        Connection.instance.send_channel(data['nick']+":"+who+" sah ich zuletzt vor "+str(datetime.timedelta(seconds=delta)))
+        i18n_server = i18n()
+        replacements = {}
+        replacements['user'] = who
+        replacements['time'] = str(datetime.timedelta(seconds=delta))
+        output = i18n_server.get_text('seen', replacements)
+        Connection.instance.send_channel(output)
