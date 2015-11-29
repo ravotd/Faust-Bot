@@ -25,6 +25,7 @@ for line in filepointer:
     else:
         long = line.rstrip()
         if schema != "explain":
+            print("Blatsch")
             cursor.execute("INSERT INTO i18n(ident, lang, longText) VALUES(?,?,?)",(ident, schema, long,))
             database_connection.commit()
         else:
