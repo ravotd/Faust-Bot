@@ -11,7 +11,7 @@ from Model.ConnectionDetails import ConnectionDateils
 
 
 def setup():
-    connection = Connection(ConnectionDateils())
+    connection = Connection(ConnectionDateils(True))
     connection.establish()
     # bind names-module
     # while names-module wasn't called yet

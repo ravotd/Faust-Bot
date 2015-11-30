@@ -27,11 +27,14 @@ class ConnectionDateils(object):
     def change_lang(self, lang):
         self.data['lang'] = lang
 
-    def __init__(self):
-        txt = open('config.txt')
-        self.data = {}
-        data = txt.readline()
-        while (data != ''):
-            self.data[data.split(': ')[0]] = data.split(': ')[1].rstrip('\n').rstrip('\r')
+    def __init__(self, foo = False):
+        if foo:
+            txt = open('config.txt')
+            self.data = {}
             data = txt.readline()
-        print(self.data)
+            while (data != ''):
+                self.data[data.split(': ')[0]] = data.split(': ')[1].rstrip('\n').rstrip('\r')
+                data = txt.readline()
+            print(self.data)
+        else:
+            print('Falscher Aufruf. ConnectionDetails wird nur über Connection benutzt.')

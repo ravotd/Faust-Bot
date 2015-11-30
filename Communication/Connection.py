@@ -21,8 +21,7 @@ class Connection(object):
         Send to channel
         :return:
         """
-        global details
-        self.raw_send("PRIVMSG " + details.get_channel() + " :" + text[0:])
+        self.raw_send("PRIVMSG " + self.details.get_channel() + " :" + text[0:])
         print (text)
 
     def send_to_user(self, user, text):
@@ -65,18 +64,16 @@ class Connection(object):
         """
         establish the connection
         """
-        global details
         self.irc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-        self.irc.connect((details.get_server(), details.get_port()))
+        self.irc.connect((self.details.get_server(), self.details.get_port()))
         print(self.irc.recv(4096))
-        self.irc.send("NICK ".encode() + details.get_nick().encode() + "\r\n".encode())
+        self.irc.send("NICK ".encode() + self.details.get_nick().encode() + "\r\n".encode())
         self.irc.send("USER botty botty botty :IRC Bot\r\n".encode())
-        self.irc.send("JOIN ".encode() + details.get_channel().encode() + '\r\n'.encode())
+        self.irc.send("JOIN ".encode() + self.details.get_channel().encode() + '\r\n'.encode())
 
     def __init__(self, set_details: ConnectionDetails):
-        global details
-        details = set_details
+        self.details = set_details
         self._ping = PingObservable()
         self._privmsg = PrivmsgObservable()
         if Connection.instance != None:
