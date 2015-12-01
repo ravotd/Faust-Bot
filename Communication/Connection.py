@@ -22,7 +22,6 @@ class Connection(object):
         :return:
         """
         self.raw_send("PRIVMSG " + self.details.get_channel() + " :" + text[0:])
-        print (text)
 
     def send_to_user(self, user, text):
         """

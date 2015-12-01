@@ -7,6 +7,7 @@ from Communication.Connection import Connection
 from Controler import PingAnswerObserver
 from Controler import ActivityObserver
 from Controler import SeenObserver
+from Controler import TitleObserver
 from Model.ConnectionDetails import ConnectionDateils
 
 
@@ -23,6 +24,7 @@ def setup():
     Connection.singleton().observePing(PingAnswerObserver.ModulePing())
     Connection.singleton().observePrivmsg(ActivityObserver.AcitivityObserver())
     Connection.singleton().observePrivmsg(SeenObserver.SeenObserver())
+    Connection.singleton().observePrivmsg(TitleObserver.TitleObserver())
 
 def run():
     running = True
