@@ -8,6 +8,7 @@ from Controler import PingAnswerObserver
 from Controler import ActivityObserver
 from Controler import SeenObserver
 from Controler import TitleObserver
+from Controler import WikiObserver
 from Model.ConnectionDetails import ConnectionDateils
 
 
@@ -25,6 +26,7 @@ def setup():
     Connection.singleton().observePrivmsg(ActivityObserver.AcitivityObserver())
     Connection.singleton().observePrivmsg(SeenObserver.SeenObserver())
     Connection.singleton().observePrivmsg(TitleObserver.TitleObserver())
+    Connection.singleton().observePrivmsg(WikiObserver.WikiObserver())
 
 def run():
     running = True
