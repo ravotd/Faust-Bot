@@ -13,9 +13,10 @@ class TitleObserver(PrivMsgObserverPrototype):
         if url is not None:
             print(url)
             try:
+                headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64)'}
                 url = url.string
-                print(url)
-                content = urllib.request.urlopen(url)
+                req = urllib.request.Request(url, None, headers)
+                content = urllib.request.urlopen(req)
                 print(content)
                 titleRE = re.compile("<title>(.+?)</title>")
                 title = titleRE.search(content.read().decode('utf8')).group(1)
