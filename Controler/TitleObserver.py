@@ -1,19 +1,10 @@
 import re
 import urllib
 from urllib import request
+import html
 
 from Communication.Connection import Connection
 from Controler.PrivMsgObserverPrototype import PrivMsgObserverPrototype
-
-
-def beautify_title(title):
-    """
-    main purpose: make tweets nicer
-    :param title: string to beautify
-
-    """
-    return title
-
 
 class TitleObserver(PrivMsgObserverPrototype):
 
@@ -35,7 +26,8 @@ class TitleObserver(PrivMsgObserverPrototype):
                 content =  resource.read().decode(encoding)
                 titleRE = re.compile("<title>(.+?)</title>")
                 title = titleRE.search(content).group(1)
-                title = beautify_title(title)
+                title = html.unescape(title)
+                title = title.replace('\n', ' ').replace('\r', '')
                 print(title)
                 Connection.singleton().send_channel(title)
             except Exception as exc:
