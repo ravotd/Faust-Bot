@@ -22,4 +22,4 @@ class WikiObserver(PrivMsgObserverPrototype):
             return
         page = wikipedia.WikipediaPage(w.pop(0))
         Connection.singleton().send_channel(data['nick'] + ' ' + page.url)
-        Connection.singleton().send_channel(page.summary)
+        Connection.singleton().send_channel(page.summary[0:230])
