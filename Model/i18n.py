@@ -1,7 +1,7 @@
 import sqlite3
 from Model.ConnectionDetails import ConnectionDateils
 class i18n(object):
-    def get_text(self, name, replacements):
+    def get_text(self, name, replacements = {}):
         """
 
         :param name: name of text

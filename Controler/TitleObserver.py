@@ -23,7 +23,7 @@ class TitleObserver(PrivMsgObserverPrototype):
                     encoding = 'windows-1252'
                 if not encoding:
                     encoding = 'utf-8'
-                content =  resource.read().decode(encoding)
+                content =  resource.read().decode(encoding, errors='replace')
                 titleRE = re.compile("<title>(.+?)</title>")
                 title = titleRE.search(content).group(1)
                 title = html.unescape(title)
