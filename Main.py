@@ -19,8 +19,11 @@ def setup():
     # while names-module wasn't called yet
     #     receive()
     Connection.singleton().receive()
-    while Connection.singleton().last_data().split(' ')[1] != '353':
+    data = Connection.singleton().last_data()
+    while -1 == data.find('353'):
         Connection.singleton().receive()
+        data = Connection.singleton().last_data()
+
 
     Connection.singleton().observePing(PingAnswerObserver.ModulePing())
     Connection.singleton().observePrivmsg(ActivityObserver.AcitivityObserver())
