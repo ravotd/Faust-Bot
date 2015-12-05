@@ -14,7 +14,7 @@ class TitleObserver(PrivMsgObserverPrototype):
             print(url)
             try:
                 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64)'}
-                url = url.string
+                url = url
                 req = urllib.request.Request(url, None, headers)
                 resource = urllib.request.urlopen(req)
                 encoding = resource.headers.get_content_charset()
