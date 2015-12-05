@@ -9,7 +9,7 @@ from Controler.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 class TitleObserver(PrivMsgObserverPrototype):
 
     def update_on_priv_msg(self, data):
-        url = re.search("(?P<url>https?://[^\s]+)", data['message'])
+        url = re.search("(?P<url>https?://[^\s]+)", data['message']).group()
         if url is not None:
             print(url)
             try:
