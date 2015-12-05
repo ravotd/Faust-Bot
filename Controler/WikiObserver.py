@@ -7,6 +7,7 @@ from Controler.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 class WikiObserver(PrivMsgObserverPrototype):
 
     def update_on_priv_msg(self, data):
+        print('WIKI')
         if data['message'].find('.w') == -1:
             return
         i18n_server = i18n()
