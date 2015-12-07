@@ -7,7 +7,7 @@ from Controler.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 class WikiObserver(PrivMsgObserverPrototype):
 
     def update_on_priv_msg(self, data):
-        if data['message'].find('.w') == -1:
+        if data['message'].find('.w ') == -1:
             return
         i18n_server = i18n()
         w = wikipedia.set_lang(i18n_server.get_text('wiki_lang'))
