@@ -14,7 +14,7 @@ class WikiObserver(PrivMsgObserverPrototype):
         q = data['message'].split(' ')
         query = ''
         for word in q:
-            if word != '.w ':
+            if word.strip() != '.w':
                 query += word + ' '
         w = wikipedia.search(query)
         if w.__len__() == 0:
