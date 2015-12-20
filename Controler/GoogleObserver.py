@@ -1,0 +1,30 @@
+import google
+from Model.i18n import i18n
+
+from Communication.Connection import Connection
+from Controler.PrivMsgObserverPrototype import PrivMsgObserverPrototype
+
+class GoogleObserver(PrivMsgObserverPrototype):
+
+    def update_on_priv_msg(self, data):
+        if data['message'].find('.g') == -1:
+            return
+        i18n_server = i18n()
+        lang = i18n_server.get_text('google_lang')
+        tld = i18n_server.get_text('google_tld')
+        q = data['message'].split(' ')
+        query = ''
+        for word in q:
+            if word.strip() != '.g':
+                query += word + ' '
+        g = google.search(query, tld=tld, lang=lang, num=1, start=1, stop=2, pause=2.0)
+#        s = next(g)
+#        print(s)
+
+#        Connection.singleton().send_channel(g)
+#        if g has nonzero results:
+#            Connection.singleton().send_channel(data['nick'] + ', ' + i18n_server.get_text('google_fail'))
+#            return
+        #Connection.singleton().send_channel(data['nick'] + ' ' + gefundenes erstes result)
+        #Connection.singleton().send_channel(title von dem link)
+        pass
