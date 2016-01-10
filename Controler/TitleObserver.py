@@ -9,8 +9,9 @@ from Controler.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 class TitleObserver(PrivMsgObserverPrototype):
 
     def update_on_priv_msg(self, data):
-        url = re.search("(?P<url>https?://[^\s]+)", data['message']).group()
+        url = re.search("(?P<url>https?://[^\s]+)", data['message'])
         if url is not None:
+            url = url.group()
             print(url)
             try:
                 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64)'}

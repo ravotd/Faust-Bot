@@ -1,8 +1,11 @@
 import socket
 import re
 
+from Communication.JoinObservable import JoinObservable
 from Communication.PingObservable import PingObservable
 from Communication.PrivmsgObservable import PrivmsgObservable
+from Communication.LeaveObservable import LeaveObservable
+from Communication.KickObservable import KickObservable
 from Model import ConnectionDetails
 
 
@@ -41,6 +44,7 @@ class Connection(object):
         try:
             data = self.irc.recv(4096)
             self.data = data
+            print(data)
             if len(data) == 0:
                 return False
         except socket.timeout:
@@ -52,6 +56,12 @@ class Connection(object):
             self._ping.input(data)
         if data.find('PRIVMSG') != -1:
             self._privmsg.input(data)
+        if data.find(' JOIN ') != -1:
+            self._join.input(data)
+        if data.find(' PART ') != -1:
+            self._leave.input(data)
+        if data.find(' KICK ') != -1:
+            self._kick.input(data)
         return True
 
     def last_data(self):
@@ -73,6 +83,9 @@ class Connection(object):
         self.details = set_details
         self._ping = PingObservable()
         self._privmsg = PrivmsgObservable()
+        self._join = JoinObservable()
+        self._leave = LeaveObservable()
+        self._kick = KickObservable()
         if Connection.instance != None:
             raise ReferenceError("Only one connection is supported, don't create a new one as long as one still exists!")
         Connection.instance = self
@@ -90,3 +103,12 @@ class Connection(object):
         :param observer: observer to add
         """
         self._privmsg.addObserver(observer)
+
+    def observeJoin(self, observer):
+        self._join.addObserver(observer)
+
+    def observeLeave(self, observer):
+        self._leave.addObserver(observer)
+
+    def observeKick(self, observer):
+        self._kick.addObserver(observer)
