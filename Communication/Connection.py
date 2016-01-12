@@ -44,7 +44,6 @@ class Connection(object):
         try:
             data = self.irc.recv(4096)
             self.data = data
-            print(data)
             if len(data) == 0:
                 return False
         except socket.timeout:
