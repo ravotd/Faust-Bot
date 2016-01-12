@@ -16,13 +16,8 @@ class JoinObservable(Observable):
         data ={}
         data['raw_data'] = raw_data
         data['channel'] = raw_data.split(' = ')[1].split(' :')[0]
-        nicks = raw_data.split(' = ')[1].split(' :')[1].split(' ')
-        print('======raw_data======')
-        print(raw_data)
-        print('======raw_data======')
-        print(nicks)
+        nicks = raw_data.split('\n')[0].split(' = ')[1].split(' :')[1].split(' ')
         for nick in nicks:
-            print('im observable ' + nick)
             data['nick'] = nick
             self.notifyObservers(data)
 
