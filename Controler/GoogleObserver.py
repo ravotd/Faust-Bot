@@ -1,4 +1,4 @@
-import google
+#import google
 from Model.i18n import i18n
 
 from Communication.Connection import Connection
@@ -11,13 +11,13 @@ class GoogleObserver(PrivMsgObserverPrototype):
             return
         i18n_server = i18n()
         lang = i18n_server.get_text('google_lang')
-        tld = i18n_server.get_text('google_tld')
+        t = i18n_server.get_text('google_tld')
         q = data['message'].split(' ')
         query = ''
         for word in q:
             if word.strip() != '.g':
                 query += word + ' '
-        g = google.search(query, tld=tld, lang=lang, num=1, start=1, stop=2, pause=2.0)
+#        g = google.search(query, tld=t, lang=lang, num=1, start=0, stop=0, pause=2.0)
 #        s = next(g)
 #        print(s)
 
