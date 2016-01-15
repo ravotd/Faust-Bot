@@ -4,11 +4,14 @@ mainfile, initializes everything
 
 # function declarations
 from Communication.Connection import Connection
-from Controler import PingAnswerObserver
 from Controler import ActivityObserver
+from Controler import GoogleObserver
+from Controler import PingAnswerObserver
 from Controler import SeenObserver
 from Controler import TitleObserver
 from Controler import WikiObserver
+from Controler.CustomUserModules import ModmailObserver
+from Controler.TestJoinObserver import TestJoinObserver
 from Model.ConnectionDetails import ConnectionDateils
 
 
@@ -23,6 +26,7 @@ def setup():
     while -1 == data.find('353'):
         Connection.singleton().receive()
         data = Connection.singleton().last_data()
+    Connection.singleton()._join.input_names(data)
 
 
     Connection.singleton().observePing(PingAnswerObserver.ModulePing())
@@ -30,6 +34,7 @@ def setup():
     Connection.singleton().observePrivmsg(SeenObserver.SeenObserver())
     Connection.singleton().observePrivmsg(TitleObserver.TitleObserver())
     Connection.singleton().observePrivmsg(WikiObserver.WikiObserver())
+    Connection.singleton().observePrivmsg(ModmailObserver.ModmailObserver())
 
 def run():
     running = True

@@ -16,10 +16,11 @@ class JoinObservable(Observable):
         data ={}
         data['raw_data'] = raw_data
         data['channel'] = raw_data.split(' = ')[1].split(' :')[0]
-        nicks = raw_data.split('\n')[0].split(' = ')[1].split(' :')[1].split(' ')
+        nicks = raw_data.split('353')[1].split('\n')[0].split(' :')[1].split(' ')
         for nick in nicks:
             data['nick'] = nick
             self.notifyObservers(data)
+            # TODO remove \r of last nick, remove +@ etc of all nicks
 
 
     def notifyObservers(self, data):
