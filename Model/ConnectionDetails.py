@@ -27,6 +27,9 @@ class ConnectionDateils(object):
     def change_lang(self, lang):
         self.data['lang'] = lang
 
+    def get_mods(self):
+        return self.data['mods']
+
     def __init__(self, foo = False):
         if foo:
             txt = open('config.txt')
@@ -35,6 +38,8 @@ class ConnectionDateils(object):
             while (data != ''):
                 self.data[data.split(': ')[0]] = data.split(': ')[1].rstrip('\n').rstrip('\r')
                 data = txt.readline()
+            print(self.data['mods'])
+            self.data['mods'] = self.data['mods'].split(',')
             print(self.data)
         else:
             print('Falscher Aufruf. ConnectionDetails wird nur über Connection benutzt.')
