@@ -11,7 +11,6 @@ from Controler import SeenObserver
 from Controler import TitleObserver
 from Controler import WikiObserver
 from Controler.CustomUserModules import ModmailObserver
-from Controler.TestJoinObserver import TestJoinObserver
 from Model.ConnectionDetails import ConnectionDateils
 
 
