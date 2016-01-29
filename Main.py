@@ -21,14 +21,13 @@ def setup():
     connection.establish()
     _thread.start_new_thread(connection.singleton().sender,())
     userList = UserList.UserList()
-    Connection.singleton().observeJoin(userList)
     Connection.singleton().receive()
     data = Connection.singleton().last_data()
     while -1 == data.find('353'):
         Connection.singleton().receive()
         data = Connection.singleton().last_data()
+    Connection.singleton().observeJoin(userList)
     Connection.singleton()._join.input_names(data)
-
 
     Connection.singleton().observeKick(userList)
     Connection.singleton().observeLeave(userList)

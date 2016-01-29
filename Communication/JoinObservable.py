@@ -13,10 +13,11 @@ class JoinObservable(Observable):
         self.notifyObservers(data)
 
     def input_names(self, raw_data):
-        i = 1
-        data ={}
-        data['raw_data'] = raw_data
-        data['channel'] = raw_data.split(' = ')[1].split(' :')[0]
+        i = 0
+        data = {}
+        data[i] = {}
+        data[i]['raw_data'] = raw_data
+        data[i]['channel'] = raw_data.split(' = ')[1].split(' :')[0]
         nicks = raw_data.split('353')[1].split('\n')[0].split(' :')[1].split(' ')
         for nick in nicks:
             nick = nick.strip('\r')
@@ -25,13 +26,12 @@ class JoinObservable(Observable):
             nick = nick.strip('+')
             nick = nick.strip('~')
             nick = nick.strip('%')
-            data['nick'] = nick
-            print('join on names')
-            print (i)
-            i = i + 1
-            print(data)
-            print('end join on names')
-            self.notifyObservers(data)
+            data[i]['nick'] = nick
+            self.notifyObservers(data[i])
+            i += 1
+            data[i] = {}
+            data[i]['raw_data'] = data[i-1]['raw_data']
+            data[i]['channel'] = data[i-1]['channel']
 
 
     def notifyObservers(self, data):

@@ -15,7 +15,9 @@ class UserList(JoinObserverPrototype, KickObserverPrototype, LeaveObserverProtot
 
 
     def update_on_join(self, data):
+        #print('update on join')
+        print(data)
         self.userList.append(data['nick'])
-        print('joined: ' + data['nick'] + '\r\n')
-        print('userList: ')
+        #print('joined: ' + data['nick'] + '\r\n')
+        #print('userList: ')
         print(self.userList)
