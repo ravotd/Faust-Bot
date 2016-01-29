@@ -7,13 +7,21 @@ from Communication.PrivmsgObservable import PrivmsgObservable
 from Communication.LeaveObservable import LeaveObservable
 from Communication.KickObservable import KickObservable
 from Model import ConnectionDetails
+import queue
+import time
 
 
 class Connection(object):
 
+    send_queue = queue.Queue()
     details = None
     irc = None
     instance = None
+
+    def sender(self):
+        while(True):
+            self.irc.send(self.send_queue.get())
+            time.sleep(1)
 
     @staticmethod
     def singleton():
@@ -34,7 +42,7 @@ class Connection(object):
         self.raw_send('PRIVMSG ' + user + ' :' + text)
 
     def raw_send(self, message):
-        self.irc.send(message.encode() + '\r\n'.encode())
+        self.send_queue.put(message.encode() + '\r\n'.encode())
 
     def receive(self):
         """

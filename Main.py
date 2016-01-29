@@ -10,16 +10,18 @@ from Controler import PingAnswerObserver
 from Controler import SeenObserver
 from Controler import TitleObserver
 from Controler import WikiObserver
+from Controler import UserList
 from Controler.CustomUserModules import ModmailObserver
 from Model.ConnectionDetails import ConnectionDateils
+import _thread
 
 
 def setup():
     connection = Connection(ConnectionDateils(True))
     connection.establish()
-    # bind names-module
-    # while names-module wasn't called yet
-    #     receive()
+    _thread.start_new_thread(connection.singleton().sender,())
+    userList = UserList.UserList()
+    Connection.singleton().observeJoin(userList)
     Connection.singleton().receive()
     data = Connection.singleton().last_data()
     while -1 == data.find('353'):
@@ -28,6 +30,8 @@ def setup():
     Connection.singleton()._join.input_names(data)
 
 
+    Connection.singleton().observeKick(userList)
+    Connection.singleton().observeLeave(userList)
     Connection.singleton().observePing(PingAnswerObserver.ModulePing())
     Connection.singleton().observePrivmsg(ActivityObserver.AcitivityObserver())
     Connection.singleton().observePrivmsg(SeenObserver.SeenObserver())
