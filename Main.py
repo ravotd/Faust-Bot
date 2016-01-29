@@ -25,7 +25,7 @@ def setup():
     while -1 == data.find('353'):
         Connection.singleton().receive()
         data = Connection.singleton().last_data()
-#    Connection.singleton()._join.input_names(data)
+    Connection.singleton()._join.input_names(data)
 
 
     Connection.singleton().observePing(PingAnswerObserver.ModulePing())
