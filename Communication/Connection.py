@@ -6,6 +6,7 @@ from Communication.PingObservable import PingObservable
 from Communication.PrivmsgObservable import PrivmsgObservable
 from Communication.LeaveObservable import LeaveObservable
 from Communication.KickObservable import KickObservable
+from Communication.NickChangeObservable import NickChangeObservable
 from Model import ConnectionDetails
 import queue
 import time
@@ -69,6 +70,8 @@ class Connection(object):
             self._leave.input(data)
         if data.find(' KICK ') != -1:
             self._kick.input(data)
+        if data.find(' NICK ') != -1:
+            self._nick.input(data)
         return True
 
     def last_data(self):
@@ -93,6 +96,7 @@ class Connection(object):
         self._join = JoinObservable()
         self._leave = LeaveObservable()
         self._kick = KickObservable()
+        self._nick = NickChangeObservable()
         if Connection.instance != None:
             raise ReferenceError("Only one connection is supported, don't create a new one as long as one still exists!")
         Connection.instance = self

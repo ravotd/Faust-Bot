@@ -1,9 +1,10 @@
 from Controler.JoinObserverPrototype import JoinObserverPrototype
 from Controler.KickObserverPrototype import KickObserverPrototype
 from Controler.LeaveObserverPrototype import LeaveObserverPrototype
+from Controler.NickChangeObserverPrototype import NickChangeObserverPrototype
 
 
-class UserList(JoinObserverPrototype, KickObserverPrototype, LeaveObserverPrototype):
+class UserList(JoinObserverPrototype, KickObserverPrototype, LeaveObserverPrototype, NickChangeObserverPrototype):
     #todo for Multi Channel Faust Add Channel descriptor here
     userList = []
 
@@ -15,9 +16,8 @@ class UserList(JoinObserverPrototype, KickObserverPrototype, LeaveObserverProtot
 
 
     def update_on_join(self, data):
-        #print('update on join')
-        print(data)
         self.userList.append(data['nick'])
-        #print('joined: ' + data['nick'] + '\r\n')
-        #print('userList: ')
-        print(self.userList)
+
+    def update_on_nick_change(self, data):
+        self.userList.remove(data['old_nick'])
+        self.userList.append(data['new_nick'])

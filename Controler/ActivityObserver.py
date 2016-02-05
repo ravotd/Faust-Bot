@@ -1,11 +1,12 @@
 from Communication.Connection import Connection
 from Controler.JoinObserverPrototype import JoinObserverPrototype
+from Controler.NickChangeObserverPrototype import NickChangeObserverPrototype
 from Model.UserProvider import UserProvider
 
 from Controler.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 
 
-class AcitivityObserver(PrivMsgObserverPrototype, JoinObserverPrototype):
+class AcitivityObserver(PrivMsgObserverPrototype, JoinObserverPrototype, NickChangeObserverPrototype):
     """
     A Class only reacting to pings
     """
@@ -21,3 +22,6 @@ class AcitivityObserver(PrivMsgObserverPrototype, JoinObserverPrototype):
             users.set_active(data['nick'])
             users.add_characters(data['nick'],len(data['message']))
 
+    def update_on_nick_change(self, data):
+        users = UserProvider()
+        users.set_active(data['new_nick'])
