@@ -34,6 +34,7 @@ def setup():
 
     Connection.singleton().observeKick(userList)
     Connection.singleton().observeLeave(userList)
+    Connection.singleton().observeNickChange(userList)
     Connection.singleton().observePing(PingAnswerObserver.ModulePing())
     Connection.singleton().observePing(Kicker.Kicker())
     Connection.singleton().observePrivmsg(Activity )

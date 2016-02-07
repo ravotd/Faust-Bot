@@ -21,3 +21,4 @@ class UserList(JoinObserverPrototype, KickObserverPrototype, LeaveObserverProtot
     def update_on_nick_change(self, data):
         self.userList.remove(data['old_nick'])
         self.userList.append(data['new_nick'])
+        print(self.userList)

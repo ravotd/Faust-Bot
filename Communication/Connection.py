@@ -123,3 +123,6 @@ class Connection(object):
 
     def observeKick(self, observer):
         self._kick.addObserver(observer)
+
+    def observeNickChange(self, observer):
+        self._nick.addObserver(observer)
