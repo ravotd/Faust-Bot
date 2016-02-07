@@ -6,10 +6,11 @@ class LeaveObservable(Observable):
 
     def input(self, raw_data):
         data = {}
+        leaveOrPart = "PART"  if raw_data.find('PART') != -1 else "QUIT"
         data['raw'] = raw_data
         data['nick'] = raw_data.split('!')[0][1:]
-        data['channel'] = raw_data.split('PART ')[1].split(' :')[0]
-        data['raw_nick'] = raw_data.split(' PART')[0][1:]
+        data['channel'] = raw_data.split(leaveOrPart+' ')[1].split(' :')[0]
+        data['raw_nick'] = raw_data.split(' '+leaveOrPart)[0][1:]
         self.notifyObservers(data)
 
     def notifyObservers(self, data):

@@ -66,7 +66,7 @@ class Connection(object):
             self._privmsg.input(data)
         if data.find(' JOIN ') != -1:
             self._join.input(data)
-        if data.find(' PART ') != -1:
+        if data.find(' PART ') != -1 or data.find(' QUIT ') != -1:
             self._leave.input(data)
         if data.find(' KICK ') != -1:
             self._kick.input(data)
