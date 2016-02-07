@@ -97,32 +97,15 @@ class Connection(object):
         self._leave = LeaveObservable()
         self._kick = KickObservable()
         self._nick = NickChangeObservable()
+        self.observables = {'ping': self._ping,
+                            'privmsg': self._privmsg,
+                            'join': self._join,
+                            'leave': self._leave,
+                            'kick': self._kick,
+                            'nick': self._nick}
         if Connection.instance != None:
             raise ReferenceError("Only one connection is supported, don't create a new one as long as one still exists!")
         Connection.instance = self
 
-    def observePing(self, observer):
-        """
-        add observer to the observers of the ping-observable
-        :param observer: observer to add
-        """
-        self._ping.addObserver(observer)
-
-    def observePrivmsg(self, observer):
-        """
-        add observer to the observers of the ping-observable
-        :param observer: observer to add
-        """
-        self._privmsg.addObserver(observer)
-
-    def observeJoin(self, observer):
-        self._join.addObserver(observer)
-
-    def observeLeave(self, observer):
-        self._leave.addObserver(observer)
-
-    def observeKick(self, observer):
-        self._kick.addObserver(observer)
-
-    def observeNickChange(self, observer):
-        self._nick.addObserver(observer)
+    def observe(self, what, observer):
+        self.observables[what].addObserver(observer)

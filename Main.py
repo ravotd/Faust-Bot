@@ -28,20 +28,20 @@ def setup():
     while -1 == data.find('353'):
         Connection.singleton().receive()
         data = Connection.singleton().last_data()
-    Connection.singleton().observeJoin(userList)
-    Connection.singleton().observeJoin(Activity)
+    Connection.singleton().observe('join', userList)
+    Connection.singleton().observe('join', Activity)
     Connection.singleton()._join.input_names(data)
 
-    Connection.singleton().observeKick(userList)
-    Connection.singleton().observeLeave(userList)
-    Connection.singleton().observeNickChange(userList)
-    Connection.singleton().observePing(PingAnswerObserver.ModulePing())
-    Connection.singleton().observePing(Kicker.Kicker())
-    Connection.singleton().observePrivmsg(Activity )
-    Connection.singleton().observePrivmsg(SeenObserver.SeenObserver())
-    Connection.singleton().observePrivmsg(TitleObserver.TitleObserver())
-    Connection.singleton().observePrivmsg(WikiObserver.WikiObserver())
-    Connection.singleton().observePrivmsg(ModmailObserver.ModmailObserver())
+    Connection.singleton().observe('kick', userList)
+    Connection.singleton().observe('leave', userList)
+    Connection.singleton().observe('nick', userList)
+    Connection.singleton().observe('ping', PingAnswerObserver.ModulePing())
+    Connection.singleton().observe('ping', Kicker.Kicker())
+    Connection.singleton().observe('privmsg', Activity )
+    Connection.singleton().observe('privmsg', SeenObserver.SeenObserver())
+    Connection.singleton().observe('privmsg', TitleObserver.TitleObserver())
+    Connection.singleton().observe('privmsg', WikiObserver.WikiObserver())
+    Connection.singleton().observe('privmsg', ModmailObserver.ModmailObserver())
 
 def run():
     running = True
