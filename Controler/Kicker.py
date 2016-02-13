@@ -11,6 +11,9 @@ class Kicker(PingObserverPrototype):
 
     def update_on_ping(self, data):
         for user in UserList.userList:
+            if self.getOfflineTime(user) < 500:
+                while user in self.warned_users:
+                    self.warned_users.remove(user)
             if self.getOfflineTime(user) > 18000 and not user == Connection.singleton().details.get_nick():
                 if self.warned_users.count(user)%30 == 0:
                     Connection.singleton().send_channel('\001ACTION schüttet ' + user + \
