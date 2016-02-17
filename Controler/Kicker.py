@@ -14,7 +14,7 @@ class Kicker(PingObserverPrototype):
         for user in UserList.userList:
             if self.getOfflineTime(user) < 500:
                 self.warned_users[user] = 0
-            if self.getOfflineTime(user) > 1800 and not user == Connection.singleton().details.get_nick():
+            if self.getOfflineTime(user) > 18000 and not user == Connection.singleton().details.get_nick():
                 if self.warned_users[user] % 30 == 0:
                     Connection.singleton().send_channel('\001ACTION schüttet ' + user + \
                                                         ' einen Eimer Wasser über den Kopf\001')
