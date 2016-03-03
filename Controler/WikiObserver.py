@@ -20,6 +20,10 @@ class WikiObserver(PrivMsgObserverPrototype):
         if w.__len__() == 0:
             Connection.singleton().send_channel(data['nick'] + ', ' + i18n_server.get_text('wiki_fail'))
             return
-        page = wikipedia.WikipediaPage(w.pop(0))
+        try:
+            page = wikipedia.WikipediaPage(w.pop(0))
+        except wikipedia.DisambiguationError as error:
+            print('disambiguation page')
+            page = wikipedia.WikipediaPage(error.args[1][0])
         Connection.singleton().send_channel(data['nick'] + ' ' + page.url)
         Connection.singleton().send_channel(page.summary[0:230])
