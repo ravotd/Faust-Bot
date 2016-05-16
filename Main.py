@@ -13,6 +13,7 @@ from Controler import WikiObserver
 from Controler import UserList
 from Controler import Kicker
 from Controler.CustomUserModules import ModmailObserver
+from Controler.CustomUserModules import ICDObserver
 from Model.ConnectionDetails import ConnectionDateils
 import _thread
 
@@ -43,6 +44,7 @@ def setup():
     Connection.singleton().observePrivmsg(TitleObserver.TitleObserver())
     Connection.singleton().observePrivmsg(WikiObserver.WikiObserver())
     Connection.singleton().observePrivmsg(ModmailObserver.ModmailObserver())
+    Connection.singleton().observePrivmsg(ICDObserver.ICDObserver())
 
 def run():
     running = True
