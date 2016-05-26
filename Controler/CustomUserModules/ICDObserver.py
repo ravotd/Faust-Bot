@@ -25,10 +25,12 @@ class ICDObserver(PrivMsgObserverPrototype):
             return 0
 
     def update_on_priv_msg(self, data):
+        regex = "(?P<url>https?://[^\s]+)"
+        message = re.sub(regex, ' ', data['message'])
         if data['channel'] != Connection.singleton().details.get_channel():
             return
         regex = r'\b(\w\d{2}\.?\d?)\b'
-        codes = re.findall(regex,data['message'])
+        codes = re.findall(regex,message)
         for code in codes:
             code = code.capitalize()
             text = self.get_icd(code)
@@ -38,4 +40,5 @@ class ICDObserver(PrivMsgObserverPrototype):
                 else:
                     code = code + '.-'
             text = self.get_icd(code)
-            Connection.singleton().send_channel(text)
+            if (text != 0):
+                Connection.singleton().send_channel(text)
