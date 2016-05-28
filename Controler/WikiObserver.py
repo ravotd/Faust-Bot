@@ -26,4 +26,8 @@ class WikiObserver(PrivMsgObserverPrototype):
             print('disambiguation page')
             page = wikipedia.WikipediaPage(error.args[1][0])
         Connection.singleton().send_channel(data['nick'] + ' ' + page.url)
-        Connection.singleton().send_channel(page.summary[0:230])
+        index = page.summary.find('. ')
+        if index == -1 or index > 230:
+            Connection.singleton().send_channel(page.summary[0:230])
+        else:
+            Connection.singleton().send_channel(page.summary[0:index+1])
