@@ -31,7 +31,7 @@ class TitleObserver(PrivMsgObserverPrototype):
                 title = html.unescape(title)
                 title = title.replace('\n', ' ').replace('\r', '')
                 print(title)
-                Connection.singleton().send_channel(title)
+                Connection.singleton().send_back(title, data)
             except Exception as exc:
                 print(exc)
                 pass

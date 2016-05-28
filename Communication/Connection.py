@@ -42,6 +42,18 @@ class Connection(object):
         """
         self.raw_send('PRIVMSG ' + user + ' :' + text)
 
+    def send_back(self, text, data):
+        """
+        Send message to the channel the command got received in
+        :param message:
+        :param data: needed because of concurrency, there can't be a global variable holding where messages came from
+        :return:
+        """
+        if data['channel'] == self.details.get_nick():
+            self.send_to_user(data['nick'], text)
+        else:
+            self.send_channel(text)
+
     def raw_send(self, message):
         self.send_queue.put(message.encode() + '\r\n'.encode())
 

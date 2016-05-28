@@ -41,4 +41,4 @@ class ICDObserver(PrivMsgObserverPrototype):
                     code = code + '.-'
             text = self.get_icd(code)
             if (text != 0):
-                Connection.singleton().send_channel(text)
+                Connection.singleton().send_back(text, data)
