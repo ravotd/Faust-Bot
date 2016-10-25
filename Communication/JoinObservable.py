@@ -17,7 +17,12 @@ class JoinObservable(Observable):
         data = {}
         data[i] = {}
         data[i]['raw_data'] = raw_data
-        data[i]['channel'] = raw_data.split(' = ')[1].split(' :')[0]
+        if raw_data.find(' = ') != -1:
+            data[i]['channel'] = raw_data.split(' = ')[1].split(' :')[0]
+        if raw_data.find(' @ ') != -1:
+            data[i]['channel'] = raw_data.split(' @ ')[1].split(' :')[0]
+        if raw_data.find(' * ') != -1:
+            data[i]['channel'] = raw_data.split(' * ')[1].split(' :')[0]
         nicks = raw_data.split('353')[1].split('\n')[0].split(' :')[1].split(' ')
         for nick in nicks:
             nick = nick.strip('\r')
