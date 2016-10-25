@@ -11,7 +11,7 @@ class JoinObservable(Observable):
         data['channel'] = raw_data.split('JOIN ')[1].split(' :')[0]
         data['raw_nick'] = raw_data.split(' JOIN')[0][1:]
         self.notifyObservers(data)
-
+ 
     def input_names(self, raw_data):
         i = 0
         data = {}
