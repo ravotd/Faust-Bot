@@ -1,6 +1,6 @@
 server: irc.freenode.org
 port: 6667
-nick: FaustBot
-channel: #faust-bot
+nick: FaustBot97
+channel: ##wobbelgalaxy
 lang: de-de
-mods: nick1,nick2
+mods: starly

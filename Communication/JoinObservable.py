@@ -11,13 +11,18 @@ class JoinObservable(Observable):
         data['channel'] = raw_data.split('JOIN ')[1].split(' :')[0]
         data['raw_nick'] = raw_data.split(' JOIN')[0][1:]
         self.notifyObservers(data)
-
+ 
     def input_names(self, raw_data):
         i = 0
         data = {}
         data[i] = {}
         data[i]['raw_data'] = raw_data
-        data[i]['channel'] = raw_data.split(' = ')[1].split(' :')[0]
+        if raw_data.find(' = ') != -1:
+            data[i]['channel'] = raw_data.split(' = ')[1].split(' :')[0]
+        if raw_data.find(' @ ') != -1:
+            data[i]['channel'] = raw_data.split(' @ ')[1].split(' :')[0]
+        if raw_data.find(' * ') != -1:
+            data[i]['channel'] = raw_data.split(' * ')[1].split(' :')[0]
         nicks = raw_data.split('353')[1].split('\n')[0].split(' :')[1].split(' ')
         for nick in nicks:
             nick = nick.strip('\r')
