@@ -1,15 +1,14 @@
+import queue
 import socket
-import re
+import time
 
 from Communication.JoinObservable import JoinObservable
+from Communication.KickObservable import KickObservable
+from Communication.LeaveObservable import LeaveObservable
+from Communication.NickChangeObservable import NickChangeObservable
 from Communication.PingObservable import PingObservable
 from Communication.PrivmsgObservable import PrivmsgObservable
-from Communication.LeaveObservable import LeaveObservable
-from Communication.KickObservable import KickObservable
-from Communication.NickChangeObservable import NickChangeObservable
 from Model import ConnectionDetails
-import queue
-import time
 
 
 class Connection(object):
@@ -118,23 +117,23 @@ class Connection(object):
         add observer to the observers of the ping-observable
         :param observer: observer to add
         """
-        self._ping.addObserver(observer)
+        self._ping.add_observer(observer)
 
     def observePrivmsg(self, observer):
         """
         add observer to the observers of the ping-observable
         :param observer: observer to add
         """
-        self._privmsg.addObserver(observer)
+        self._privmsg.add_observer(observer)
 
     def observeJoin(self, observer):
-        self._join.addObserver(observer)
+        self._join.add_observer(observer)
 
     def observeLeave(self, observer):
-        self._leave.addObserver(observer)
+        self._leave.add_observer(observer)
 
     def observeKick(self, observer):
-        self._kick.addObserver(observer)
+        self._kick.add_observer(observer)
 
     def observeNickChange(self, observer):
-        self._nick.addObserver(observer)
+        self._nick.add_observer(observer)

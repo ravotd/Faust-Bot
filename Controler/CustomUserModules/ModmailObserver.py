@@ -1,9 +1,8 @@
 from Communication.Connection import Connection
 from Controler.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 
+
 class ModmailObserver(PrivMsgObserverPrototype):
-
-
     def update_on_priv_msg(self, data):
         if data['message'].find('.modmail') == -1:
             return

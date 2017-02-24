@@ -1,11 +1,11 @@
 from wikipedia import wikipedia
-from Model.i18n import i18n
 
 from Communication.Connection import Connection
 from Controler.PrivMsgObserverPrototype import PrivMsgObserverPrototype
+from Model.i18n import i18n
+
 
 class WikiObserver(PrivMsgObserverPrototype):
-
     def update_on_priv_msg(self, data):
         if data['message'].find('.w ') == -1:
             return

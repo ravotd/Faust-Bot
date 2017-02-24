@@ -1,4 +1,4 @@
-import sys, sqlite3
+import sqlite3
 
 filepointer = open('de-de.lang', "r")
 ''''schema = sys.argv[2]
@@ -20,13 +20,13 @@ long = None
 switch = True
 cursor = database_connection.cursor()
 for line in filepointer:
-    if(switch):
+    if switch:
         ident = line.rstrip()
     else:
         long = line.rstrip()
         if 'en-us' != "explain":
             print("Blatsch")
-            cursor.execute("INSERT INTO i18n(ident, lang, longText) VALUES(?,?,?)",(ident, 'de-de', long,))
+            cursor.execute("INSERT INTO i18n(ident, lang, longText) VALUES(?,?,?)", (ident, 'de-de', long,))
             database_connection.commit()
         else:
             cursor.execute("INSERT INTO explain(ident, longText) VALUES(?,?)", (ident, long,))

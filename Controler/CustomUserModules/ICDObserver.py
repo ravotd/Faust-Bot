@@ -1,12 +1,13 @@
-from Communication.Connection import Connection
-from Controler.PrivMsgObserverPrototype import PrivMsgObserverPrototype
+import html
 import re
 import urllib
 from urllib import request
-import html
+
+from Communication.Connection import Connection
+from Controler.PrivMsgObserverPrototype import PrivMsgObserverPrototype
+
 
 class ICDObserver(PrivMsgObserverPrototype):
-
     def get_icd(self, code):
         url = 'http://www.icd-code.de/icd/code/' + code + '.html'
         try:
@@ -14,7 +15,7 @@ class ICDObserver(PrivMsgObserverPrototype):
             req = urllib.request.Request(url, None, headers)
             resource = urllib.request.urlopen(req)
             encoding = 'iso-8859-1'
-            content =  resource.read().decode(encoding, errors='replace')
+            content = resource.read().decode(encoding, errors='replace')
             titleRE = re.compile('<title>ICD-10-GM-2016\s(.+?)\sICD10\s</title>')
             title = titleRE.search(content).group(1)
             title = html.unescape(title)
@@ -30,15 +31,15 @@ class ICDObserver(PrivMsgObserverPrototype):
         if data['channel'] != Connection.singleton().details.get_channel():
             return
         regex = r'\b(\w\d{2}\.?\d?)\b'
-        codes = re.findall(regex,message)
+        codes = re.findall(regex, message)
         for code in codes:
             code = code.capitalize()
             text = self.get_icd(code)
             if text == 0:
                 if code.find('.') != -1:
-                    code = code + '-'
+                    code += '-'
                 else:
-                    code = code + '.-'
+                    code += '.-'
             text = self.get_icd(code)
-            if (text != 0):
+            if text != 0:
                 Connection.singleton().send_back(text, data)

@@ -2,6 +2,7 @@ class NickChangeObserverPrototype(object):
     """
     The Prototype of a Class who can react to every action
     """
+
     def __init__(self):
         pass
 

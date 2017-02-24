@@ -1,13 +1,13 @@
+import html
 import re
 import urllib
 from urllib import request
-import html
 
 from Communication.Connection import Connection
 from Controler.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 
-class TitleObserver(PrivMsgObserverPrototype):
 
+class TitleObserver(PrivMsgObserverPrototype):
     def update_on_priv_msg(self, data):
         regex = "(?P<url>https?://[^\s]+)"
         url = re.search(regex, data['message'])
@@ -25,9 +25,9 @@ class TitleObserver(PrivMsgObserverPrototype):
                     encoding = 'windows-1252'
                 if not encoding:
                     encoding = 'utf-8'
-                content =  resource.read().decode(encoding, errors='replace')
-                titleRE = re.compile("<title>(.+?)</title>")
-                title = titleRE.search(content).group(1)
+                content = resource.read().decode(encoding, errors='replace')
+                title_re = re.compile("<title>(.+?)</title>")
+                title = title_re.search(content).group(1)
                 title = html.unescape(title)
                 title = title.replace('\n', ' ').replace('\r', '')
                 print(title)

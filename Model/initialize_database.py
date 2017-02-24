@@ -1,4 +1,5 @@
 import sqlite3
+
 database_connection = sqlite3.connect('faust_bot.db')
 cursor = database_connection.cursor()
 cursor.execute('''CREATE TABLE IF NOT EXISTS user (id INT , name TEXT AS PRIMARY KEY)''')

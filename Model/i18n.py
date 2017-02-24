@@ -1,9 +1,11 @@
 import sqlite3
-from Model.ConnectionDetails import ConnectionDateils
+
+
 class i18n(object):
-    def get_text(self, name, replacements = {}):
+    def get_text(self, name, replacements={}):
         """
 
+        :param replacements:
         :param name: name of text
         :param lang: language to get text in
         :return: the text
@@ -12,9 +14,9 @@ class i18n(object):
         cursor = database_connection.cursor()
         ltext = ""
         lang = "en-us"
-        print (replacements);
-        for longText in cursor.execute("SELECT longText FROM i18n WHERE lang = ? AND ident = ?",( lang,name,)):
+        print(replacements);
+        for longText in cursor.execute("SELECT longText FROM i18n WHERE lang = ? AND ident = ?", (lang, name,)):
             ltext = longText[0]
         for (key, value) in replacements.items():
-            ltext = ltext.replace('$'+key, value)
+            ltext = ltext.replace('$' + key, value)
         return ltext

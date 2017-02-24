@@ -3,25 +3,25 @@ mainfile, initializes everything
 """
 
 # function declarations
+import _thread
+
 from Communication.Connection import Connection
 from Controler import ActivityObserver
-from Controler import GoogleObserver
+from Controler import Kicker
 from Controler import PingAnswerObserver
 from Controler import SeenObserver
 from Controler import TitleObserver
-from Controler import WikiObserver
 from Controler import UserList
-from Controler import Kicker
-from Controler.CustomUserModules import ModmailObserver
+from Controler import WikiObserver
 from Controler.CustomUserModules import ICDObserver
+from Controler.CustomUserModules import ModmailObserver
 from Model.ConnectionDetails import ConnectionDateils
-import _thread
 
 
 def setup():
     connection = Connection(ConnectionDateils(True))
     connection.establish()
-    _thread.start_new_thread(connection.singleton().sender,())
+    _thread.start_new_thread(connection.singleton().sender, ())
     userList = UserList.UserList()
     Activity = ActivityObserver.AcitivityObserver()
     Connection.singleton().receive()
@@ -39,17 +39,18 @@ def setup():
     Connection.singleton().observeNickChange(Activity)
     Connection.singleton().observePing(PingAnswerObserver.ModulePing())
     Connection.singleton().observePing(Kicker.Kicker())
-    Connection.singleton().observePrivmsg(Activity )
+    Connection.singleton().observePrivmsg(Activity)
     Connection.singleton().observePrivmsg(SeenObserver.SeenObserver())
     Connection.singleton().observePrivmsg(TitleObserver.TitleObserver())
     Connection.singleton().observePrivmsg(WikiObserver.WikiObserver())
     Connection.singleton().observePrivmsg(ModmailObserver.ModmailObserver())
     Connection.singleton().observePrivmsg(ICDObserver.ICDObserver())
 
+
 def run():
     running = True
     while running:
-        if Connection.singleton().receive() == False:
+        if not Connection.singleton().receive():
             return
 
 
@@ -63,5 +64,6 @@ def main():
     setup()
     run()
     cleanup()
+
 
 main()

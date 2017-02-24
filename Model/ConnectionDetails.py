@@ -1,5 +1,4 @@
 class ConnectionDateils(object):
-
     def get_server(self):
         """
         :return: the server to connect to
@@ -30,7 +29,7 @@ class ConnectionDateils(object):
     def get_mods(self):
         return self.data['mods']
 
-    def __init__(self, foo = False):
+    def __init__(self, foo=False):
         if foo:
             txt = open('config.txt')
             self.data = {}
