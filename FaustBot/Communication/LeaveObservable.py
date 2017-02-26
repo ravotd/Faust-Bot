@@ -1,6 +1,6 @@
 import _thread
 
-from Communication.Observable import Observable
+from FaustBot.Communication.Observable import Observable
 
 
 class LeaveObservable(Observable):

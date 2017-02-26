@@ -1,5 +1,5 @@
-from Communication.Connection import Connection
-from Controler.PingObserverPrototype import PingObserverPrototype
+from FaustBot.Communication.Connection import Connection
+from FaustBot.Modules.PingObserverPrototype import PingObserverPrototype
 
 
 class ModulePing(PingObserverPrototype):

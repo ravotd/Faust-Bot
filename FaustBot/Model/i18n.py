@@ -2,7 +2,7 @@ import sqlite3
 
 
 class i18n(object):
-    def get_text(self, name, replacements={}):
+    def get_text(self, name, replacements=None, lang='de-DE'):
         """
 
         :param replacements:
@@ -10,10 +10,11 @@ class i18n(object):
         :param lang: language to get text in
         :return: the text
         """
+        if replacements is None:
+            replacements = {}
         database_connection = sqlite3.connect('faust_bot.db')
         cursor = database_connection.cursor()
         ltext = ""
-        lang = "en-us"
         print(replacements);
         for longText in cursor.execute("SELECT longText FROM i18n WHERE lang = ? AND ident = ?", (lang, name,)):
             ltext = longText[0]

@@ -1,10 +1,10 @@
 import time
 from collections import defaultdict
 
-from Communication.Connection import Connection
-from Controler.PingObserverPrototype import PingObserverPrototype
-from Controler.UserList import UserList
-from Model.UserProvider import UserProvider
+from FaustBot.Communication.Connection import Connection
+from FaustBot.Model.UserProvider import UserProvider
+from FaustBot.Modules.UserList import UserList
+from ..Modules.PingObserverPrototype import PingObserverPrototype
 
 
 class Kicker(PingObserverPrototype):

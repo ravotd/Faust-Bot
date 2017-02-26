@@ -1,6 +1,6 @@
 # import google
-from Controler.PrivMsgObserverPrototype import PrivMsgObserverPrototype
-from Model.i18n import i18n
+from FaustBot.Model.i18n import i18n
+from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 
 
 class GoogleObserver(PrivMsgObserverPrototype):

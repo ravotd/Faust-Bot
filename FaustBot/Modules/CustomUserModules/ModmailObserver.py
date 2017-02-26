@@ -1,5 +1,5 @@
-from Communication.Connection import Connection
-from Controler.PrivMsgObserverPrototype import PrivMsgObserverPrototype
+from FaustBot.Communication.Connection import Connection
+from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 
 
 class ModmailObserver(PrivMsgObserverPrototype):

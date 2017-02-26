@@ -1,16 +1,17 @@
 from wikipedia import wikipedia
 
-from Communication.Connection import Connection
-from Controler.PrivMsgObserverPrototype import PrivMsgObserverPrototype
-from Model.i18n import i18n
+from FaustBot.Communication.Connection import Connection
+from FaustBot.Model.i18n import i18n
+from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 
 
 class WikiObserver(PrivMsgObserverPrototype):
     def update_on_priv_msg(self, data):
+
         if data['message'].find('.w ') == -1:
             return
         i18n_server = i18n()
-        w = wikipedia.set_lang(i18n_server.get_text('wiki_lang'))
+        w = wikipedia.set_lang(i18n_server.get_text('wiki_lang', lang=self.config.lang))
         q = data['message'].split(' ')
         query = ''
         for word in q:
@@ -18,7 +19,10 @@ class WikiObserver(PrivMsgObserverPrototype):
                 query += word + ' '
         w = wikipedia.search(query)
         if w.__len__() == 0:
-            Connection.singleton().send_back(data['nick'] + ', ' + i18n_server.get_text('wiki_fail'), data)
+            Connection.singleton().send_back(data['nick'] + ', ' +
+                                             i18n_server.get_text('wiki_fail',
+                                                                  replacements=data,
+                                                                  lang=self.config.lang))
             return
         try:
             page = wikipedia.WikipediaPage(w.pop(0))

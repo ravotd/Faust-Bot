@@ -14,3 +14,6 @@ class Observable(object):
     def input(self, raw_data):
         # here implement some data handling. Fill self._data with the data received
         raise NotImplementedError("Some Observable doesn't know what to do with its input data")
+
+    def rm_observer(self, observer):
+        self._observers.remove(observer)

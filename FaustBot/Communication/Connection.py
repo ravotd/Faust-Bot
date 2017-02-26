@@ -1,31 +1,31 @@
+import _thread
 import queue
 import socket
 import time
 
-from Communication.JoinObservable import JoinObservable
-from Communication.KickObservable import KickObservable
-from Communication.LeaveObservable import LeaveObservable
-from Communication.NickChangeObservable import NickChangeObservable
-from Communication.PingObservable import PingObservable
-from Communication.PrivmsgObservable import PrivmsgObservable
-from Model import ConnectionDetails
+from FaustBot.Communication.JoinObservable import JoinObservable
+from FaustBot.Communication.KickObservable import KickObservable
+from FaustBot.Communication.LeaveObservable import LeaveObservable
+from FaustBot.Communication.NickChangeObservable import NickChangeObservable
+from FaustBot.Communication.PingObservable import PingObservable
+from FaustBot.Communication.PrivmsgObservable import PrivmsgObservable
+from FaustBot.Model.ConnectionDetails import ConnectionDetails
 
 
 class Connection(object):
-
     send_queue = queue.Queue()
     details = None
     irc = None
     instance = None
 
     def sender(self):
-        while(True):
+        while True:
             self.irc.send(self.send_queue.get())
             time.sleep(1)
 
     @staticmethod
     def singleton():
-        return Connection.instance;
+        return Connection.instance
 
     def send_channel(self, text):
         """
@@ -60,7 +60,6 @@ class Connection(object):
         """
         receive from Network
         """
-        error = False
         try:
             data = self.irc.recv(4096)
             self.data = data
@@ -72,17 +71,17 @@ class Connection(object):
         self.data = data
         data = data.rstrip()
         if data.find('PING') != -1:
-            self._ping.input(data)
+            self.ping_observable.input(data)
         if data.find('PRIVMSG') != -1:
-            self._privmsg.input(data)
+            self.priv_msg_observable.input(data)
         if data.find(' JOIN ') != -1:
-            self._join.input(data)
+            self.join_observable.input(data)
         if data.find(' PART ') != -1 or data.find(' QUIT ') != -1:
-            self._leave.input(data)
+            self.leave_observable.input(data)
         if data.find(' KICK ') != -1:
-            self._kick.input(data)
+            self.kick_observable.input(data)
         if data.find(' NICK ') != -1:
-            self._nick.input(data)
+            self.nick_change_observable.input(data)
         return True
 
     def last_data(self):
@@ -99,41 +98,20 @@ class Connection(object):
         self.irc.send("NICK ".encode() + self.details.get_nick().encode() + "\r\n".encode())
         self.irc.send("USER botty botty botty :IRC Bot\r\n".encode())
         self.irc.send("JOIN ".encode() + self.details.get_channel().encode() + '\r\n'.encode())
+        _thread.start_new_thread(self.sender, ())
 
     def __init__(self, set_details: ConnectionDetails):
         self.details = set_details
-        self._ping = PingObservable()
-        self._privmsg = PrivmsgObservable()
-        self._join = JoinObservable()
-        self._leave = LeaveObservable()
-        self._kick = KickObservable()
-        self._nick = NickChangeObservable()
-        if Connection.instance != None:
-            raise ReferenceError("Only one connection is supported, don't create a new one as long as one still exists!")
+        self.ping_observable = PingObservable()
+        self.priv_msg_observable = PrivmsgObservable()
+        self.join_observable = JoinObservable()
+        self.leave_observable = LeaveObservable()
+        self.kick_observable = KickObservable()
+        self.nick_change_observable = NickChangeObservable()
+        self.data = None
+        if Connection.instance is not None:
+            raise ReferenceError(
+                "Only one connection is supported, don't create a new one as long as one still exists!")
         Connection.instance = self
 
-    def observePing(self, observer):
-        """
-        add observer to the observers of the ping-observable
-        :param observer: observer to add
-        """
-        self._ping.add_observer(observer)
 
-    def observePrivmsg(self, observer):
-        """
-        add observer to the observers of the ping-observable
-        :param observer: observer to add
-        """
-        self._privmsg.add_observer(observer)
-
-    def observeJoin(self, observer):
-        self._join.add_observer(observer)
-
-    def observeLeave(self, observer):
-        self._leave.add_observer(observer)
-
-    def observeKick(self, observer):
-        self._kick.add_observer(observer)
-
-    def observeNickChange(self, observer):
-        self._nick.add_observer(observer)

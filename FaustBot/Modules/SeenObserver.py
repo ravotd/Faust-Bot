@@ -1,10 +1,10 @@
 import datetime
 import time
 
-from Communication.Connection import Connection
-from Controler.PrivMsgObserverPrototype import PrivMsgObserverPrototype
-from Model.UserProvider import UserProvider
-from Model.i18n import i18n
+from FaustBot.Communication.Connection import Connection
+from FaustBot.Model.UserProvider import UserProvider
+from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
+from ..Model.i18n import i18n
 
 
 class SeenObserver(PrivMsgObserverPrototype):
@@ -17,5 +17,6 @@ class SeenObserver(PrivMsgObserverPrototype):
         delta = time.time() - activity
         i18n_server = i18n()
         replacements = {'user': who, 'time': str(datetime.timedelta(seconds=delta))}
-        output = i18n_server.get_text('seen', replacements)
+        output = i18n_server.get_text('seen', replacements=replacements,
+                                      lang=self.config.lang)
         Connection.instance.send_channel(output)
