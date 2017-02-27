@@ -1,3 +1,4 @@
+from FaustBot.Communication.Connection import Connection
 from FaustBot.Modules.ModulePrototype import ModulePrototype
 from FaustBot.Modules.ModuleType import ModuleType
 
@@ -12,7 +13,7 @@ class NickChangeObserverPrototype(ModulePrototype):
         return [ModuleType.ON_NICK_CHANGE]
 
     def __init__(self):
-        pass
+        super().__init__()
 
-    def update_on_nick_change(self, data):
+    def update_on_nick_change(self, data, connection: Connection):
         raise NotImplementedError("Some module doesn't do anything")

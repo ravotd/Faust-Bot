@@ -1,10 +1,11 @@
 # import google
+from FaustBot.Communication.Connection import Connection
 from FaustBot.Model.i18n import i18n
 from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 
 
 class GoogleObserver(PrivMsgObserverPrototype):
-    def update_on_priv_msg(self, data):
+    def update_on_priv_msg(self, data, connection: Connection):
         if data['message'].find('.g') == -1:
             return
         i18n_server = i18n()

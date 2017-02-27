@@ -9,6 +9,7 @@ from FaustBot.Modules import SeenObserver
 from FaustBot.Modules import TitleObserver
 from FaustBot.Modules import UserList
 from FaustBot.Modules import WikiObserver
+from FaustBot.Modules.CustomUserModules import GlossaryModule
 from FaustBot.Modules.CustomUserModules import ICDObserver
 from FaustBot.Modules.CustomUserModules import ModmailObserver
 from FaustBot.Modules.ModuleType import ModuleType
@@ -50,6 +51,7 @@ class FaustBot(object):
         self.add_module(WikiObserver.WikiObserver())
         self.add_module(ModmailObserver.ModmailObserver())
         self.add_module(ICDObserver.ICDObserver())
+        self.add_module(GlossaryModule.GlossaryModule())
 
     def run(self):
         self._setup()

@@ -16,8 +16,8 @@ class ICDObserver(PrivMsgObserverPrototype):
             resource = urllib.request.urlopen(req)
             encoding = 'iso-8859-1'
             content = resource.read().decode(encoding, errors='replace')
-            titleRE = re.compile('<title>ICD-10-GM-2016\s(.+?)\sICD10\s</title>')
-            title = titleRE.search(content).group(1)
+            title_re = re.compile('<title>ICD-10-GM-2016\s(.+?)\sICD10\s</title>')
+            title = title_re.search(content).group(1)
             title = html.unescape(title)
             title = title.replace('\n', ' ').replace('\r', '')
             return title
@@ -25,10 +25,10 @@ class ICDObserver(PrivMsgObserverPrototype):
             print(exc)
             return 0
 
-    def update_on_priv_msg(self, data):
+    def update_on_priv_msg(self, data, connection: Connection):
         regex = "(?P<url>https?://[^\s]+)"
         message = re.sub(regex, ' ', data['message'])
-        if data['channel'] != Connection.singleton().details.get_channel():
+        if data['channel'] != connection.details.get_channel():
             return
         regex = r'\b(\w\d{2}\.?\d?)\b'
         codes = re.findall(regex, message)
@@ -42,4 +42,4 @@ class ICDObserver(PrivMsgObserverPrototype):
                     code += '.-'
             text = self.get_icd(code)
             if text != 0:
-                Connection.singleton().send_back(text, data)
+                connection.send_back(text, data)

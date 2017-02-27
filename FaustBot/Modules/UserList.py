@@ -13,15 +13,15 @@ class UserList(JoinObserverPrototype, KickObserverPrototype, LeaveObserverProtot
     def get_module_types():
         return [ModuleType.ON_JOIN, ModuleType.ON_KICK, ModuleType.ON_LEAVE, ModuleType.ON_NICK_CHANGE]
 
-    def update_on_kick(self, data):
+    def update_on_kick(self, data, connection):
         self.userList.remove(data['nick'])
 
-    def update_on_leave(self, data):
+    def update_on_leave(self, data, connection):
         self.userList.remove(data['nick'])
 
-    def update_on_join(self, data):
+    def update_on_join(self, data, connection):
         self.userList.append(data['nick'])
 
-    def update_on_nick_change(self, data):
+    def update_on_nick_change(self, data, connection):
         self.userList.remove(data['old_nick'])
         self.userList.append(data['new_nick'])

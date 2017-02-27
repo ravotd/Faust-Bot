@@ -7,7 +7,7 @@ class ModulePing(PingObserverPrototype):
     A Class only reacting to pings
     """
 
-    def update_on_ping(self, data):
+    def update_on_ping(self, data, connection: Connection):
         print('Module Ping')
         msg = 'PONG ' + data['server']
-        Connection.singleton().raw_send(msg)
+        connection.raw_send(msg)

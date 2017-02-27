@@ -1,3 +1,4 @@
+
 class Observable(object):
     def __init__(self):
         self._observers = []
@@ -7,11 +8,11 @@ class Observable(object):
         print("appended(" + str(observer.__class__) + ")")
 
     # data has to be a dictionary matching the structure of the query
-    def notify_observers(self, data):
+    def notify_observers(self, data, connection):
         # here implement some data handling. Fill self._data with the data received
         raise NotImplementedError("Some Observable doesn't know what to do with its input data")
 
-    def input(self, raw_data):
+    def input(self, raw_data, connection):
         # here implement some data handling. Fill self._data with the data received
         raise NotImplementedError("Some Observable doesn't know what to do with its input data")
 

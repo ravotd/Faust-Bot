@@ -1,3 +1,4 @@
+from FaustBot.Communication.Connection import Connection
 from FaustBot.Modules.ModulePrototype import ModulePrototype
 from FaustBot.Modules.ModuleType import ModuleType
 
@@ -12,7 +13,7 @@ class PrivMsgObserverPrototype(ModulePrototype):
         return [ModuleType.ON_MSG]
 
     def __init__(self):
-        pass
+        super().__init__()
 
-    def update_on_priv_msg(self, data):
+    def update_on_priv_msg(self, data, connection: Connection):
         raise NotImplementedError("Some module doesn't do anything")

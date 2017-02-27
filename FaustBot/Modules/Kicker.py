@@ -10,7 +10,7 @@ from ..Modules.PingObserverPrototype import PingObserverPrototype
 class Kicker(PingObserverPrototype):
     warned_users = defaultdict(int)
 
-    def update_on_ping(self, data):
+    def update_on_ping(self, data, connection: Connection):
         for user in UserList.userList:
             if self.get_offline_time(user) < 500:
                 self.warned_users[user] = 0

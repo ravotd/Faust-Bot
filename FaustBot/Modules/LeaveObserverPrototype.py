@@ -1,3 +1,4 @@
+from FaustBot.Communication.Connection import Connection
 from FaustBot.Modules.ModulePrototype import ModulePrototype
 from FaustBot.Modules.ModuleType import ModuleType
 
@@ -12,7 +13,7 @@ class LeaveObserverPrototype(ModulePrototype):
         return [ModuleType.ON_LEAVE]
 
     def __init__(self):
-        pass
+        super().__init__()
 
-    def update_on_leave(self, data):
+    def update_on_leave(self, data, connection: Connection):
         raise NotImplementedError("Some module doesn't do anything")

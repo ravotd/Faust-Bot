@@ -8,7 +8,7 @@ from ..Model.i18n import i18n
 
 
 class SeenObserver(PrivMsgObserverPrototype):
-    def update_on_priv_msg(self, data):
+    def update_on_priv_msg(self, data, connection: Connection):
         if data['message'].find('.seen') == -1:
             return
         who = data['message'].split(' ')[1]
@@ -19,4 +19,4 @@ class SeenObserver(PrivMsgObserverPrototype):
         replacements = {'user': who, 'time': str(datetime.timedelta(seconds=delta))}
         output = i18n_server.get_text('seen', replacements=replacements,
                                       lang=self.config.lang)
-        Connection.instance.send_channel(output)
+        connection.send_channel(output)

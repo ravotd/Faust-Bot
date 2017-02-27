@@ -8,7 +8,7 @@ from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 
 
 class TitleObserver(PrivMsgObserverPrototype):
-    def update_on_priv_msg(self, data):
+    def update_on_priv_msg(self, data, connection: Connection):
         regex = "(?P<url>https?://[^\s]+)"
         url = re.search(regex, data['message'])
         if url is not None:
@@ -31,7 +31,7 @@ class TitleObserver(PrivMsgObserverPrototype):
                 title = html.unescape(title)
                 title = title.replace('\n', ' ').replace('\r', '')
                 print(title)
-                Connection.singleton().send_back(title, data)
+                connection.send_back(title, data)
             except Exception as exc:
                 print(exc)
                 pass

@@ -16,16 +16,11 @@ class Connection(object):
     send_queue = queue.Queue()
     details = None
     irc = None
-    instance = None
 
     def sender(self):
         while True:
             self.irc.send(self.send_queue.get())
             time.sleep(1)
-
-    @staticmethod
-    def singleton():
-        return Connection.instance
 
     def send_channel(self, text):
         """
@@ -71,17 +66,17 @@ class Connection(object):
         self.data = data
         data = data.rstrip()
         if data.find('PING') != -1:
-            self.ping_observable.input(data)
+            self.ping_observable.input(data, self)
         if data.find('PRIVMSG') != -1:
-            self.priv_msg_observable.input(data)
+            self.priv_msg_observable.input(data, self)
         if data.find(' JOIN ') != -1:
-            self.join_observable.input(data)
+            self.join_observable.input(data, self)
         if data.find(' PART ') != -1 or data.find(' QUIT ') != -1:
-            self.leave_observable.input(data)
+            self.leave_observable.input(data, self)
         if data.find(' KICK ') != -1:
-            self.kick_observable.input(data)
+            self.kick_observable.input(data, self)
         if data.find(' NICK ') != -1:
-            self.nick_change_observable.input(data)
+            self.nick_change_observable.input(data, self)
         return True
 
     def last_data(self):
@@ -109,9 +104,3 @@ class Connection(object):
         self.kick_observable = KickObservable()
         self.nick_change_observable = NickChangeObservable()
         self.data = None
-        if Connection.instance is not None:
-            raise ReferenceError(
-                "Only one connection is supported, don't create a new one as long as one still exists!")
-        Connection.instance = self
-
-

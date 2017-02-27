@@ -4,12 +4,12 @@ from FaustBot.Communication.Observable import Observable
 
 
 class JoinObservable(Observable):
-    def input(self, raw_data):
+    def input(self, raw_data, connection):
         data = {'raw': raw_data, 'nick': raw_data.split('!')[0][1:],
                 'channel': raw_data.split('JOIN ')[1].split(' :')[0], 'raw_nick': raw_data.split(' JOIN')[0][1:]}
-        self.notify_observers(data)
+        self.notify_observers(data, connection)
 
-    def input_names(self, raw_data):
+    def input_names(self, raw_data, connection):
         i = 0
         data = {i: {}}
         data[i]['raw_data'] = raw_data
@@ -28,12 +28,12 @@ class JoinObservable(Observable):
             nick = nick.strip('~')
             nick = nick.strip('%')
             data[i]['nick'] = nick
-            self.notify_observers(data[i])
+            self.notify_observers(data[i], connection)
             i += 1
             data[i] = {}
             data[i]['raw_data'] = data[i - 1]['raw_data']
             data[i]['channel'] = data[i - 1]['channel']
 
-    def notify_observers(self, data):
+    def notify_observers(self, data, connection):
         for observer in self._observers:
-            _thread.start_new_thread(observer.__class__.update_on_join, (observer, data))
+            _thread.start_new_thread(observer.__class__.update_on_join, (observer, data, connection))
