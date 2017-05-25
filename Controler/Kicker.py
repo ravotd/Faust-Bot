@@ -21,7 +21,7 @@ class Kicker(PingObserverPrototype):
                 self.warned_users[user] += 1
                 if self.warned_users[user] % 29 == 0:
                     Connection.singleton().raw_send("KICK "+Connection.singleton().details.get_channel()+ \
-                     " "+user+" :Zu lang geidlet komm gerne wieder!")
+                     " "+user+" :Zu lang geidlet, komm gerne wieder!")
 
     def getOfflineTime(self, nick):
         who = nick
