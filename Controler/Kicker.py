@@ -11,7 +11,23 @@ class Kicker(PingObserverPrototype):
     warned_users = defaultdict(int)
 
     def update_on_ping(self, data):
-        getraenke = ['einen Kaffe','eine Limonade','einen Kakao','einen Tee','einen Kräutertee aus elians Garten','eine Cola', 'kaltes Wasser','kalten Eistee','einen Raktajino', 'frischen Mate', 'eine Club Mate','ein Glas Gurkenwasser', 'einen Energydrink','einen Apfelsaft','einen Traubensaft','einen Muckefuck','einen Kiwismoothie', 'einen Spinatsmoothie','einen Orangensaft','einen Coconut Kiss','ein Glas Milch','einen Erdbeersmoothie','einen Kirschsaft','einen Latte Macciato','eine Tasse heiße Schokolade','ein Glas Sauerkrautwasser','einen Topf Kinderpunsch','einen Mango-Melonesmoothie','ein Glas Hoffnung','einen frischen Pfefferminztee','eine Eisschokolade', 'einen Eiskaffee','einen kalten Milchschake','eine kalte Afri Cola','ein lauwarmes Spezi'] 
+        getraenke = ['einen Kaffe','eine Limonade','einen Kakao','einen Tee',
+                     'einen Kräutertee aus elians Garten','eine Cola', 
+                     'kaltes Wasser','kalten Eistee','einen Raktajino', 
+                     'frischen Mate', 'eine Club Mate','ein Glas Gurkenwasser', 
+                     'einen Energydrink','einen Apfelsaft','einen Traubensaft',
+                     'einen Muckefuck','einen Kiwismoothie', 'einen Spinatsmoothie',
+                     'einen Orangensaft','einen Coconut Kiss','ein Glas Milch',
+                     'einen Erdbeersmoothie','einen Kirschsaft',
+                     'einen Latte Macciato','eine Tasse heiße Schokolade',
+                     'ein Glas Sauerkrautwasser','einen Topf Kinderpunsch',
+                     'einen Mango-Melonesmoothie','ein Glas Hoffnung',
+                     'einen frischen Pfefferminztee','eine Eisschokolade',
+                     'einen Eiskaffee','einen kalten Milchschake',
+                     'eine kalte Afri Cola','ein lauwarmes Spezi',
+                    'ein Glas Joylent', 'ein Monster Energy Drink',
+                    'ein Fraktal Allmachtstrank', 'ein Heiltrank',
+                    'ein großen Becher Blumenwasser'] 
         for user in UserList.userList:
             if self.getOfflineTime(user) < 500:
                 self.warned_users[user] = 0
