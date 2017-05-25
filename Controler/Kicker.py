@@ -25,9 +25,9 @@ class Kicker(PingObserverPrototype):
                      'einen frischen Pfefferminztee','eine Eisschokolade',
                      'einen Eiskaffee','einen kalten Milchschake',
                      'eine kalte Afri Cola','ein lauwarmes Spezi',
-                    'ein Glas Joylent', 'ein Monster Energy Drink',
-                    'ein Fraktal Allmachtstrank', 'ein Heiltrank',
-                    'ein großen Becher Blumenwasser'] 
+                     'ein Glas Joylent', 'einen Monster Energy Drink',
+                     'einen Fraktal Allmachtstrank', 'einen Heiltrank',
+                     'einen großen Becher Blumenwasser'] 
         for user in UserList.userList:
             if self.getOfflineTime(user) < 500:
                 self.warned_users[user] = 0
