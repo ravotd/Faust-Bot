@@ -79,6 +79,18 @@ class Connection(object):
             self.nick_change_observable.input(data, self)
         return True
 
+    def is_op(self, user):
+        """
+        Checks wether the given user is an op in this connections' channel or not.
+        :param user: the user to check
+        :return: return true if the user is an op, else false
+        """
+        # add call to raw send with WHO
+        # manualy receive data until answer received
+        # then evaluate and return
+        # this way we'll block the bot until is_op is finished
+        return False
+
     def last_data(self):
         return self.data
 

@@ -14,11 +14,22 @@ class GlossaryProvider(object):
         self._database_connection.commit()
 
     def get_explanation(self, abbreviation: str):
+        """
+        
+        :param abbreviation: 
+        :return: 
+        """
         cursor = self._database_connection.cursor()
         cursor.execute('SELECT id, explanation FROM glossary WHERE abbreviation = ?', (abbreviation.lower(),))
         return cursor.fetchone()
 
     def save_or_replace(self, abbreviation: str, explanation: str):
+        """
+        
+        :param abbreviation: 
+        :param explanation: 
+        :return: 
+        """
         existing = self.get_explanation(abbreviation)
         _id = existing[0] if existing is not None else None
         data = (_id, abbreviation.lower(), explanation)

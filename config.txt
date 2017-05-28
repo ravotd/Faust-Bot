@@ -1,7 +1,7 @@
 server: irc.freenode.org
 port: 6667
-nick: FaustBotDev_
-channel: #corvidae-test
+nick: FaustBotDev
+channel: #faust-bot
 lang: de-de
 mods: corvidae
 

@@ -31,7 +31,7 @@ class FaustBot(object):
         activity = ActivityObserver.ActivityObserver()
         self._connection.receive()
         data = self._connection.last_data()
-        while -1 == data.find('353'):
+        while -1 == data.find('353'):  # 353 RPL_NAMREPLY
             self._connection.receive()
             data = self._connection.last_data()
             print(data)

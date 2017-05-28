@@ -21,6 +21,12 @@ class GlossaryModule(PrivMsgObserverPrototype):
             self._answer_query(data, connection)
 
     def _answer_query(self, data, connection: Connection):
+        """
+        
+        :param data: 
+        :param connection: 
+        :return: 
+        """
         glossary_provider = GlossaryProvider()
         split = data['message'].split(GlossaryModule._QUERY_EXPLANATION)
         if not len(split) == 2:
@@ -29,9 +35,21 @@ class GlossaryModule(PrivMsgObserverPrototype):
         connection.send_back(answer[1], data)
 
     def _remove_query(self, data, connection: Connection):
+        """
+        
+        :param data: 
+        :param connection: 
+        :return: 
+        """
         pass
 
     def _add_query(self, data, connection: Connection):
+        """
+        
+        :param data: 
+        :param connection: 
+        :return: 
+        """
         msg = data['message'].split(GlossaryModule._ADD_EXPLANATION)[1].strip()
 
         split = msg.split(' ', 1)
