@@ -1,10 +1,8 @@
 import sys, sqlite3
 
 filepointer = open('de-de.lang', "r")
-''''schema = sys.argv[2]
-print(sys.argv[1])
-print(sys.argv[2])
-'''''
+schema = 'de-de'
+
 database_connection = sqlite3.connect('faust_bot.db')
 cursor = database_connection.cursor()
 cursor.execute('''CREATE TABLE IF NOT EXISTS i18n (ident TEXT , lang TEXT, longText TEXT)''')
@@ -12,7 +10,7 @@ cursor.execute('''CREATE TABLE IF NOT EXISTS explain(ident TEXT  PRIMARY KEY, lo
 database_connection.commit()
 
 cursor = database_connection.cursor()
-cursor.execute('DELETE FROM i18n WHERE lang = ?', ('de-de',))
+cursor.execute('DELETE FROM i18n WHERE lang = ?', (schema,))
 database_connection.commit()
 
 ident = None
@@ -26,7 +24,7 @@ for line in filepointer:
         long = line.rstrip()
         if 'en-us' != "explain":
             print("Blatsch")
-            cursor.execute("INSERT INTO i18n(ident, lang, longText) VALUES(?,?,?)",(ident, 'de-de', long,))
+            cursor.execute("INSERT INTO i18n(ident, lang, longText) VALUES(?,?,?)",(ident, schema, long,))
             database_connection.commit()
         else:
             cursor.execute("INSERT INTO explain(ident, longText) VALUES(?,?)", (ident, long,))

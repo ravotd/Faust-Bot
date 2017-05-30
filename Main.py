@@ -15,6 +15,7 @@ from Controler import Kicker
 from Controler.CustomUserModules import ModmailObserver
 from Controler.CustomUserModules import ICDObserver
 from Model.ConnectionDetails import ConnectionDateils
+from Controler import GiveDrinkObserver
 import _thread
 
 
@@ -45,6 +46,7 @@ def setup():
     Connection.singleton().observePrivmsg(WikiObserver.WikiObserver())
     Connection.singleton().observePrivmsg(ModmailObserver.ModmailObserver())
     Connection.singleton().observePrivmsg(ICDObserver.ICDObserver())
+    connection.singleton().observePrivmsg(GiveDrinkObserver.GiveDrinkObserver())
 
 def run():
     running = True
