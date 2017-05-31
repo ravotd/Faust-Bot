@@ -2,6 +2,7 @@ import _thread
 import queue
 import socket
 import time
+from threading import Condition
 
 from FaustBot.Communication.JoinObservable import JoinObservable
 from FaustBot.Communication.KickObservable import KickObservable
@@ -67,17 +68,31 @@ class Connection(object):
         data = data.rstrip()
         if data.find('PING') != -1:
             self.ping_observable.input(data, self)
-        if data.find('PRIVMSG') != -1:
+        elif data.find('PRIVMSG') != -1:
             self.priv_msg_observable.input(data, self)
-        if data.find(' JOIN ') != -1:
+        elif data.find(' JOIN ') != -1:
             self.join_observable.input(data, self)
-        if data.find(' PART ') != -1 or data.find(' QUIT ') != -1:
+        elif data.find(' PART ') != -1 or data.find(' QUIT ') != -1:
             self.leave_observable.input(data, self)
-        if data.find(' KICK ') != -1:
+        elif data.find(' KICK ') != -1:
             self.kick_observable.input(data, self)
-        if data.find(' NICK ') != -1:
+        elif data.find(' NICK ') != -1:
             self.nick_change_observable.input(data, self)
+
         return True
+
+    def _read_acc_answer(self):
+        pass
+
+    def is_idented(self, user: str):
+        self.send_to_user('NickServ', 'ACC ' + user)
+        with self.condition_lock:
+            if user not in self.idented_look_up:
+                self.condition_lock.wait()
+            is_idented = self.idented_look_up[user]
+            del self.idented_look_up[user]
+            return is_idented
+
 
     def is_op(self, user):
         """
@@ -115,4 +130,6 @@ class Connection(object):
         self.leave_observable = LeaveObservable()
         self.kick_observable = KickObservable()
         self.nick_change_observable = NickChangeObservable()
+        self.condition_lock = Condition()
+        self.idented_look_up = {}
         self.data = None
