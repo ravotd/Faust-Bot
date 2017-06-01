@@ -32,6 +32,8 @@ class GlossaryModule(PrivMsgObserverPrototype):
         if not len(split) == 2:
             return
         answer = glossary_provider.get_explanation(split[1].strip())
+        if answer[1] is None or answer[1].strip() == '':
+            answer = "Tut mir leid, " + data['nick'] + ". Für " + split[1] + " habe ich noch keine Erklärung."
         connection.send_back(answer[1], data)
 
     def _remove_query(self, data, connection: Connection):
@@ -50,8 +52,12 @@ class GlossaryModule(PrivMsgObserverPrototype):
         :param connection: 
         :return: 
         """
+        if not connection.is_idented(data['nick']):
+            connection.send_back("Du du du, das darfst du aber nicht, " + data['nick'] + ".", data)
+            return
         msg = data['message'].split(GlossaryModule._ADD_EXPLANATION)[1].strip()
 
         split = msg.split(' ', 1)
         glossary_provider = GlossaryProvider()
         glossary_provider.save_or_replace(split[0], split[1])
+        connection.send_back(data['nick'] + " die Erklärung für " + split[0] + " wurde hinzugefügt.", data)

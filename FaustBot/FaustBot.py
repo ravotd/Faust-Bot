@@ -1,7 +1,7 @@
 from FaustBot.Communication.Connection import Connection
 from FaustBot.Model.Config import Config
 from FaustBot.Model.ConnectionDetails import ConnectionDetails
-from FaustBot.Modules import ActivityObserver
+from FaustBot.Modules import ActivityObserver, IdentNickServObserver
 from FaustBot.Modules import Kicker
 from FaustBot.Modules import ModulePrototype
 from FaustBot.Modules import PingAnswerObserver
@@ -52,6 +52,7 @@ class FaustBot(object):
         self.add_module(ModmailObserver.ModmailObserver())
         self.add_module(ICDObserver.ICDObserver())
         self.add_module(GlossaryModule.GlossaryModule())
+        self.add_module(IdentNickServObserver.IdentNickServObserver())
 
     def run(self):
         self._setup()
@@ -84,3 +85,6 @@ class FaustBot(object):
 
         if module_type == ModuleType.ON_PING:
             return self._connection.ping_observable
+
+        if module_type == ModuleType.ON_NOTICE:
+            return self._connection.notice_observable

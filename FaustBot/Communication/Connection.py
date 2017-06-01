@@ -8,6 +8,7 @@ from FaustBot.Communication.JoinObservable import JoinObservable
 from FaustBot.Communication.KickObservable import KickObservable
 from FaustBot.Communication.LeaveObservable import LeaveObservable
 from FaustBot.Communication.NickChangeObservable import NickChangeObservable
+from FaustBot.Communication.NoticeObservable import NoticeObservable
 from FaustBot.Communication.PingObservable import PingObservable
 from FaustBot.Communication.PrivmsgObservable import PrivmsgObservable
 from FaustBot.Model.ConnectionDetails import ConnectionDetails
@@ -58,6 +59,7 @@ class Connection(object):
         """
         try:
             data = self.irc.recv(4096)
+            print(data)
             self.data = data
             if len(data) == 0:
                 return False
@@ -78,21 +80,18 @@ class Connection(object):
             self.kick_observable.input(data, self)
         elif data.find(' NICK ') != -1:
             self.nick_change_observable.input(data, self)
-
+        elif data.find(' NOTICE ') != -1:
+            self.notice_observable.input(data, self)
         return True
-
-    def _read_acc_answer(self):
-        pass
 
     def is_idented(self, user: str):
         self.send_to_user('NickServ', 'ACC ' + user)
         with self.condition_lock:
-            if user not in self.idented_look_up:
+            while user not in self.idented_look_up:
                 self.condition_lock.wait()
             is_idented = self.idented_look_up[user]
             del self.idented_look_up[user]
             return is_idented
-
 
     def is_op(self, user):
         """
@@ -130,6 +129,7 @@ class Connection(object):
         self.leave_observable = LeaveObservable()
         self.kick_observable = KickObservable()
         self.nick_change_observable = NickChangeObservable()
+        self.notice_observable = NoticeObservable()
         self.condition_lock = Condition()
         self.idented_look_up = {}
         self.data = None

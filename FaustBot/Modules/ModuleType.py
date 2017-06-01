@@ -8,3 +8,4 @@ class ModuleType(Enum):
     ON_PING = 'ON_PING'
     ON_NICK_CHANGE = 'ON_NICK_CHANGE'
     ON_MSG = 'ON_MSG'
+    ON_NOTICE = 'ON_NOTICE'
