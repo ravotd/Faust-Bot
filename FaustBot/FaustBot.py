@@ -51,7 +51,7 @@ class FaustBot(object):
         self.add_module(WikiObserver.WikiObserver())
         self.add_module(ModmailObserver.ModmailObserver())
         self.add_module(ICDObserver.ICDObserver())
-        self.add_module(GlossaryModule.GlossaryModule())
+        self.add_module(GlossaryModule.GlossaryModule(self._config))
         self.add_module(IdentNickServObserver.IdentNickServObserver())
 
     def run(self):

@@ -1,4 +1,5 @@
 from FaustBot.Communication.Connection import Connection
+from FaustBot.Model.Config import Config
 from FaustBot.Model.GlossaryProvider import GlossaryProvider
 from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 
@@ -8,8 +9,9 @@ class GlossaryModule(PrivMsgObserverPrototype):
     _REMOVE_EXPLANATION = '.?-'
     _ADD_EXPLANATION = '.?+'
 
-    def __init__(self):
+    def __init__(self, config: Config):
         super().__init__()
+        self._config = config
 
     def update_on_priv_msg(self, data, connection: Connection):
         msg = data['message']
@@ -22,7 +24,6 @@ class GlossaryModule(PrivMsgObserverPrototype):
 
     def _answer_query(self, data, connection: Connection):
         """
-        
         :param data: 
         :param connection: 
         :return: 
@@ -32,18 +33,28 @@ class GlossaryModule(PrivMsgObserverPrototype):
         if not len(split) == 2:
             return
         answer = glossary_provider.get_explanation(split[1].strip())
-        if answer[1] is None or answer[1].strip() == '':
-            answer = "Tut mir leid, " + data['nick'] + ". Für " + split[1] + " habe ich noch keine Erklärung."
-        connection.send_back(answer[1], data)
+        if answer is None or answer[1] is None or answer[1].strip() == '':
+            connection.send_back("Tut mir leid, " + data['nick'] + ". Für " + split[1].strip() +
+                                 " habe ich noch keine Erklärung.", data)
+        else:
+            connection.send_back(data['nick'] + ": " + split[1] + " steht für " + answer[1] + ".", data)
 
     def _remove_query(self, data, connection: Connection):
         """
-        
+
         :param data: 
         :param connection: 
         :return: 
         """
-        pass
+        if not self._is_idented_mod(data, connection):
+            connection.send_back("Dir fehlen die Berechtigungen zum Löschen von Einträgen, " + data['nick'] + ".", data)
+            return
+        glossary_provider = GlossaryProvider()
+        split = data['message'].split(GlossaryModule._REMOVE_EXPLANATION)
+        if not len(split) == 2:
+            return
+        glossary_provider.delete_explanation(split[1])
+        connection.send_back("Die Erklärung zu " + split[1] + " wurde gelöscht, " + data['nick'] + ".", data)
 
     def _add_query(self, data, connection: Connection):
         """
@@ -52,12 +63,15 @@ class GlossaryModule(PrivMsgObserverPrototype):
         :param connection: 
         :return: 
         """
-        if not connection.is_idented(data['nick']):
-            connection.send_back("Du du du, das darfst du aber nicht, " + data['nick'] + ".", data)
+        if not self._is_idented_mod(data, connection):
+            connection.send_back("Dir fehlen leider die Rechte zum Hinzufügen von Erklärungen, " + data['nick'] + ".",
+                                 data)
             return
         msg = data['message'].split(GlossaryModule._ADD_EXPLANATION)[1].strip()
-
         split = msg.split(' ', 1)
         glossary_provider = GlossaryProvider()
         glossary_provider.save_or_replace(split[0], split[1])
-        connection.send_back(data['nick'] + " die Erklärung für " + split[0] + " wurde hinzugefügt.", data)
+        connection.send_back(data['nick'] + ": die Erklärung für " + split[0] + " wurde hinzugefügt.", data)
+
+    def _is_idented_mod(self, data: dict, connection: Connection):
+        return data['nick'] in self._config.mods and connection.is_idented(data['nick'])

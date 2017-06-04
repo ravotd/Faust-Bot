@@ -28,6 +28,10 @@ class Config(object):
             kv_pair = l.split(':')
             if len(kv_pair) == 2:
                 self._config_dict[kv_pair[0].strip()] = kv_pair[1][:-1].strip()
+        mods = self._config_dict['mods'].split(',')
+        self._config_dict['mods'] = []
+        for mod in mods:
+            self._config_dict['mods'].append(mod.strip())
 
     @property
     def lang(self):

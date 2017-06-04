@@ -1,7 +1,7 @@
 server: irc.freenode.org
 port: 6667
 nick: FaustBotDev
-channel: #faust-bot
+channel: -channel the bot should be on-
 lang: de-de
-mods: corvidae
+mods: -insert mods-here-
 
