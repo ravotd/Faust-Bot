@@ -65,3 +65,4 @@ target/
 .idea/misc.xml
 *.xml
 Model/ConnectionDetails.py
+FaustBotVEnv/

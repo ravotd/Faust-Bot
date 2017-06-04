@@ -1,0 +1,135 @@
+import _thread
+import queue
+import socket
+import time
+from threading import Condition
+
+from FaustBot.Communication.JoinObservable import JoinObservable
+from FaustBot.Communication.KickObservable import KickObservable
+from FaustBot.Communication.LeaveObservable import LeaveObservable
+from FaustBot.Communication.NickChangeObservable import NickChangeObservable
+from FaustBot.Communication.NoticeObservable import NoticeObservable
+from FaustBot.Communication.PingObservable import PingObservable
+from FaustBot.Communication.PrivmsgObservable import PrivmsgObservable
+from FaustBot.Model.ConnectionDetails import ConnectionDetails
+
+
+class Connection(object):
+    send_queue = queue.Queue()
+    details = None
+    irc = None
+
+    def sender(self):
+        while True:
+            self.irc.send(self.send_queue.get())
+            time.sleep(1)
+
+    def send_channel(self, text):
+        """
+        Send to channel
+        :return:
+        """
+        self.raw_send("PRIVMSG " + self.details.get_channel() + " :" + text[0:])
+
+    def send_to_user(self, user, text):
+        """
+        Send to user
+        :return:
+        """
+        self.raw_send('PRIVMSG ' + user + ' :' + text)
+
+    def send_back(self, text, data):
+        """
+        Send message to the channel the command got received in
+        :param message:
+        :param data: needed because of concurrency, there can't be a global variable holding where messages came from
+        :return:
+        """
+        if data['channel'] == self.details.get_nick():
+            self.send_to_user(data['nick'], text)
+        else:
+            self.send_channel(text)
+
+    def raw_send(self, message):
+        self.send_queue.put(message.encode() + '\r\n'.encode())
+
+    def receive(self):
+        """
+        receive from Network
+        """
+        try:
+            data = self.irc.recv(4096)
+            print(data)
+            self.data = data
+            if len(data) == 0:
+                return False
+        except socket.timeout:
+            return False
+        data = data.decode('UTF-8', errors='replace')
+        self.data = data
+        data = data.rstrip()
+        if data.find('PING') != -1:
+            self.ping_observable.input(data, self)
+        elif data.find('PRIVMSG') != -1:
+            self.priv_msg_observable.input(data, self)
+        elif data.find(' JOIN ') != -1:
+            self.join_observable.input(data, self)
+        elif data.find(' PART ') != -1 or data.find(' QUIT ') != -1:
+            self.leave_observable.input(data, self)
+        elif data.find(' KICK ') != -1:
+            self.kick_observable.input(data, self)
+        elif data.find(' NICK ') != -1:
+            self.nick_change_observable.input(data, self)
+        elif data.find(' NOTICE ') != -1:
+            self.notice_observable.input(data, self)
+        return True
+
+    def is_idented(self, user: str):
+        self.send_to_user('NickServ', 'ACC ' + user)
+        with self.condition_lock:
+            while user not in self.idented_look_up:
+                self.condition_lock.wait()
+            is_idented = self.idented_look_up[user]
+            del self.idented_look_up[user]
+            return is_idented
+
+    def is_op(self, user):
+        """
+        Checks wether the given user is an op in this connections' channel or not.
+        :param user: the user to check
+        :return: return true if the user is an op, else false
+        """
+        # add call to raw send with WHO
+        # manualy receive data until answer received
+        # then evaluate and return
+        # this way we'll block the bot until is_op is finished
+        return False
+
+    def last_data(self):
+        return self.data
+
+    def establish(self):
+        """
+        establish the connection
+        """
+        self.irc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+        self.irc.connect((self.details.get_server(), self.details.get_port()))
+        print(self.irc.recv(4096))
+        self.irc.send("NICK ".encode() + self.details.get_nick().encode() + "\r\n".encode())
+        self.irc.send("USER botty botty botty :IRC Bot\r\n".encode())
+        self.irc.send("JOIN ".encode() + self.details.get_channel().encode() + '\r\n'.encode())
+        _thread.start_new_thread(self.sender, ())
+
+    def __init__(self, set_details: ConnectionDetails):
+        self.details = set_details
+        self.ping_observable = PingObservable()
+        self.priv_msg_observable = PrivmsgObservable()
+        self.join_observable = JoinObservable()
+        self.leave_observable = LeaveObservable()
+        self.kick_observable = KickObservable()
+        self.nick_change_observable = NickChangeObservable()
+        self.notice_observable = NoticeObservable()
+        self.condition_lock = Condition()
+        self.idented_look_up = {}
+        self.data = None
