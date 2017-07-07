@@ -25,6 +25,7 @@ for line in filepointer:
         if 'en-us' != "explain":
             print("Blatsch")
             cursor.execute("INSERT INTO i18n(ident, lang, longText) VALUES(?,?,?)",(ident, schema, long,))
+            database_connection.commit()
         else:
             cursor.execute("INSERT INTO explain(ident, longText) VALUES(?,?)", (ident, long,))
             database_connection.commit()

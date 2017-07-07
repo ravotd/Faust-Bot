@@ -1,3 +1,5 @@
+#!/bin/python
+
 """
 mainfile, initializes everything
 """
