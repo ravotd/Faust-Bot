@@ -1,7 +1,7 @@
 from FaustBot.Communication.Connection import Connection
 from FaustBot.Model.Config import Config
 from FaustBot.Model.ConnectionDetails import ConnectionDetails
-from FaustBot.Modules import ActivityObserver, IdentNickServObserver
+from FaustBot.Modules import ActivityObserver, IdentNickServObserver, GiveCookieObserver
 from FaustBot.Modules import Kicker
 from FaustBot.Modules import ModulePrototype
 from FaustBot.Modules import PingAnswerObserver
@@ -55,6 +55,7 @@ class FaustBot(object):
         self.add_module(GlossaryModule.GlossaryModule(self._config))
         self.add_module(IdentNickServObserver.IdentNickServObserver())
         self.add_module(GiveDrinkObserver())
+        self.add_module(GiveCookieObserver.GiveCookieObserver())
 
     def run(self):
         self._setup()
