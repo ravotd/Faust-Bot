@@ -1,7 +1,8 @@
 from FaustBot.Communication.Connection import Connection
 from FaustBot.Model.Config import Config
 from FaustBot.Model.ConnectionDetails import ConnectionDetails
-from FaustBot.Modules import ActivityObserver, IdentNickServObserver, GiveCookieObserver, LoveAndPeaceObserver
+from FaustBot.Modules import ActivityObserver, IdentNickServObserver, GiveCookieObserver, LoveAndPeaceObserver, \
+    FreeHugsObserver
 from FaustBot.Modules import Kicker
 from FaustBot.Modules import ModulePrototype
 from FaustBot.Modules import PingAnswerObserver
@@ -12,7 +13,6 @@ from FaustBot.Modules import WikiObserver
 from FaustBot.Modules.CustomUserModules import GlossaryModule
 from FaustBot.Modules.CustomUserModules import ICDObserver
 from FaustBot.Modules.CustomUserModules import ModmailObserver
-from FaustBot.Modules.FreeHugsObserver import FreeHugObserver
 from FaustBot.Modules.GiveDrinkObserver import GiveDrinkObserver
 from FaustBot.Modules.ModuleType import ModuleType
 
@@ -58,7 +58,7 @@ class FaustBot(object):
         self.add_module(GiveDrinkObserver())
         self.add_module(GiveCookieObserver.GiveCookieObserver())
         self.add_module(LoveAndPeaceObserver.LoveAndPeaceObserver())
-        self.add_module(FreeHugObserver.FreeHugObserver())
+        self.add_module(FreeHugsObserver.FreeHugsObserver())
 
     def run(self):
         self._setup()
