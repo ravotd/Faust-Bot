@@ -12,6 +12,7 @@ from FaustBot.Modules import WikiObserver
 from FaustBot.Modules.CustomUserModules import GlossaryModule
 from FaustBot.Modules.CustomUserModules import ICDObserver
 from FaustBot.Modules.CustomUserModules import ModmailObserver
+from FaustBot.Modules.FreeHugsObserver import FreeHugObserver
 from FaustBot.Modules.GiveDrinkObserver import GiveDrinkObserver
 from FaustBot.Modules.ModuleType import ModuleType
 
@@ -57,6 +58,7 @@ class FaustBot(object):
         self.add_module(GiveDrinkObserver())
         self.add_module(GiveCookieObserver.GiveCookieObserver())
         self.add_module(LoveAndPeaceObserver.LoveAndPeaceObserver())
+        self.add_module(FreeHugObserver.FreeHugObserver())
 
     def run(self):
         self._setup()
