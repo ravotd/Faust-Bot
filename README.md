@@ -3,12 +3,16 @@ IRC Bot, derived from Pallaber Bot, Architectonic rework
 
 Designed for non-technical channels
 
-Usage:
+### Requirements
 
 Install Python 3.5  (we don't guarantee it to work under any other python version), including pip
-
-Run ReadInternationalization.py with arguments de-de.lang and de-de (that is done to initialise internationalisation, needed for some modules to work)
-
-Edit config.txt
-
-Run Main.py
+### Usage
+```bash
+# First load all needed strings into the database
+# Per default german is used. If you want another language you need to 
+# add an language file and modify the script.
+# Later it will be refactored, so it uses arguments
+python ReadInternationalization.py
+# Start the bot using the given config file.
+python Main.py --config ./config.txt
+``` 
