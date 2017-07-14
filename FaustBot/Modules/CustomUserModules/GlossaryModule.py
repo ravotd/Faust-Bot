@@ -35,9 +35,9 @@ class GlossaryModule(PrivMsgObserverPrototype):
         answer = glossary_provider.get_explanation(split[1].strip())
         if answer is None or answer[1] is None or answer[1].strip() == '':
             connection.send_back("Tut mir leid, " + data['nick'] + ". Für " + split[1].strip() +
-                                 " habe ich noch keine Erklärung.", data)
+                                 " habe ich noch keinen Eintrag.", data)
         else:
-            connection.send_back(data['nick'] + ": " + split[1] + " steht für " + answer[1] + ".", data)
+            connection.send_back(data['nick'] + ": " + split[1] + " - " + answer[1], data)
 
     def _remove_query(self, data, connection: Connection):
         """
@@ -54,7 +54,7 @@ class GlossaryModule(PrivMsgObserverPrototype):
         if not len(split) == 2:
             return
         glossary_provider.delete_explanation(split[1])
-        connection.send_back("Die Erklärung zu " + split[1] + " wurde gelöscht, " + data['nick'] + ".", data)
+        connection.send_back("Der Eintrag zu " + split[1] + " wurde gelöscht, " + data['nick'] + ".", data)
 
     def _add_query(self, data, connection: Connection):
         """
@@ -64,14 +64,14 @@ class GlossaryModule(PrivMsgObserverPrototype):
         :return: 
         """
         if not self._is_idented_mod(data, connection):
-            connection.send_back("Dir fehlen leider die Rechte zum Hinzufügen von Erklärungen, " + data['nick'] + ".",
+            connection.send_back("Dir fehlen leider die Rechte zum Hinzufügen von Einträgen, " + data['nick'] + ".",
                                  data)
             return
         msg = data['message'].split(GlossaryModule._ADD_EXPLANATION)[1].strip()
         split = msg.split(' ', 1)
         glossary_provider = GlossaryProvider()
         glossary_provider.save_or_replace(split[0], split[1])
-        connection.send_back(data['nick'] + ": die Erklärung für " + split[0] + " wurde hinzugefügt.", data)
+        connection.send_back(data['nick'] + ": der Eintrag zu " + split[0] + " wurde gespeichert.", data)
 
     def _is_idented_mod(self, data: dict, connection: Connection):
         return data['nick'] in self._config.mods and connection.is_idented(data['nick'])
