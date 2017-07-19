@@ -6,8 +6,9 @@ from ..Modules.NickChangeObserverPrototype import NickChangeObserverPrototype
 
 
 class UserList(JoinObserverPrototype, KickObserverPrototype, LeaveObserverPrototype, NickChangeObserverPrototype):
-    # todo for Multi Channel Faust Add Channel descriptor here
-    userList = []
+    def __init__(self):
+        super().__init__()
+        self.userList = []
 
     @staticmethod
     def get_module_types():

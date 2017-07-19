@@ -10,22 +10,29 @@ from ..Modules.PingObserverPrototype import PingObserverPrototype
 
 
 class Kicker(PingObserverPrototype):
-    warned_users = defaultdict(int)
+    def __init__(self, user_list: UserList):
+        super().__init__()
+        self.user_list = user_list
+        self.warned_users = defaultdict(int)
 
     def update_on_ping(self, data, connection: Connection):
-        for user in UserList.userList:
-            if self.get_offline_time(user) < 500:
+        for user in self.user_list.userList:
+            offline_time = Kicker.get_offline_time(user)
+            if offline_time < 500:
                 self.warned_users[user] = 0
-            if self.get_offline_time(user) > 18000 and not user == connection.details.get_nick():
+            # 36000s (= 1h) to test instead of 18000s (= 5h)
+            if offline_time > 3600 and not user == connection.details.get_nick():
                 if self.warned_users[user] % 30 == 0:
                     connection.send_channel(
                         '\001ACTION schenkt ' + user + ' ' + random.choice(getraenke) + ' ein.\001')
                 self.warned_users[user] += 1
                 if self.warned_users[user] % 29 == 0:
+                    connection.send_channel('Jetzt würde ich ' + user + ' kicken!')
                     connection.raw_send("KICK " + connection.details.get_channel() +
                                         " " + user + " :Zu lang geidlet, komm gerne wieder!")
 
-    def get_offline_time(self, nick):
+    @staticmethod
+    def get_offline_time(nick):
         who = nick
         user_provider = UserProvider()
         activity = user_provider.get_activity(who)
