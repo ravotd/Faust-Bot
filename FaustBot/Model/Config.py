@@ -1,7 +1,7 @@
 class Config(object):
     CONFIG_PATH = 'config_path'
 
-    def __init__(self, path=None):
+    def __init__(self, path):
         """
 
         :param path:
@@ -32,6 +32,10 @@ class Config(object):
         self._config_dict['mods'] = []
         for mod in mods:
             self._config_dict['mods'].append(mod.strip())
+        # If no idle_time value is given, we set it to five hours ( == 18000 seconds )
+        if 'idle_time' not in self._config_dict:
+            self._config_dict['idle_time'] = 18000
+        self._config_dict['idle_time'] = int(self._config_dict['idle_time'])
 
     @property
     def lang(self):
@@ -48,3 +52,11 @@ class Config(object):
     @mods.setter
     def mods(self, value):
         self._config_dict["mods"] = value
+
+    @property
+    def idle_time(self):
+        return self._config_dict["idle_time"]
+
+    @idle_time.setter
+    def idle_time(self, value: int):
+        self._config_dict["idle_time"] = value

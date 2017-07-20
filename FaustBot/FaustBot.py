@@ -40,7 +40,7 @@ class FaustBot(object):
         self.add_module(user_list)
         self.add_module(activity)
         self.add_module(PingAnswerObserver.ModulePing())
-        self.add_module(Kicker.Kicker(user_list))
+        self.add_module(Kicker.Kicker(user_list, self._config.idle_time))
         self.add_module(SeenObserver.SeenObserver())
         self.add_module(TitleObserver.TitleObserver())
         self.add_module(WikiObserver.WikiObserver())
@@ -52,6 +52,9 @@ class FaustBot(object):
         self.add_module(GiveCookieObserver.GiveCookieObserver())
         self.add_module(LoveAndPeaceObserver.LoveAndPeaceObserver())
         self.add_module(FreeHugsObserver.FreeHugsObserver())
+        # Setting all users which are already in the joined channel.
+        # They're announced by the 353 RPL_NAMERPLY command from the IRC
+        self._connection.join_observable.input_names(data, self._connection)
 
     def run(self):
         self._setup()
