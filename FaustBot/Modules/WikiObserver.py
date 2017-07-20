@@ -7,14 +7,14 @@ from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 class WikiObserver(PrivMsgObserverPrototype):
     def update_on_priv_msg(self, data, connection):
 
-        if data['message'].find('.w ') == -1:
+        if data['message'].find('.x ') == -1:
             return
         i18n_server = i18n()
         w = wikipedia.set_lang(i18n_server.get_text('wiki_lang', lang=self.config.lang))
         q = data['message'].split(' ')
         query = ''
         for word in q:
-            if word.strip() != '.w':
+            if word.strip() != '.x':
                 query += word + ' '
         w = wikipedia.search(query)
         if w.__len__() == 0:  # TODO BUG BELOW, ERROR MESSAGE NOT SHOWN!
@@ -29,11 +29,8 @@ class WikiObserver(PrivMsgObserverPrototype):
             print('disambiguation page')
             page = wikipedia.WikipediaPage(error.args[1][0])
         connection.send_back(data['nick'] + ' ' + page.url, data)
-        if len(page.summary) <= 230:
-            connection.send_back(page.summary, data)
+        index = 51 + page.summary[50:230].find('. ')
+        if index == 50 or index > 230:
+            connection.send_back(page.summary[0:230], data)
         else:
-            index = 51 + page.summary[50:230].find('. ')
-            if index == -1 or index > 230:
-                connection.send_back(page.summary[0:230], data)
-            else:
-                connection.send_back(page.summary[0:index], data)
+            connection.send_back(page.summary[0:index], data)
