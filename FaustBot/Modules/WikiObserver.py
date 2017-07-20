@@ -7,14 +7,14 @@ from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 class WikiObserver(PrivMsgObserverPrototype):
     def update_on_priv_msg(self, data, connection):
 
-        if data['message'].find('.x ') == -1:
+        if data['message'].find('.w ') == -1:
             return
         i18n_server = i18n()
         w = wikipedia.set_lang(i18n_server.get_text('wiki_lang', lang=self.config.lang))
         q = data['message'].split(' ')
         query = ''
         for word in q:
-            if word.strip() != '.x':
+            if word.strip() != '.w':
                 query += word + ' '
         w = wikipedia.search(query)
         if w.__len__() == 0:  # TODO BUG BELOW, ERROR MESSAGE NOT SHOWN!
