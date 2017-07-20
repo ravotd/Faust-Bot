@@ -28,9 +28,8 @@ class Kicker(PingObserverPrototype):
                         '\001ACTION schenkt ' + user + ' ' + random.choice(getraenke) + ' ein.\001')
                 self.warned_users[user] += 1
                 if self.warned_users[user] % 29 == 0:
-                    connection.send_channel('Jetzt würde ich ' + user + ' kicken!')
-                    connection.raw_send("KICK " + connection.details.get_channel() +
-                                        " " + user + " :Zu lang geidlet, komm gerne wieder!")
+                    connection.raw_send("KICK " + connection.details.get_channel() + " " + user +
+                                        " :Zu lang geidlet, komm gerne wieder!")
 
     @staticmethod
     def get_offline_time(nick):
