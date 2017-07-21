@@ -4,8 +4,10 @@ IRC Bot, derived from Pallaber Bot, Architectonic rework
 Designed for non-technical channels
 
 ### Requirements
-
-Install Python 3.5  (we don't guarantee it to work under any other python version), including pip
+ - Python 3.5
+ - pip
+ - wikipedia package (can be installed using pip; tested with version 1.4.0)
+ 
 ### Usage
 ```bash
 # First load all needed strings into the database
