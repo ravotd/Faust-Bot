@@ -16,13 +16,17 @@ class UserList(JoinObserverPrototype, KickObserverPrototype, LeaveObserverProtot
 
     def update_on_kick(self, data, connection):
         self.userList.remove(data['nick'])
+        print(self.userList)
 
     def update_on_leave(self, data, connection):
         self.userList.remove(data['nick'])
+        print(self.userList)
 
     def update_on_join(self, data, connection):
         self.userList.append(data['nick'])
+        print(self.userList)
 
     def update_on_nick_change(self, data, connection):
         self.userList.remove(data['old_nick'])
         self.userList.append(data['new_nick'])
+        print(self.userList)
