@@ -59,7 +59,7 @@ class Connection(object):
         """
         try:
             data = self.irc.recv(4096)
-            print(data)
+#            print(data)
             self.data = data
             if len(data) == 0:
                 return False
