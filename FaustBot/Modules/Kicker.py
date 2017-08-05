@@ -22,7 +22,7 @@ class Kicker(PingObserverPrototype):
             if offline_time < 500:
                 self.warned_users[user] = 0
             # 36000s (= 1h) to test instead of 18000s (= 5h)
-            if offline_time > self.idle_time and not user == connection.details.get_nick():
+            if offline_time > self.idle_time and not user == connection.details.get_nick() and not user == "Sigyn":
                 if self.warned_users[user] % 30 == 0:
                     connection.send_channel(
                         '\001ACTION schenkt ' + user + ' ' + random.choice(getraenke) + ' ein.\001')
