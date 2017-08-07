@@ -2,6 +2,7 @@ import html
 import re
 import urllib
 from urllib import request
+import csv
 
 from FaustBot.Communication.Connection import Connection
 from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
@@ -9,22 +10,12 @@ from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 
 class ICDObserver(PrivMsgObserverPrototype):
     def get_icd(self, code):
-        url = 'http://www.icd-code.de/icd/code/' + code + '.html'
-        print(url)
-        try:
-            headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64)'}
-            req = urllib.request.Request(url, None, headers)
-            resource = urllib.request.urlopen(req)
-            encoding = 'iso-8859-1'
-            content =  resource.read().decode(encoding, errors='replace')
-            titleRE = re.compile('<title>ICD-10-GM-2017 \s(.+?)\s- ICD10\s</title>')
-            title = titleRE.search(content).group(1)
-            title = html.unescape(title)
-            title = title.replace('\n', ' ').replace('\r', '')
-            return title
-        except Exception as exc:
-            print(exc)
-            return 0
+        icd10_codes = open('care_icd10_de.csv', 'r')
+        icd10 = csv.reader(icd10_codes, delimiter=';', quotechar='"')
+        for row in icd10:
+            if row[0] == code:
+                return code +' - ' + row[1]
+        return 0
 
     def update_on_priv_msg(self, data, connection: Connection):
         regex = "(?P<url>https?://[^\s]+)"
