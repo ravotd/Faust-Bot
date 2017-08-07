@@ -27,11 +27,11 @@ class ICDObserver(PrivMsgObserverPrototype):
         for code in codes:
             code = code.capitalize()
             text = self.get_icd(code)
-            # if text == 0:
-            #     if code.find('.') != -1:
-            #         code += '-'
-            #     else:
-            #         code += '.-'
-            # text = self.get_icd(code)
+            if text == 0:
+                if code.find('.') != -1:
+                    code += '-'
+                else:
+                     code += '.-'
+            text = self.get_icd(code)
             if text != 0:
                 connection.send_back(text, data)
