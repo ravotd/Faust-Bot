@@ -9,3 +9,4 @@ class ModuleType(Enum):
     ON_NICK_CHANGE = 'ON_NICK_CHANGE'
     ON_MSG = 'ON_MSG'
     ON_NOTICE = 'ON_NOTICE'
+    ON_MAGIC_NUMBER = 'ON_MAGIC_NUMBER'

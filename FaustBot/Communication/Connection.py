@@ -11,6 +11,7 @@ from FaustBot.Communication.NickChangeObservable import NickChangeObservable
 from FaustBot.Communication.NoticeObservable import NoticeObservable
 from FaustBot.Communication.PingObservable import PingObservable
 from FaustBot.Communication.PrivmsgObservable import PrivmsgObservable
+from FaustBot.Communication.MagicNumberObservable import MagicNumberObservable
 from FaustBot.Model.ConnectionDetails import ConnectionDetails
 
 
@@ -59,7 +60,7 @@ class Connection(object):
         """
         try:
             data = self.irc.recv(4096)
-#            print(data)
+#             print(data)
             self.data = data
             if len(data) == 0:
                 return False
@@ -70,8 +71,6 @@ class Connection(object):
         data = data.rstrip()
         if data.find('PING') != -1:
             self.ping_observable.input(data, self)
-        elif data.find('PRIVMSG') != -1:
-            self.priv_msg_observable.input(data, self)
         elif data.find(' JOIN ') != -1:
             self.join_observable.input(data, self)
         elif data.find(' PART ') != -1 or data.find(' QUIT ') != -1:
@@ -82,6 +81,11 @@ class Connection(object):
             self.nick_change_observable.input(data, self)
         elif data.find(' NOTICE ') != -1:
             self.notice_observable.input(data, self)
+        elif data.find('PRIVMSG') != -1:
+            self.priv_msg_observable.input(data, self)
+# TODO: Hier nach generelleren Servernachrichten suchen
+        elif data.find('353') != -1:
+            self.magic_number_observable.input(data, self)   
         return True
 
     def is_idented(self, user: str):
@@ -130,6 +134,7 @@ class Connection(object):
         self.kick_observable = KickObservable()
         self.nick_change_observable = NickChangeObservable()
         self.notice_observable = NoticeObservable()
+        self.magic_number_observable = MagicNumberObservable()
         self.condition_lock = Condition()
         self.idented_look_up = {}
         self.data = None
