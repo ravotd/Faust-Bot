@@ -10,7 +10,7 @@ from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 
 class ICDObserver(PrivMsgObserverPrototype):
     def get_icd(self, code):
-        icd10_codes = open('care_icd10_de.csv', 'r')
+        icd10_codes = open('care_icd10_de.csv', 'r',encoding='utf8')
         icd10 = csv.reader(icd10_codes, delimiter=';', quotechar='"')
         for row in icd10:
             if row[0] == code:
