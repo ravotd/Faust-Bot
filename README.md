@@ -32,7 +32,7 @@ Since we're programming in python please hold on [PEP-08](https://www.python.org
 ## Copyright
 ```
     Faust-Bot. A simple, extensible IRC bot.
-    Copyright (C) 2017  Sophie Bartmann, ravotd, Kristoffer Schneider
+    Copyright (C) 2017  Sophie Bartmann, Daniela Tovar, Kristoffer Schneider
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
