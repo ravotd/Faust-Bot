@@ -24,7 +24,8 @@ class UserList(JoinObserverPrototype, KickObserverPrototype, LeaveObserverProtot
 
     def update_on_join(self, data, connection):
         try:
-            self.userList.remove(data['nick'])
+            while True:
+                self.userList.remove(data['nick'])
         except Exception:
             1+1               
         self.userList.append(data['nick'])
