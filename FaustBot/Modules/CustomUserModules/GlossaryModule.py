@@ -34,6 +34,8 @@ class GlossaryModule(PrivMsgObserverPrototype):
             return
         answer = glossary_provider.get_explanation(split[1].strip())
         if answer is None or answer[1] is None or answer[1].strip() == '':
+            if split[1].strip() == '':
+                return
             connection.send_back("Tut mir leid, " + data['nick'] + ". Für " + split[1].strip() +
                                  " habe ich noch keinen Eintrag.", data)
         else:
