@@ -1,7 +1,11 @@
 from FaustBot.Communication import Connection
 from FaustBot.Modules.MagicNumberObserverPrototype import MagicNumberObserverPrototype
+from FaustBot.Modules.UserList import UserList
 
 class NamesObserver(MagicNumberObserverPrototype):
+    def __init__(self, user_list: UserList):
+        super().__init__()
+        self.user_list = user_list
 
     def update_on_magic_number(self, data, connection):
         if data['raw'].find('353') == -1:
@@ -9,18 +13,9 @@ class NamesObserver(MagicNumberObserverPrototype):
         print('353 detected1')
         self.input_names(data, connection)
         
-    def input_names(self, raw_data, connection: Connection):
-        i = 0
-        data = {i: {}}
-        raw_data = raw_data['raw']
-        data[i]['raw_data'] = raw_data
-        if raw_data.find(' = ') != -1:
-            data[i]['channel'] = raw_data.split(' = ')[1].split(' :')[0]
-        if raw_data.find(' @ ') != -1:
-            data[i]['channel'] = raw_data.split(' @ ')[1].split(' :')[0]
-        if raw_data.find(' * ') != -1:
-            data[i]['channel'] = raw_data.split(' * ')[1].split(' :')[0]
-        nicks = raw_data.split('353')[1].split('\n')[0].split(' :')[1].split(' ')
+    def input_names(self, data, connection: Connection):
+        self.user_list.clear_list()
+        nicks = data['raw'].split('353')[1].split('\n')[0].split(' :')[1].split(' ')
         for nick in nicks:
             nick = nick.strip('\r')
             nick = nick.strip('\n')
@@ -28,9 +23,5 @@ class NamesObserver(MagicNumberObserverPrototype):
             nick = nick.strip('+')
             nick = nick.strip('~')
             nick = nick.strip('%')
-            data[i]['nick'] = nick
-            connection.join_observable.notify_observers(data[i], connection)
-            i += 1
-            data[i] = {}
-            data[i]['raw_data'] = data[i - 1]['raw_data']
-            data[i]['channel'] = data[i - 1]['channel']
+            self.user_list.__class__.update_on_join(self.user_list, {'nick': nick}, connection)
+

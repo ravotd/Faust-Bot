@@ -27,7 +27,7 @@ class UserList(JoinObserverPrototype, KickObserverPrototype, LeaveObserverProtot
             while True:
                 self.userList.remove(data['nick'])
         except Exception:
-            1+1               
+            'es ist zu erwarten, dass die UserList diesen Nick noch nicht enthält'               
         self.userList.append(data['nick'])
         print(self.userList)
 
@@ -35,3 +35,6 @@ class UserList(JoinObserverPrototype, KickObserverPrototype, LeaveObserverProtot
         self.userList.remove(data['old_nick'])
         self.userList.append(data['new_nick'])
         print(self.userList)
+
+    def clear_list(self):
+        self.userList = []

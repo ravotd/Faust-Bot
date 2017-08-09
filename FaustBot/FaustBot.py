@@ -21,10 +21,9 @@ class FaustBot(object):
     def _setup(self):
         self._connection.establish()
         user_list = UserList.UserList()
-        activity = ActivityObserver.ActivityObserver()
         self.add_module(user_list)
-        self.add_module(activity)
-        self.add_module(NamesObserver.NamesObserver())
+        self.add_module(ActivityObserver.ActivityObserver())
+        self.add_module(NamesObserver.NamesObserver(user_list))
         self.add_module(PingAnswerObserver.ModulePing())
         self.add_module(Kicker.Kicker(user_list, self._config.idle_time))
         self.add_module(SeenObserver.SeenObserver())
