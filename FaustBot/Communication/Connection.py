@@ -71,15 +71,15 @@ class Connection(object):
         data = data.rstrip()
         if data.find('PING') != -1:
             self.ping_observable.input(data, self)
-        elif data.find(' JOIN ') != -1:
+        elif data.find('JOIN') != -1:
             self.join_observable.input(data, self)
-        elif data.find(' PART ') != -1 or data.find(' QUIT ') != -1:
+        elif data.find('PART') != -1 or data.find(' QUIT ') != -1:
             self.leave_observable.input(data, self)
-        elif data.find(' KICK ') != -1:
+        elif data.find('KICK') != -1:
             self.kick_observable.input(data, self)
-        elif data.find(' NICK ') != -1:
+        elif data.find('NICK') != -1:
             self.nick_change_observable.input(data, self)
-        elif data.find(' NOTICE ') != -1:
+        elif data.find('NOTICE') != -1:
             self.notice_observable.input(data, self)
         elif data.find('PRIVMSG') != -1:
             self.priv_msg_observable.input(data, self)

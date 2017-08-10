@@ -27,7 +27,7 @@ class UserList(JoinObserverPrototype, KickObserverPrototype, LeaveObserverProtot
             while True:
                 self.userList.remove(data['nick'])
         except Exception:
-            'es ist zu erwarten, dass die UserList diesen Nick noch nicht enthält'               
+            'es ist zu erwarten, dass die UserList diesen Nick noch nicht enthaelt'               
         self.userList.append(data['nick'])
         print(self.userList)
 
