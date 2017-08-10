@@ -33,6 +33,6 @@ class NamesObserver(MagicNumberObserverPrototype, PingObserverPrototype):
             self.user_list.__class__.update_on_join(self.user_list, {'nick': nick}, connection)
 
     def update_on_ping(self, data, connection: Connection):
-        if self.pings_seen % 1 == 0: # 90 * 2 min = 3 Stunden
+        if self.pings_seen % 90 == 0: # 90 * 2 min = 3 Stunden
             connection.raw_send('NAMES ' + connection.details.get_channel())
             self.pings_seen += 1
