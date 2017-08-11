@@ -60,7 +60,7 @@ class Connection(object):
         """
         try:
             data = self.irc.recv(4096)
-#             print(data)
+            print(data)
             self.data = data
             if len(data) == 0:
                 return False
@@ -69,23 +69,28 @@ class Connection(object):
         data = data.decode('UTF-8', errors='replace')
         self.data = data
         data = data.rstrip()
-        if data.find('PING') != -1:
+        command = data.split(' ')[1]
+        print(command)
+        if data.split(' ')[0] == 'PING':
             self.ping_observable.input(data, self)
-        elif data.find('JOIN') != -1:
+        elif command == 'JOIN':
             self.join_observable.input(data, self)
-        elif data.find('PART') != -1 or data.find(' QUIT ') != -1:
+        elif command == 'PART' or command == 'QUIT':
             self.leave_observable.input(data, self)
-        elif data.find('KICK') != -1:
+        elif command == 'KICK':
             self.kick_observable.input(data, self)
-        elif data.find('NICK') != -1:
+        elif command == 'NICK':
             self.nick_change_observable.input(data, self)
-        elif data.find('NOTICE') != -1:
+        elif command == 'NOTICE':
             self.notice_observable.input(data, self)
-        elif data.find('PRIVMSG') != -1:
+        elif command == 'PRIVMSG':
             self.priv_msg_observable.input(data, self)
-# TODO: Hier nach generelleren Servernachrichten suchen
-        elif data.find('353') != -1:
-            self.magic_number_observable.input(data, self)   
+        else:
+            try:
+                int(command)
+                self.magic_number_observable.input(data, self)   
+            except Exception:
+                pass
         return True
 
     def is_idented(self, user: str):

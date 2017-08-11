@@ -7,7 +7,7 @@ class MagicNumberObservable(Observable):
     def input(self, raw_data, connection):
         data = {}
         data['raw'] = raw_data
-        
+        data['number'] = data['raw'].split(' ')[1]
         self.notify_observers(data, connection)
 
     def notify_observers(self, data, connection):
