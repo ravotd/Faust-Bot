@@ -60,7 +60,7 @@ class Connection(object):
         """
         try:
             data = self.irc.recv(4096)
-            print(data)
+#             print(data)
             self.data = data
             if len(data) == 0:
                 return False
@@ -70,7 +70,7 @@ class Connection(object):
         self.data = data
         data = data.rstrip()
         command = data.split(' ')[1]
-        print(command)
+#         print(command)
         if data.split(' ')[0] == 'PING':
             self.ping_observable.input(data, self)
         elif command == 'JOIN':
