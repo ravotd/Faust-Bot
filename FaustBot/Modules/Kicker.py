@@ -19,9 +19,8 @@ class Kicker(PingObserverPrototype):
     def update_on_ping(self, data, connection: Connection):
         for user in self.user_list.userList:
             offline_time = Kicker.get_offline_time(user)
-            if offline_time < 36000:
+            if offline_time < self.idle_time:
                 self.warned_users[user] = 0
-            # 36000s (= 1h) to test instead of 18000s (= 5h)
             if offline_time > self.idle_time and not user == connection.details.get_nick() and not user == "Sigyn":
                 if self.warned_users[user] % 30 == 0:
                     connection.send_channel(
