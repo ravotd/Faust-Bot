@@ -25,5 +25,5 @@ getraenke = ['einen Kaffee','eine Limonade','einen Kakao','einen Tee',
                      'einen Lebertran', 'eine Caprisonne',
                      'ein Moloko-Plus', 'einen DGPT', 'einen Kefir',
                      'einen Ayran', 'ein Glas Nihilismus', 'eine Sprite', 
-                     'eine Fanta', 'einen Purple Flurp', 'einen Booster Energy'
+                     'eine Fanta', 'einen Purple Flurp', 'einen Booster Energy',
                      'ein leckeres Wasser', 'einen Robby Bubble']
