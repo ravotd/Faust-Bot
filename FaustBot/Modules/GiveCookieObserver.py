@@ -3,7 +3,8 @@ from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 import random
 
 kekse = ['einen Schokoladenkeks', 'einen Vanillekeks', 'einen Doppelkeks', 'keinen Keks',
-         'einen Keks','einen Erdbeerkeks','einen Schokoladen Cheescake keks']
+         'einen Keks','einen Erdbeerkeks','einen Schokoladen Cheescake keks',
+         'einen Glückskeks', 'einen Scherzkeks', 'einen Unglückskeks']
 
 class GiveCookieObserver(PrivMsgObserverPrototype):
 
