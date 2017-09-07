@@ -7,12 +7,13 @@ from threading import Condition
 from FaustBot.Communication.JoinObservable import JoinObservable
 from FaustBot.Communication.KickObservable import KickObservable
 from FaustBot.Communication.LeaveObservable import LeaveObservable
+from FaustBot.Communication.MagicNumberObservable import MagicNumberObservable
 from FaustBot.Communication.NickChangeObservable import NickChangeObservable
 from FaustBot.Communication.NoticeObservable import NoticeObservable
 from FaustBot.Communication.PingObservable import PingObservable
 from FaustBot.Communication.PrivmsgObservable import PrivmsgObservable
-from FaustBot.Communication.MagicNumberObservable import MagicNumberObservable
 from FaustBot.Model.ConnectionDetails import ConnectionDetails
+from FaustBot.StringBuffer import StringBuffer
 
 
 class Connection(object):
@@ -60,15 +61,18 @@ class Connection(object):
         """
         try:
             data = self.irc.recv(4096)
-#             print(data)
-            self.data = data
+            # print(data)
             if len(data) == 0:
                 return False
         except socket.timeout:
             return False
         data = data.decode('UTF-8', errors='replace')
-        self.data = data
         data = data.rstrip()
+        data = self._receiver_buffer.append(data)
+        if data is None:
+            return False
+        self.data = data
+
         command = data.split(' ')[1]
 #         print(command)
         if data.split(' ')[0] == 'PING':
@@ -143,3 +147,4 @@ class Connection(object):
         self.condition_lock = Condition()
         self.idented_look_up = {}
         self.data = None
+        self._receiver_buffer = StringBuffer()
