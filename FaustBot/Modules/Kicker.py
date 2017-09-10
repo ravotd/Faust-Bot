@@ -17,7 +17,7 @@ class Kicker(PingObserverPrototype):
         self.warned_users = defaultdict(int)
 
     def update_on_ping(self, data, connection: Connection):
-        for user in self.user_list.userList:
+        for user in self.user_list.userList.keys():
             offline_time = Kicker.get_offline_time(user)
             if offline_time < self.idle_time:
                 self.warned_users[user] = 0
