@@ -5,8 +5,17 @@ from FaustBot.Communication.Observable import Observable
 
 class JoinObservable(Observable):
     def input(self, raw_data, connection):
-        data = {'raw': raw_data, 'nick': raw_data.split('!')[0][1:],
-                'channel': raw_data.split('JOIN ')[1].split(' :')[0], 'raw_nick': raw_data.split(' JOIN')[0][1:]}
+        # ":nick!user@host" "JOIN" "#channel"
+        # additional ignored arguments are put into "ign". This could be used
+        # for http://ircv3.net/specs/extensions/extended-join-3.1.html in the
+        # future.
+        prefix, cmd, channel, *ign = raw_data.split(' ')
+        hostmask = prefix.lstrip(':')
+        nick, userhost = hostmask.split('!')
+        user, host = userhost.split('@')
+
+        data = {'raw': raw_data, 'nick': nick, 'user': user, 'host': host,
+                'channel': channel, 'raw_nick': hostmask}
         self.notify_observers(data, connection)
 
 

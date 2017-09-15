@@ -142,6 +142,7 @@ class Connection(object):
         self.irc.send("NICK ".encode() + self.details.get_nick().encode() + "\r\n".encode())
         self.irc.send("USER botty botty botty :IRC Bot\r\n".encode())
         self.irc.send("JOIN ".encode() + self.details.get_channel().encode() + '\r\n'.encode())
+        self.irc.send("WHO ".encode() + self.details.get_channel().encode() + '\r\n'.encode())
         _thread.start_new_thread(self.sender, ())
 
     def __init__(self, set_details: ConnectionDetails):
