@@ -23,7 +23,10 @@ class Connection(object):
 
     def sender(self):
         while True:
-            self.irc.send(self.send_queue.get())
+            msg = self.send_queue.get()
+            if msg[-1] is not b'\n':
+                msg = msg + b'\n'
+            self.irc.send(msg)
             time.sleep(1)
 
     def send_channel(self, text):
@@ -61,40 +64,47 @@ class Connection(object):
         """
         try:
             data = self.irc.recv(4096)
-            # print(data)
             if len(data) == 0:
                 return False
         except socket.timeout:
             return False
         data = data.decode('UTF-8', errors='replace')
-        data = data.rstrip()
-        data = self._receiver_buffer.append(data)
+
+        data_lines = self._receiver_buffer.append(data)
         if data is None:
             return False
-        self.data = data
 
-        command = data.split(' ')[1]
-#         print(command)
-        if data.split(' ')[0] == 'PING':
-            self.ping_observable.input(data, self)
-        elif command == 'JOIN':
-            self.join_observable.input(data, self)
-        elif command == 'PART' or command == 'QUIT':
-            self.leave_observable.input(data, self)
-        elif command == 'KICK':
-            self.kick_observable.input(data, self)
-        elif command == 'NICK':
-            self.nick_change_observable.input(data, self)
-        elif command == 'NOTICE':
-            self.notice_observable.input(data, self)
-        elif command == 'PRIVMSG':
-            self.priv_msg_observable.input(data, self)
-        else:
-            try:
-                int(command)
-                self.magic_number_observable.input(data, self)   
-            except Exception:
-                pass
+        for data in data_lines:
+            # print(data)
+            data = data.rstrip()
+            self.data = data
+
+            splitted = data.split(' ')
+            if not len(splitted) >= 2:
+                continue
+            command = splitted[1]
+            #         print(command)
+            if data.split(' ')[0] == 'PING':
+                self.ping_observable.input(data, self)
+            elif command == 'JOIN':
+                self.join_observable.input(data, self)
+            elif command == 'PART' or command == 'QUIT':
+                self.leave_observable.input(data, self)
+            elif command == 'KICK':
+                self.kick_observable.input(data, self)
+            elif command == 'NICK':
+                self.nick_change_observable.input(data, self)
+            elif command == 'NOTICE':
+                self.notice_observable.input(data, self)
+            elif command == 'PRIVMSG':
+                self.priv_msg_observable.input(data, self)
+            else:
+                try:
+                    int(command)
+                    self.magic_number_observable.input(data, self)
+                except Exception:
+                    pass
+
         return True
 
     def is_idented(self, user: str):
@@ -128,7 +138,7 @@ class Connection(object):
         self.irc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
         self.irc.connect((self.details.get_server(), self.details.get_port()))
-        print(self.irc.recv(4096))
+        print(self.irc.recv(512))
         self.irc.send("NICK ".encode() + self.details.get_nick().encode() + "\r\n".encode())
         self.irc.send("USER botty botty botty :IRC Bot\r\n".encode())
         self.irc.send("JOIN ".encode() + self.details.get_channel().encode() + '\r\n'.encode())
