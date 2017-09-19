@@ -22,6 +22,6 @@ class StringBuffer:
     def buffer(self):
         return self._buffer
 
-    @buffer.getter
-    def set_buffer(self, new_value):
+    @buffer.setter
+    def buffer(self, new_value):
         self._buffer = new_value
