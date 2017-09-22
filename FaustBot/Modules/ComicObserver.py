@@ -10,7 +10,7 @@ class ComicObserver(PrivMsgObserverPrototype):
     def update_on_priv_msg(self, data: dict, connection: Connection):
         if data['message'].find('.comic') == -1:
             return
-        comics = ['https://c.xkcd.com/random/comic/']
+        comics = ['https://c.xkcd.com/random/comic/', 'http://www.commitstrip.com/?random=1']
         comic = random.choice(comics)
         headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64)'}
         req = urllib.request.Request(comic, None, headers)
