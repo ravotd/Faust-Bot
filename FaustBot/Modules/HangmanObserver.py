@@ -12,11 +12,20 @@ class HangmanObserver(PrivMsgObserverPrototype):
     def update_on_priv_msg(self, data, connection: Connection):
         if data['message'].find('.guess') != -1:
             self.guess(data,connection)
+            return
         if data['message'].find('.word') != -1:
             self.takeword(data, connection)
+        if data['message'].find('.stop') != -1:
+            self.word = ''
+            self.guesses = []
+            self.leftTrys = 0
+            connection.send_channel("Spiel gestoppt")
 
     def guess(self, data,connection):
-        tried =  data['message'].split(' ')[1].upper()#
+        if data['channel'] != connection.details.get_channel():
+            connection.send_back("Sorry kein raten im Query", data)
+            return
+        tried =  data['message'].split(' ')[1].upper()
         if self.leftTrys < 1:
             connection.send_channel("Flüstere mir ein neues Wort mit .word WORT")
             return
@@ -34,7 +43,7 @@ class HangmanObserver(PrivMsgObserverPrototype):
         if self.word == '':
             self.word = data['message'].split(' ')[1].upper()
             self.guesses = []
-            self.leftTrys = 5
+            self.leftTrys = 11
             connection.send_channel(self.prepareWord())
         else:
             connection.send_back("Sorry es läuft bereits ein Wort", data)
