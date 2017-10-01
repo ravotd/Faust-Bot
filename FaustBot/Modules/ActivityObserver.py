@@ -12,6 +12,14 @@ class ActivityObserver(PrivMsgObserverPrototype, JoinObserverPrototype, NickChan
     A Class only reacting to pings
     """
 
+    @staticmethod
+    def cmd():
+        return None
+
+    @staticmethod
+    def help():
+        return None
+
     def update_on_join(self, data, connection: Connection):
         users = UserProvider()
         if data['channel'] == connection.details.get_channel():

@@ -3,6 +3,14 @@ from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 
 
 class ModmailObserver(PrivMsgObserverPrototype):
+    @staticmethod
+    def cmd():
+        return [".modmail"]
+
+    @staticmethod
+    def help():
+        return ".modmail <msg> - Benachrichtig alle Moderatoren"
+
     def update_on_priv_msg(self, data, connection: Connection):
         if data['message'].find('.modmail') == -1:
             return

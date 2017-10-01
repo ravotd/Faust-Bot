@@ -3,6 +3,14 @@ from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 
 
 class LoveAndPeaceObserver(PrivMsgObserverPrototype):
+    @staticmethod
+    def cmd():
+        return [".peace"]
+
+    @staticmethod
+    def help():
+        return ".peace - sorgt für Frieden"
+
     def update_on_priv_msg(self, data: dict, connection: Connection):
         if data['message'].find('.peace') == -1:
             return

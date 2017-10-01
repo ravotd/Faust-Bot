@@ -7,6 +7,14 @@ from ..Modules.NickChangeObserverPrototype import NickChangeObserverPrototype
 
 
 class UserList(JoinObserverPrototype, KickObserverPrototype, LeaveObserverPrototype, NickChangeObserverPrototype):
+    @staticmethod
+    def cmd():
+        return None
+
+    @staticmethod
+    def help():
+        return None
+
     def __init__(self):
         super().__init__()
         self.userList = {}

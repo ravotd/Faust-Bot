@@ -8,6 +8,14 @@ from ..Model.i18n import i18n
 
 
 class SeenObserver(PrivMsgObserverPrototype):
+    @staticmethod
+    def cmd():
+        return [".seen"]
+
+    @staticmethod
+    def help():
+        return ".seen <nick> - um abzufragen wann <nick> zuletzt hier war"
+
     def update_on_priv_msg(self, data, connection: Connection):
         if data['message'].find('.seen') == -1:
             return

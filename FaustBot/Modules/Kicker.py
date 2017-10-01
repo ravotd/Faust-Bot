@@ -10,6 +10,14 @@ from ..Modules.PingObserverPrototype import PingObserverPrototype
 
 
 class Kicker(PingObserverPrototype):
+    @staticmethod
+    def cmd():
+        return None
+
+    @staticmethod
+    def help():
+        return None
+
     def __init__(self, user_list: UserList, idle_time: int):
         super().__init__()
         self.idle_time = idle_time

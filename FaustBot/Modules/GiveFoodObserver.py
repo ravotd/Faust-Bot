@@ -1,10 +1,18 @@
+import random
+
 from FaustBot.Communication.Connection import Connection
 from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 from essen import essen
-import random
 
 
 class GiveFoodObserver(PrivMsgObserverPrototype):
+    @staticmethod
+    def cmd():
+        return [".food"]
+
+    @staticmethod
+    def help():
+        return ".food - gibt etwas zu essen aus"
 
     def update_on_priv_msg(self, data: dict, connection: Connection):
         if data['message'].find('.food') == -1:
