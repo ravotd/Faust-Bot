@@ -75,7 +75,7 @@ class Connection(object):
             return False
 
         for data in data_lines:
-            # print(data)
+            print(data)
             data = data.rstrip()
             self.data = data
 
