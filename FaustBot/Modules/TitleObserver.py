@@ -27,19 +27,23 @@ class TitleObserver(PrivMsgObserverPrototype):
                 url = url
                 req = urllib.request.Request(url, None, headers)
                 resource = urllib.request.urlopen(req)
-                encoding = resource.headers.get_content_charset()
-                # der erste Fall kann raus, wenn ein anderer Channel benutzt wird
-                if url.find('rehakids.de') != -1:
-                    encoding = 'windows-1252'
-                if not encoding:
-                    encoding = 'utf-8'
-                content = resource.read().decode(encoding, errors='replace')
-                title_re = re.compile("<title>(.+?)</title>")
-                title = title_re.search(content).group(1)
-                title = html.unescape(title)
-                title = title.replace('\n', ' ').replace('\r', '')
+                title = self.getTitle(resource)
                 print(title)
                 connection.send_back(title, data)
             except Exception as exc:
                 print(exc)
                 pass
+            
+    def getTitle(self, resource):
+            encoding = resource.headers.get_content_charset()
+            # der erste Fall kann raus, wenn ein anderer Channel benutzt wird
+            if resource.geturl().find('rehakids.de') != -1:
+                encoding = 'windows-1252'
+            if not encoding:
+                encoding = 'utf-8'
+            content = resource.read().decode(encoding, errors='replace')
+            title_re = re.compile("<title>(.+?)</title>")
+            title = title_re.search(content).group(1)
+            title = html.unescape(title)
+            title = title.replace('\n', ' ').replace('\r', '')
+            return title
