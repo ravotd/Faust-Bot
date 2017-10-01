@@ -1,6 +1,6 @@
 server: irc.freenode.org
 port: 6667
-nick: FaustBot42
+nick: FaustBot
 channel: #faust-bot
 lang: de-de
-mods: starly,Yana
+mods: starly,Yana, corvidae
