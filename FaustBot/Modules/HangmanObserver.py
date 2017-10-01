@@ -23,6 +23,7 @@ class HangmanObserver(PrivMsgObserverPrototype):
         if tried == self.word:
             self.word = ''
             connection.send_channel("Korrekt: "+ tried)
+            return
         if tried in self.word:
             self.guesses += tried
         else:
