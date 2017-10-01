@@ -5,6 +5,14 @@ from FaustBot.Modules.NoticeObserverPrototype import NoticeObserverPrototype
 
 
 class IdentNickServObserver(NoticeObserverPrototype):
+    @staticmethod
+    def cmd():
+        return None
+
+    @staticmethod
+    def help():
+        return None
+
     def update_on_notice(self, data, connection: Connection):
         # b':NickServ!NickServ@services. NOTICE FaustBotDev :corvidae ACC 3 \r\n'
         if not data['nick'].lower() == 'nickserv':

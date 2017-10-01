@@ -3,4 +3,4 @@ port: 6667
 nick: FaustBot
 channel: #faust-bot
 lang: de-de
-mods: starly
+mods: starly,Yana, corvidae

@@ -3,7 +3,8 @@ from FaustBot.Model.Config import Config
 from FaustBot.Model.ConnectionDetails import ConnectionDetails
 from FaustBot.Modules import ActivityObserver, IdentNickServObserver, GiveCookieObserver, LoveAndPeaceObserver, \
     FreeHugsObserver, WhoObserver, Kicker, ModulePrototype, PingAnswerObserver, SeenObserver, TitleObserver, \
-    UserList, WikiObserver, GiveDrinkObserver, GiveFoodObserver, ComicObserver
+    UserList, WikiObserver, GiveDrinkObserver, GiveFoodObserver, ComicObserver, HelpObserver, \
+    IntroductionObserver
 from FaustBot.Modules.CustomUserModules import GlossaryModule, ICDObserver, ModmailObserver
 from FaustBot.Modules.ModuleType import ModuleType
 
@@ -39,6 +40,9 @@ class FaustBot(object):
         self.add_module(FreeHugsObserver.FreeHugsObserver())
         self.add_module(GiveFoodObserver.GiveFoodObserver())
         self.add_module(ComicObserver.ComicObserver())
+        # self.add_module(HangmanObserver.HangmanObserver())
+        self.add_module(HelpObserver.HelpObserver())
+        self.add_module(IntroductionObserver.IntroductionObserver(user_list))
 
     def run(self):
         self._setup()

@@ -1,10 +1,18 @@
+import random
+
 from FaustBot.Communication.Connection import Connection
 from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 from getraenke import getraenke
-import random
 
 
 class GiveDrinkObserver(PrivMsgObserverPrototype):
+    @staticmethod
+    def cmd():
+        return [".drink"]
+
+    @staticmethod
+    def help():
+        return ".drink - schenkt Getränke aus"
 
     def update_on_priv_msg(self, data: dict, connection: Connection):
         if data['message'].find('.drink') == -1:

@@ -1,14 +1,19 @@
-import html
-import re
-import urllib
-from urllib import request
 import csv
+import re
 
 from FaustBot.Communication.Connection import Connection
 from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 
 
 class ICDObserver(PrivMsgObserverPrototype):
+    @staticmethod
+    def cmd():
+        return None
+
+    @staticmethod
+    def help():
+        return None
+
     def get_icd(self, code):
         icd10_codes = open('care_icd10_de.csv', 'r',encoding='utf8')
         icd10 = csv.reader(icd10_codes, delimiter=';', quotechar='"')

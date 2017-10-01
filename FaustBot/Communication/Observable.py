@@ -7,6 +7,9 @@ class Observable(object):
         self._observers.append(observer)
         print("appended(" + str(observer.__class__) + ")")
 
+    def get_observer(self):
+        return self._observers
+
     # data has to be a dictionary matching the structure of the query
     def notify_observers(self, data, connection):
         # here implement some data handling. Fill self._data with the data received
