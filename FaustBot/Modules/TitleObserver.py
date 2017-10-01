@@ -8,6 +8,14 @@ from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 
 
 class TitleObserver(PrivMsgObserverPrototype):
+    @staticmethod
+    def cmd():
+        return None
+
+    @staticmethod
+    def help():
+        return None
+
     def update_on_priv_msg(self, data, connection: Connection):
         regex = "(?P<url>https?://[^\s]+)"
         url = re.search(regex, data['message'])

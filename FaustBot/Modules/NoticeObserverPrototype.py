@@ -5,6 +5,14 @@ from FaustBot.Modules.ModuleType import ModuleType
 
 class NoticeObserverPrototype(ModulePrototype):
     @staticmethod
+    def cmd():
+        raise NotImplementedError()
+
+    @staticmethod
+    def help():
+        raise NotImplementedError("Need sto be implemented by subclasses!")
+
+    @staticmethod
     def get_module_types():
         return [ModuleType.ON_NOTICE]
 

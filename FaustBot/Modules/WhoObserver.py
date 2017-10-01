@@ -1,11 +1,20 @@
 from FaustBot.Communication import Connection
 from FaustBot.Model.RemoteUser import RemoteUser
 from FaustBot.Modules.MagicNumberObserverPrototype import MagicNumberObserverPrototype
-from FaustBot.Modules.UserList import UserList
-from FaustBot.Modules.PingObserverPrototype import PingObserverPrototype
 from FaustBot.Modules.ModuleType import ModuleType
+from FaustBot.Modules.PingObserverPrototype import PingObserverPrototype
+from FaustBot.Modules.UserList import UserList
+
 
 class WhoObserver(MagicNumberObserverPrototype, PingObserverPrototype):
+    @staticmethod
+    def cmd():
+        return None
+
+    @staticmethod
+    def help():
+        return None
+
     def __init__(self, user_list: UserList):
         super().__init__()
         self.user_list = user_list
@@ -17,9 +26,9 @@ class WhoObserver(MagicNumberObserverPrototype, PingObserverPrototype):
         return [ModuleType.ON_MAGIC_NUMBER, ModuleType.ON_PING]
 
     def update_on_magic_number(self, data, connection):
-        if data['number'] == '352': # RPL_WHOREPLY
+        if data['number'] == '352':  # RPL_WHOREPLY
             self.input_who(data, connection)
-        elif data['number'] == '315': # RPL_ENDOFWHO
+        elif data['number'] == '315':  # RPL_ENDOFWHO
             self.end_who()
 
     def input_who(self, data, connection: Connection):
@@ -34,6 +43,6 @@ class WhoObserver(MagicNumberObserverPrototype, PingObserverPrototype):
         self.pending_whos = []
 
     def update_on_ping(self, data, connection: Connection):
-        if self.pings_seen % 90 == 0: # 90 * 2 min = 3 Stunden
+        if self.pings_seen % 90 == 0:  # 90 * 2 min = 3 Stunden
             connection.raw_send('WHO ' + connection.details.get_channel())
             self.pings_seen += 1

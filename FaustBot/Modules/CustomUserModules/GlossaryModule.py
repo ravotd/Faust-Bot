@@ -5,6 +5,16 @@ from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 
 
 class GlossaryModule(PrivMsgObserverPrototype):
+    @staticmethod
+    def cmd():
+        return [GlossaryModule._ADD_EXPLANATION,
+                GlossaryModule._REMOVE_EXPLANATION,
+                GlossaryModule._QUERY_EXPLANATION]
+
+    @staticmethod
+    def help():
+        return None
+
     _QUERY_EXPLANATION = '.?'
     _REMOVE_EXPLANATION = '.?-'
     _ADD_EXPLANATION = '.?+'
