@@ -29,9 +29,9 @@ class WikiObserver(PrivMsgObserverPrototype):
             print('disambiguation page')
             page = wikipedia.WikipediaPage(error.args[1][0])
         connection.send_back(data['nick'] + ' ' + page.url, data)
-        index = 51 + page.summary[50:230].rfind('. ')
+        index = 51 + page.summary[50:350].rfind('. ')
         if index == 50 or index > 230:
-            index = page.summary[0:230].rfind(' ')
+            index = page.summary[0:350].rfind(' ')
             connection.send_back(page.summary[0:index], data)
         else:
             connection.send_back(page.summary[0:index], data)
