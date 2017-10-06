@@ -32,7 +32,7 @@ class IntroductionObserver(PrivMsgObserverPrototype):
             if intro is not None:
                 text = nick + " ist " + intro[1]
             else:
-                text = nick + " für dich gibt es noch keinen Eintrag, vielleicht magst du ja noch einen hinzufügen?"
+                text = nick + " für dich gibt es noch keinen Eintrag, vielleicht magst du ja mittels .me <intro> noch einen hinzufügen?"
             connection.send_back(text, data)
         elif len(msg) == 1 and '-' in msg:
             intro_provider.delete_intro(nick)
@@ -40,7 +40,8 @@ class IntroductionObserver(PrivMsgObserverPrototype):
         else:
             intro = msg.strip()
             intro_provider.save_or_replace(nick, intro)
-            connection.send_back(nick + ": Dein Intro wurde gespeichert!", data)
+            connection.send_back(
+                nick + ": Dein Intro wurde gespeichert! Mittels .me- kannst du deinen Eintrag wieder löschen.", data)
             text = nick + " ist " + intro_provider.get_intro(nick)[1]
             connection.send_back(text, data)
 
