@@ -69,20 +69,20 @@ class Connection(object):
         except socket.timeout:
             return False
         data = data.decode('UTF-8', errors='replace')
-
+        print('received: \n' + data)
         data_lines = self._receiver_buffer.append(data)
         if data is None:
             return False
-
+        print('splited: ')
         for data in data_lines:
             print(data)
             data = data.rstrip()
             self.data = data
 
-            splitted = data.split(' ')
-            if not len(splitted) >= 2:
+            splited = data.split(' ')
+            if not len(splited) >= 2:
                 continue
-            command = splitted[1]
+            command = splited[1]
             #         print(command)
             if data.split(' ')[0] == 'PING':
                 self.ping_observable.input(data, self)

@@ -22,7 +22,7 @@ for line in filepointer:
         ident = line.rstrip()
     else:
         long = line.rstrip()
-        if 'en-us' != "explain":
+        if 'en-us' != "explain":  # Öh WHAT?
             print("Blatsch")
             cursor.execute("INSERT INTO i18n(ident, lang, longText) VALUES(?,?,?)",(ident, schema, long,))
             database_connection.commit()

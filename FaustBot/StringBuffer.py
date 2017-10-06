@@ -7,15 +7,16 @@ class StringBuffer:
         return self.get()
 
     def get(self):
-        ready = set()
+        ready = list()
+        # Python do-while-loop
         idx = self._buffer.find('\n')
         while idx is not -1:
-            idx = self._buffer.find('\n')
             data = self._buffer[0:idx]  #
             data = data.strip()
             if len(data) >= 1:
-                ready.add(data)
+                ready.append(data)
             self._buffer = self._buffer[idx + 1:]
+            idx = self._buffer.find('\n')
         return ready
 
     @property
