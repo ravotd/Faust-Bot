@@ -23,6 +23,7 @@ class IntroductionObserver(PrivMsgObserverPrototype):
         if not msg.startswith(".me") and not msg.startswith(".me-"):
             return
         if not self.authenticated(nick, connection):
+            # print('no  auth')
             return
         intro_provider = IntroductionProvider()
         msg = msg.split('.me')[1].strip()
@@ -32,7 +33,8 @@ class IntroductionObserver(PrivMsgObserverPrototype):
             if intro is not None:
                 text = nick + " ist " + intro[1]
             else:
-                text = nick + " für dich gibt es noch keinen Eintrag, vielleicht magst du ja mittels .me <intro> noch einen hinzufügen?"
+                text = nick + "für dich gibt es noch keinen Eintrag, vielleicht magst du ja mittels .me <intro> noch " \
+                              "einen hinzufügen? "
             connection.send_back(text, data)
         elif len(msg) == 1 and '-' in msg:
             intro_provider.delete_intro(nick)

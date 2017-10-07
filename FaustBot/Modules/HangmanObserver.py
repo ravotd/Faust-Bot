@@ -4,7 +4,16 @@ from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 
 
 class HangmanObserver(PrivMsgObserverPrototype):
+    @staticmethod
+    def cmd():
+        return ['.guess', '.word', '.stop']
+
+    @staticmethod
+    def help():
+        return 'hangman game'
+
     def __init__(self):
+        super().__init__()
         self.word = ''
         self.guesses = []
         self.leftTrys = 0

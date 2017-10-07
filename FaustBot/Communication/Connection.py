@@ -69,13 +69,13 @@ class Connection(object):
         except socket.timeout:
             return False
         data = data.decode('UTF-8', errors='replace')
-        print('received: \n' + data)
+        # print('received: \n' + data)
         data_lines = self._receiver_buffer.append(data)
         if data is None:
             return False
-        print('splited: ')
+        # print('splited: ')
         for data in data_lines:
-            print(data)
+            # print(data)
             data = data.rstrip()
             self.data = data
 
