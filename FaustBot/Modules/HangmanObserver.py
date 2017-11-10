@@ -19,10 +19,10 @@ class HangmanObserver(PrivMsgObserverPrototype):
         self.leftTrys = 0
 
     def update_on_priv_msg(self, data, connection: Connection):
-        if data['message'].find('.guess') != -1:
+        if data['message'].find('.guess ') != -1:
             self.guess(data,connection)
             return
-        if data['message'].find('.word') != -1:
+        if data['message'].find('.word ') != -1:
             self.takeword(data, connection)
         if data['message'].find('.stop') != -1:
             self.word = ''
