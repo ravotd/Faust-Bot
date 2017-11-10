@@ -42,7 +42,10 @@ class TitleObserver(PrivMsgObserverPrototype):
             if not encoding:
                 encoding = 'utf-8'
             content = resource.read().decode(encoding, errors='replace')
-            title_re = re.compile("<title>(.+?)</title>")
+            if resource.geturl().find('twitter.com') != -1:
+                title_re = re.compile('<meta  property="og:description" content="(.+?)">')
+            else:
+                title_re = re.compile("<title>(.+?)</title>")
             title = title_re.search(content).group(1)
             title = html.unescape(title)
             title = title.replace('\n', ' ').replace('\r', '')
