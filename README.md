@@ -28,6 +28,8 @@ If you have any question you're also welcome to join us in `#faust-bot` on freen
 Before creating a pull request please test your code. Untested, obviously buggy code will - of course - be rejected.
 Since we're programming in python please hold on [PEP-08](https://www.python.org/dev/peps/pep-0008/).
 
+### Branching
+Currently we use the [main-branch](https://github.com/SophieBartmann/Faust-Bot/edit/master/README.md) for development and the stable version is represented with the [stable-branch](https://github.com/SophieBartmann/Faust-Bot/tree/stable). Please create an own feature-branch if you want to contribute. This will make it easier to merge.
 
 ## Copyright
 ```
