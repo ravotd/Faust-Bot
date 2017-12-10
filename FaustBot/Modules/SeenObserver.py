@@ -24,7 +24,7 @@ class SeenObserver(PrivMsgObserverPrototype):
         activity = user_provider.get_activity(who)
         delta = time.time() - activity
         i18n_server = i18n()
-        replacements = {'user': who, 'time': str(datetime.timedelta(seconds=delta))}
+        replacements = {'user': who, 'time': str(datetime.timedelta(seconds=delta)),'asker':data['nick']}
         output = i18n_server.get_text('seen', replacements=replacements,
                                       lang=self.config.lang)
         connection.send_channel(output)
