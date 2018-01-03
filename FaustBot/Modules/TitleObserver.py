@@ -49,4 +49,7 @@ class TitleObserver(PrivMsgObserverPrototype):
             title = title_re.search(content).group(1)
             title = html.unescape(title)
             title = title.replace('\n', ' ').replace('\r', '')
+            title = s.replace("&lt;", "<")
+            title = s.replace("&gt;", ">")
+            title = s.replace("&amp;", "&")
             return title
