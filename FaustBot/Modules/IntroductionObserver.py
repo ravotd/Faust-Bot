@@ -33,7 +33,7 @@ class IntroductionObserver(PrivMsgObserverPrototype):
             if intro is not None:
                 text = nick + " ist " + intro[1]
             else:
-                text = nick + "für dich gibt es noch keinen Eintrag, vielleicht magst du ja mittels .me <intro> noch " \
+                text = nick + " für dich gibt es noch keinen Eintrag, vielleicht magst du ja mittels .me <intro> noch " \
                               "einen hinzufügen? "
             connection.send_back(text, data)
         elif len(msg) == 1 and '-' in msg:
