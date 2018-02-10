@@ -29,6 +29,7 @@ class TitleObserver(PrivMsgObserverPrototype):
                 resource = urllib.request.urlopen(req)
                 title = self.getTitle(resource)
                 print(title)
+                title = title[:250]
                 connection.send_back(title, data)
             except Exception as exc:
                 print(exc)
