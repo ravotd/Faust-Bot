@@ -27,10 +27,18 @@ class DuckObserver(PrivMsgObserverPrototype, PingObserverPrototype):
 
     def update_on_priv_msg(self, data, connection: Connection):
         if data['message'].find('.starthunt') != -1:
+            if not self._is_idented_mod(data, connection):
+                connection.send_back("Dir fehlen leider die Rechte zum Hinzufügen von Einträgen, " + data['nick'] + ".",
+                                     data)
+                return
             self.active = 1
             connection.send_channel("Jagd eröffnet")
             return
         if data['message'].find('.stophunt') != -1:
+            if not self._is_idented_mod(data, connection):
+                connection.send_back("Dir fehlen leider die Rechte zum Hinzufügen von Einträgen, " + data['nick'] + ".",
+                                     data)
+                return
             self.active = 0
             self.duck_alive = 0
             connection.send_channel("Jagd beended")
