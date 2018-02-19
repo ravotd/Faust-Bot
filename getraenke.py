@@ -23,7 +23,9 @@ getraenke = ['einen Kaffee','eine Limonade','einen Kakao','einen Tee',
                      'eine Fritz!Cola', 'einen Ginger-Ale',
                      'ein Butterbier', 'ein Glas laktosefreie Milch',
                      'einen Lebertran', 'eine Caprisonne',
-                     'ein Moloko-Plus', 'einen DGPT', 'einen Kefir',
+                     'ein Moloko-Plus', 'einen Kefir',
                      'einen Ayran', 'ein Glas Nihilismus', 'eine Sprite', 
                      'eine Fanta', 'einen Purple Flurp', 'einen Booster Energy',
-                     'ein leckeres Wasser', 'einen Robby Bubble']
+                     'ein leckeres Wasser', 'einen Robby Bubble', 'ein Glas warme Milch',
+                     'ein Glas Schlamm', 'ein Glas Regenwasser', 'ein halbes Glas Kokosnussmilch',
+                     'eine Tasse Whiskey', 'ein Glas Ingwerwasser']
