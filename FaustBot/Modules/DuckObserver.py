@@ -70,7 +70,6 @@ class DuckObserver(PrivMsgObserverPrototype, PingObserverPrototype):
             connection.send_channel("Es läuft derzeit keine Entenjagd.")
 
     def update_on_ping(self, data, connection: Connection):
-        print("Ping")
         if self.active == 0:
             return
         if 1 == randint(1,11):
