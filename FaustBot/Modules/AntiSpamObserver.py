@@ -3,7 +3,11 @@ from FaustBot.Modules.PrivMsgObserverPrototype
 from enum import Enum
 from datetime import datetime
 
+
 class AntiSpamLevel(Enum):
+    """
+    Which action to be done if spam is detected.
+    """
     OFF = 0
     WARN = 1
     WARN_KICK = 2
@@ -13,13 +17,24 @@ class AntiSpamLevel(Enum):
 
 
 class AntiSpamAggressivity(Enum):
-    LOW = 3
-    MEDIUM = 5
-    HIGH = 7
-    ULTRA = 10
+    """
+    Settings to detect spam.
+    a: Amount of seconds between two similiar messages to detect them as spam
+    b: Amount of (non similiar) messages to be received with time-distance c, to detect them as spam
+    c: Time between messages of b:
+    d: Trustfactor
+    """
+    LOW = (3, 7, 0.5, 15)  # (a, b, c, d)
+    MEDIUM = (5, 5, 0.7, 10)
+    HIGH = (7, 3, 1.0, 5)
+    ULTRA = (10, 3, 1.0, 2)
 
 
 class AntiSpamEntry(object):
+    """
+    Entry collecting information about possible spammers.
+    """
+
     def __init__():
         super().__init__()
         self.user = ""
@@ -77,6 +92,7 @@ class AntiSpamObserver(PrivMsgObserverPrototype):
         super().__init__()
         self._msg_map = dict()
         self._anti_spam_level = AntiSpamLevel.OFF
+        self._anti_spam_aggressivity = AntiSpamAggressivity.LOW
 
     def update_on_priv_msg(self, data, connection: Connection):
         if self._anti_spam_level == AntiSpamLevel.OFF:
