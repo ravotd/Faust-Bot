@@ -1,5 +1,7 @@
 from FaustBot.Communication.Communication import Connection
-from FaustBot.Modules.PrivMsgObserverPrototype
+from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
+from FaustBot.Modules.JoinObserverPrototype import JoinObserverPrototype
+from FaustBot.Model.Config import Config
 from enum import Enum
 from datetime import datetime
 
@@ -78,7 +80,7 @@ class AntiSpamEntry(object):
         self.timestamp = timestamp
 
 
-class AntiSpamObserver(PrivMsgObserverPrototype):
+class AntiSpamObserver(PrivMsgObserverPrototype, JoinObserverPrototype):
 
     @staticmethod
     def cmd():
@@ -88,16 +90,35 @@ class AntiSpamObserver(PrivMsgObserverPrototype):
     def help():
         raise NotImplementedError("TBD!")
 
-    def __init__(self):
+    @staticmethod
+    def get_module_types():
+        return [ModuleType.ON_JOIN,
+                ModuleType.ON_PRIVMSG]
+
+    def __init__(self, config : Config):
         super().__init__()
         self._msg_map = dict()
         self._anti_spam_level = AntiSpamLevel.OFF
         self._anti_spam_aggressivity = AntiSpamAggressivity.LOW
 
     def update_on_priv_msg(self, data, connection: Connection):
+        if _bot_name in  data['channel']:  # TBD! _bot_name should be fetched from the config! 
+            self._handle_command(data, connection)
+
         if self._anti_spam_level == AntiSpamLevel.OFF:
             return
 
+    def update_on_join(self, data: dict, connection: Connection):
+        raise NotImplementedError("TBD!")
 
-    def is_spam(self, user: str, msg: str)
-        pass 
+    def _is_spam(self, user: str, msg: str)
+        pass
+
+    def _handle_command(self, data: dict, connection: Connection)
+        pass
+
+    def _is_idented_mod(self, data: dict, connection: Connection):
+        """
+        Check wether the issuer of a module control command is a moderator or not
+        """
+        return data['nick'] in self._config.mods and connection.is_idented(data['nick']
