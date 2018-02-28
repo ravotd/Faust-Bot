@@ -5,17 +5,23 @@ from FaustBot.Model.Config import Config
 from enum import Enum
 from datetime import datetime
 
+"""
+This Module contains multiple classes to handle spam.
+Goal of this module is to provide an easy to use AntiSpam-Module, which can be activated if needed.
+It should support multiple modes regarding the aggressivity of the anti-spam-handling. 
+"""
+
 
 class AntiSpamLevel(Enum):
     """
     Which action to be done if spam is detected.
     """
-    OFF = 0
-    WARN = 1
-    WARN_KICK = 2
-    KICK = 3
-    WARN_KICK_BAN = 4
-    KICK_BAN = 5
+    OFF = 0  # No action is taken if spam is detected.
+    WARN = 1  # Warns the user by messaging him/her without any further steps.
+    WARN_KICK = 2  # Warns the user first, then kicks him/her.
+    KICK = 3  # Kicks the user without any further warning.
+    WARN_KICK_BAN = 4  # Like WARN_KICK but also bans the user directly.
+    KICK_BAN = 5  # Like KICK, but also bans the user directly.
 
 
 class AntiSpamAggressivity(Enum):
