@@ -46,8 +46,8 @@ class GlossaryModule(PrivMsgObserverPrototype):
         if answer is None or answer[1] is None or answer[1].strip() == '':
             if split[1].strip() == '':
                 return
-            connection.send_back("Tut mir leid, " + data['nick'] + ". Für " + split[1].strip() +
-                                 " habe ich noch keinen Eintrag. Aber Wikipedia sagt dazu:", data)
+#            connection.send_back("Tut mir leid, " + data['nick'] + ". Für " + split[1].strip() +
+#                                 " habe ich noch keinen Eintrag. Aber Wikipedia sagt dazu:", data)
             wikiObserver = WikiObserver()
             wikiObserver.config = self.config
             data2 = data
