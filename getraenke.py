@@ -1,5 +1,5 @@
 getraenke = ['einen Kaffee','eine Limonade','einen Kakao','einen Tee',
-                     'einen Kräutertee aus elians Garten','eine Cola',
+                     'einen Kräutertee','eine Cola',
                      'kaltes Wasser','kalten Eistee','einen Raktajino',
                      'frischen Mate', 'eine Club Mate','ein Glas Gurkenwasser',
                      'einen Energydrink','einen Apfelsaft','einen Traubensaft',
