@@ -43,7 +43,6 @@ class Config(object):
             self._config_dict['blacklist'] =  []
             for module in blacklist:
                 self._config_dict['blacklist'].append(module.strip())
-            print(self._config_dict['blacklist'])
 
     @property
     def lang(self):
