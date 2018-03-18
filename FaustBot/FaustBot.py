@@ -52,6 +52,9 @@ class FaustBot(object):
                 return
 
     def add_module(self, module: ModulePrototype):
+        if module.__class__.__name__ in self._config.blacklist:
+            print(module.__class__.__name__+ " not loaded because of blacklisting")
+            return
         for module_type in module.get_module_types():
             observable = self._get_observable_by_module_type(module_type)
             observable.add_observer(module)

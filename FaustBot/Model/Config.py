@@ -36,6 +36,14 @@ class Config(object):
         if 'idle_time' not in self._config_dict:
             self._config_dict['idle_time'] = 18000
         self._config_dict['idle_time'] = int(self._config_dict['idle_time'])
+        if 'blacklist' not in self._config_dict:
+            self._config_dict['blacklist'] = []
+        else:
+            blacklist=self._config_dict['blacklist'].split(',')
+            self._config_dict['blacklist'] =  []
+            for module in blacklist:
+                self._config_dict['blacklist'].append(module.strip())
+            print(self._config_dict['blacklist'])
 
     @property
     def lang(self):
@@ -60,3 +68,7 @@ class Config(object):
     @idle_time.setter
     def idle_time(self, value: int):
         self._config_dict["idle_time"] = value
+
+    @property
+    def blacklist(self):
+        return self._config_dict['blacklist']
