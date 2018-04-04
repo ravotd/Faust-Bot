@@ -15,7 +15,7 @@ class i18n(object):
         database_connection = sqlite3.connect('faust_bot.db')
         cursor = database_connection.cursor()
         ltext = ""
-        print(replacements);
+        print(replacements)
         for longText in cursor.execute("SELECT longText FROM i18n WHERE lang = ? AND ident = ?", (lang, name,)):
             ltext = longText[0]
         for (key, value) in replacements.items():

@@ -22,12 +22,8 @@ for line in filepointer:
         ident = line.rstrip()
     else:
         long = line.rstrip()
-        if 'en-us' != "explain":  # Öh WHAT?
-            print("Blatsch")
-            cursor.execute("INSERT INTO i18n(ident, lang, longText) VALUES(?,?,?)",(ident, schema, long,))
-            database_connection.commit()
-        else:
-            cursor.execute("INSERT INTO explain(ident, longText) VALUES(?,?)", (ident, long,))
-            database_connection.commit()
+        print("Blatsch")
+        cursor.execute("INSERT INTO i18n(ident, lang, longText) VALUES(?,?,?)",(ident, schema, long,))
+        database_connection.commit()
     switch = False if switch else True
 database_connection.close()
