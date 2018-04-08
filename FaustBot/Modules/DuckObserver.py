@@ -1,9 +1,11 @@
-from FaustBot.Modules.ModuleType import ModuleType
-from FaustBot.Communication.Connection import Connection
-from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
-from FaustBot.Modules.PingObserverPrototype import PingObserverPrototype
-from random import randint
 from collections import defaultdict
+from random import randint
+
+from FaustBot.Communication.Connection import Connection
+from FaustBot.Modules.ModuleType import ModuleType
+from FaustBot.Modules.PingObserverPrototype import PingObserverPrototype
+from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
+
 
 class DuckObserver(PrivMsgObserverPrototype, PingObserverPrototype):
     @staticmethod
@@ -78,4 +80,4 @@ class DuckObserver(PrivMsgObserverPrototype, PingObserverPrototype):
                 self.duck_alive = 1
 
     def _is_idented_mod(self, data: dict, connection: Connection):
-        return data['nick'] in self._config.mods and connection.is_idented(data['nick'])
+        return data['nick'] in self._config.mods and connection.is_identified(data['nick'])

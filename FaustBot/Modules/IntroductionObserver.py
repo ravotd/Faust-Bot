@@ -49,4 +49,4 @@ class IntroductionObserver(PrivMsgObserverPrototype):
 
     def authenticated(self, nick: str, connection: Connection):
         return nick in self.userList.userList and \
-               connection.is_idented(nick)
+               connection.is_identified(nick)

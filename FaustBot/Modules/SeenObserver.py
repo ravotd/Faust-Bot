@@ -33,4 +33,4 @@ class SeenObserver(PrivMsgObserverPrototype):
         connection.send_back(output, data)
 
     def _is_idented_mod(self, data: dict, connection: Connection):
-        return data['nick'] in self._config.mods and connection.is_idented(data['nick'])
+        return data['nick'] in self._config.mods and connection.is_identified(data['nick'])

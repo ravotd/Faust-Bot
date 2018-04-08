@@ -1,9 +1,11 @@
-from FaustBot.Communication.Communication import Connection
-from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
-from FaustBot.Modules.JoinObserverPrototype import JoinObserverPrototype
-from FaustBot.Model.Config import Config
-from enum import Enum
 from datetime import datetime
+from enum import Enum
+
+from FaustBot.Communication.Communication import Connection
+
+from FaustBot.Model.Config import Config
+from FaustBot.Modules.JoinObserverPrototype import JoinObserverPrototype
+from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 
 """
 This Module contains multiple classes to handle spam.
@@ -127,4 +129,4 @@ class AntiSpamObserver(PrivMsgObserverPrototype, JoinObserverPrototype):
         """
         Check wether the issuer of a module control command is a moderator or not
         """
-        return data['nick'] in self._config.mods and connection.is_idented(data['nick']
+        return data['nick'] in self._config.mods and connection.is_identified(data['nick']

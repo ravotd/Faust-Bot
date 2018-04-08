@@ -1,0 +1,37 @@
+server: irc.freenode.org
+port: 6667
+nick: FaustBotDev
+channel:
+[
+    {
+        name: #autistenchat,
+        group: autistenchat,
+        mods: [starly, Yana, corvidae, Fabian2, Keksteig],
+        blacklist: [],
+        lang: de-de,
+        idle_time: 240,
+    },
+    {
+        name: #autistenchat-alt,
+        group: autistenchat,
+        mods: [starly, Yana, corvidae, Fabian2, keksteig],
+        blacklist: [kicker],
+        lang: de-de,
+    },
+    {
+        name: #autistenchat-active,
+        group: autistenchat,
+        mods: [starly, Yana, corvidae, Fabian2, keksteig],
+        blacklist: [],
+        lang: de-de,
+        idle_time: 15,
+    },
+    {
+        name: #faust-bot,
+        group: dev,
+        mods: [starly, Yana, corvidae],
+        blacklist: [kicker],
+        lang: de-de,
+    }
+]
+

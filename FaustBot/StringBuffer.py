@@ -1,12 +1,28 @@
 class StringBuffer:
+    """
+
+    """
+
     def __init__(self):
+        """
+
+        """
         self._buffer = str()
 
     def append(self, to_append):
+        """
+
+        :param to_append:
+        :return:
+        """
         self._buffer = self._buffer + to_append
         return self.get()
 
     def get(self):
+        """
+
+        :return:
+        """
         ready = list()
         # Python do-while-loop
         idx = self._buffer.find('\n')
@@ -21,8 +37,17 @@ class StringBuffer:
 
     @property
     def buffer(self):
+        """
+
+        :return:
+        """
         return self._buffer
 
     @buffer.setter
     def buffer(self, new_value):
+        """
+
+        :param new_value:
+        :return:
+        """
         self._buffer = new_value

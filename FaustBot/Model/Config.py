@@ -39,18 +39,32 @@ class Config(object):
         if 'blacklist' not in self._config_dict:
             self._config_dict['blacklist'] = []
         else:
-            blacklist=self._config_dict['blacklist'].split(',')
-            self._config_dict['blacklist'] =  []
+            blacklist = self._config_dict['blacklist'].split(',')
+            self._config_dict['blacklist'] = []
             for module in blacklist:
                 self._config_dict['blacklist'].append(module.strip())
 
     @property
+    def channel_groups(self):
+        return self.channel_groups
+
+    @channel_groups.setter
+    def channel_groups(self, value: {}):
+        self.channel_groups = value
+
+
+class ChannelConfig(object):
+
+    def __init__(self, config_dict: {}):
+        self._config_dict = config_dict
+
+    @property
     def lang(self):
-        return self._config_dict["lang"]
+        return self._config_dict['lang']
 
     @lang.setter
     def lang(self, value):
-        self._config_dict["lang"] = value
+        self._config_dict['lang'] = value
 
     @property
     def mods(self):
@@ -71,3 +85,7 @@ class Config(object):
     @property
     def blacklist(self):
         return self._config_dict['blacklist']
+
+    @blacklist.setter
+    def blacklist(self, value: []):
+        self.blacklist = value

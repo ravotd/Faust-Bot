@@ -1,11 +1,12 @@
 import datetime
 import time
 from collections import defaultdict
+
 from FaustBot.Communication.Connection import Connection
 from FaustBot.Model.UserProvider import UserProvider
 from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
-from ..Model.i18n import i18n
 from FaustBot.Modules.UserList import UserList
+
 
 class AllSeenObserver(PrivMsgObserverPrototype):
     @staticmethod
@@ -38,4 +39,4 @@ class AllSeenObserver(PrivMsgObserverPrototype):
             connection.send_back(output, data)
 
     def _is_idented_mod(self, data: dict, connection: Connection):
-        return data['nick'] in self._config.mods and connection.is_idented(data['nick'])
+        return data['nick'] in self._config.mods and connection.is_identified(data['nick'])

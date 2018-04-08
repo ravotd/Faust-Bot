@@ -46,7 +46,7 @@ class Connection(object):
     def send_back(self, text, data):
         """
         Send message to the channel the command got received in
-        :param message:
+        :param text:
         :param data: needed because of concurrency, there can't be a global variable holding where messages came from
         :return:
         """
@@ -73,16 +73,16 @@ class Connection(object):
         data_lines = self._receiver_buffer.append(data)
         if data is None:
             return False
-        # print('splited: ')
+        # print('split: ')
         for data in data_lines:
             # print(data)
             data = data.rstrip()
             self.data = data
 
-            splited = data.split(' ')
-            if not len(splited) >= 2:
+            split = data.split(' ')
+            if not len(split) >= 2:
                 continue
-            command = splited[1]
+            command = split[1]
             #         print(command)
             if data.split(' ')[0] == 'PING':
                 self.ping_observable.input(data, self)
@@ -107,26 +107,14 @@ class Connection(object):
 
         return True
 
-    def is_idented(self, user: str):
+    def is_identified(self, user: str):
         self.send_to_user('NickServ', 'ACC ' + user)
         with self.condition_lock:
             while user not in self.idented_look_up:
                 self.condition_lock.wait()
-            is_idented = self.idented_look_up[user]
+            is_identified = self.idented_look_up[user]
             del self.idented_look_up[user]
-            return is_idented
-
-    def is_op(self, user):
-        """
-        Checks wether the given user is an op in this connections' channel or not.
-        :param user: the user to check
-        :return: return true if the user is an op, else false
-        """
-        # add call to raw send with WHO
-        # manualy receive data until answer received
-        # then evaluate and return
-        # this way we'll block the bot until is_op is finished
-        return False
+            return is_identified
 
     def last_data(self):
         return self.data

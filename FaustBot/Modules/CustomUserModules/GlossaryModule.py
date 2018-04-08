@@ -4,6 +4,7 @@ from FaustBot.Model.GlossaryProvider import GlossaryProvider
 from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 from FaustBot.Modules.WikiObserver import WikiObserver
 
+
 class GlossaryModule(PrivMsgObserverPrototype):
     @staticmethod
     def cmd():
@@ -46,12 +47,12 @@ class GlossaryModule(PrivMsgObserverPrototype):
         if answer is None or answer[1] is None or answer[1].strip() == '':
             if split[1].strip() == '':
                 return
-#            connection.send_back("Tut mir leid, " + data['nick'] + ". Für " + split[1].strip() +
-#                                 " habe ich noch keinen Eintrag. Aber Wikipedia sagt dazu:", data)
+            #            connection.send_back("Tut mir leid, " + data['nick'] + ". Für " + split[1].strip() +
+            #                                 " habe ich noch keinen Eintrag. Aber Wikipedia sagt dazu:", data)
             wikiObserver = WikiObserver()
             wikiObserver.config = self.config
             data2 = data
-            data2['message'] = '.w '+split[1]+" \r\n"
+            data2['message'] = '.w ' + split[1] + " \r\n"
             wikiObserver.update_on_priv_msg(data2, connection)
         else:
             connection.send_back(data['nick'] + ": " + split[1] + " - " + answer[1], data)
@@ -91,4 +92,4 @@ class GlossaryModule(PrivMsgObserverPrototype):
         connection.send_back(data['nick'] + ": der Eintrag zu " + split[0] + " wurde gespeichert.", data)
 
     def _is_idented_mod(self, data: dict, connection: Connection):
-        return data['nick'] in self._config.mods and connection.is_idented(data['nick'])
+        return data['nick'] in self._config.mods and connection.is_identified(data['nick'])
