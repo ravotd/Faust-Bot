@@ -23,7 +23,9 @@ class IntroductionObserver(PrivMsgObserverPrototype):
         if not msg.startswith(".me") and not msg.startswith(".me-"):
             return
         if not self.authenticated(nick, connection):
-            # print('no  auth')
+            connection.send_back("Für die Nutzung von .me ist es zwingend erforderlich einen registrierten Nick zu "
+                                 "haben so wie eingeloggt zu sein wie dies geht erfährst du unter "
+                                 "https://autistenchat.org/#clients", data)
             return
         intro_provider = IntroductionProvider()
         msg = msg.split('.me')[1].strip()
