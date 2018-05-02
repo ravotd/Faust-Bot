@@ -29,6 +29,7 @@ class TitleObserver(PrivMsgObserverPrototype):
                 resource = urllib.request.urlopen(req)
                 title = self.getTitle(resource)
                 print(title)
+                title = title[:250]
                 connection.send_back(title, data)
             except Exception as exc:
                 print(exc)
@@ -49,4 +50,7 @@ class TitleObserver(PrivMsgObserverPrototype):
             title = title_re.search(content).group(1)
             title = html.unescape(title)
             title = title.replace('\n', ' ').replace('\r', '')
+            title = title.replace("&lt;", "<")
+            title = title.replace("&gt;", ">")
+            title = title.replace("&amp;", "&")
             return title
