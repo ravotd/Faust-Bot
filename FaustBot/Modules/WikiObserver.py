@@ -7,11 +7,11 @@ from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 class WikiObserver(PrivMsgObserverPrototype):
     @staticmethod
     def cmd():
-        return [".wiki"]
+        return [".w"]
 
     @staticmethod
     def help():
-        return ".wiki <term> - fragt Wikipediaartikel zu <term> ab"
+        return ".w <term> - fragt Wikipediaartikel zu <term> ab"
 
     def update_on_priv_msg(self, data, connection):
 

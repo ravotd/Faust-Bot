@@ -4,10 +4,9 @@ from FaustBot.Model.ConnectionDetails import ConnectionDetails
 from FaustBot.Modules import ActivityObserver, IdentNickServObserver, GiveCookieObserver, LoveAndPeaceObserver, \
     FreeHugsObserver, WhoObserver, Kicker, ModulePrototype, PingAnswerObserver, SeenObserver, TitleObserver, \
     UserList, WikiObserver, GiveDrinkObserver, GiveFoodObserver, ComicObserver, HelpObserver, \
-    IntroductionObserver, HangmanObserver
+    IntroductionObserver, HangmanObserver, DuckObserver, AllSeenObserver
 from FaustBot.Modules.CustomUserModules import GlossaryModule, ICDObserver, ModmailObserver
 from FaustBot.Modules.ModuleType import ModuleType
-
 
 class FaustBot(object):
     def __init__(self, config_path: str):
@@ -25,6 +24,7 @@ class FaustBot(object):
         self.add_module(user_list)
         self.add_module(ActivityObserver.ActivityObserver())
         self.add_module(WhoObserver.WhoObserver(user_list))
+        self.add_module(AllSeenObserver.AllSeenObserver(user_list))
         self.add_module(PingAnswerObserver.ModulePing())
         self.add_module(Kicker.Kicker(user_list, self._config.idle_time))
         self.add_module(SeenObserver.SeenObserver())
@@ -43,7 +43,7 @@ class FaustBot(object):
         self.add_module(HangmanObserver.HangmanObserver())
         self.add_module(HelpObserver.HelpObserver())
         self.add_module(IntroductionObserver.IntroductionObserver(user_list))
-
+        self.add_module(DuckObserver.DuckObserver())
     def run(self):
         self._setup()
         running = True
@@ -52,6 +52,9 @@ class FaustBot(object):
                 return
 
     def add_module(self, module: ModulePrototype):
+        if module.__class__.__name__ in self._config.blacklist:
+            print(module.__class__.__name__+ " not loaded because of blacklisting")
+            return
         for module_type in module.get_module_types():
             observable = self._get_observable_by_module_type(module_type)
             observable.add_observer(module)
