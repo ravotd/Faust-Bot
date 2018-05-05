@@ -66,3 +66,6 @@ target/
 *.xml
 Model/ConnectionDetails.py
 FaustBotVEnv/
+
+# Custom
+config.txt
