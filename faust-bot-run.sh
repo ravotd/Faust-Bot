@@ -1,6 +1,6 @@
 #!/bin/bash
 # Directory of the virtual environment
-VENV="./faust-bot-venv"
+VENV="./FaustBotVEnv"
 
 venv() {
   if [ ! -d "$VENV" ]; then
@@ -9,7 +9,7 @@ venv() {
     echo "[=== activating virtual environment "
     source $VENV/bin/activate
     echo "[=== installing dependencies "
-    pip install -r Faust-Bot/requirements.txt
+    pip install -r requirements.txt
   else
     echo "[=== activating virtual environment "
     source $VENV/bin/activate
