@@ -9,17 +9,41 @@ Designed for non-technical channels
  - Python 3.5
  - pip
  - wikipedia package (can be installed using pip; tested with version 1.4.0)
+ - virtualenv (optional)
  
 ### Running the Bot
+The direct way:
 ```bash
+# Install all dependencies
+pip install -r requirements.txt
 # First load all needed strings into the database
 # Per default german is used. If you want another language you need to 
 # add an language file and modify the script.
 # Later it will be refactored, so it uses arguments
 python ReadInternationalization.py
+# Create a configuration file by having a look at config-example.txt
 # Start the bot using the given config file.
 python Main.py --config ./config.txt
 ``` 
+Using [faust-bot-run.sh](https://github.com/SophieBartmann/Faust-Bot/blob/master/faust-bot-run.sh). This script creates and uses a virtual environment, therefore the optional requirement virtualenv is required
+```bash
+# Make the script executable
+chmod u+x ./faust-bot-run.sh
+# To display all possible options
+./script -h
+> Simple script to manage a single faust-bot instance.
+>  -h  displays this help message
+>  -s  starts the bot, if it is not running yet
+>  -e  exits/stops the bot
+>  -r  restarts the bot
+>  -u  updates the bots code
+# Start the bot.
+# The script creates an virtualenv, installs all pip dependencies and starts the Bot in the background
+# The pid of the Bot-process is saved in .pid.
+# Stdout is redirected to out.txt 
+./script -s
+```
+
 
 ## Contribution
 Have a look into our issues. Some are explizitly marked as `help wanted` or `For Beginners`. If you're new to programming the last one would be a good point to begin with. Of course you're also free to choose your own issue or task to work on.
