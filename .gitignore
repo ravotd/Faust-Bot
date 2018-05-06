@@ -69,3 +69,5 @@ FaustBotVEnv/
 
 # Custom
 config.txt
+.pid
+out.txt
