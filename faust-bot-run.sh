@@ -50,7 +50,7 @@ start() {
     fi
     echo "[=== starting faust-bot "
     echo "[=== redirecting output to nohup.out "
-    nohup python Main.py --config config.txt > out.txt &
+    nohup python -u Main.py --config config.txt > out.txt &
     echo "[=== pid of bot process can be found in .pid "
     echo $! > .pid 
   fi
