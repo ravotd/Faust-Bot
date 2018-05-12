@@ -32,7 +32,7 @@ class Kicker(PingObserverPrototype):
             host = self.user_list.userList.get(user).host
             if offline_time > self.idle_time \
                     and not user == connection.details.get_nick() \
-                    and 'freenode/staff' not in host:
+                    and 'freenode/staff' not in host and 'freenode/utility-bot' not in host:
                 if self.warned_users[user] % 30 == 0:
                     connection.send_channel(
                         '\001ACTION schenkt ' + user + ' ' + random.choice(getraenke) + ' ein.\001')
