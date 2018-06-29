@@ -12,21 +12,21 @@ from FaustBot.Communication.NickChangeObservable import NickChangeObservable
 from FaustBot.Communication.NoticeObservable import NoticeObservable
 from FaustBot.Communication.PingObservable import PingObservable
 from FaustBot.Communication.PrivmsgObservable import PrivmsgObservable
-from FaustBot.Model.ConnectionDetails import ConnectionDetails
+from FaustBot.Model.Config import Config
 from FaustBot.StringBuffer import StringBuffer
 
 
 class Connection(object):
     send_queue = queue.Queue()
-    details = None
-    irc = None
+    config = None
+    _irc = None
 
     def sender(self):
         while True:
             msg = self.send_queue.get()
             if msg[-1] is not b'\n':
                 msg = msg + b'\n'
-            self.irc.send(msg)
+            self._irc.send(msg)
             time.sleep(1)
 
     def send_channel(self, text):
@@ -34,7 +34,7 @@ class Connection(object):
         Send to channel
         :return:
         """
-        self.raw_send("PRIVMSG " + self.details.get_channel() + " :" + text[0:])
+        self.raw_send("PRIVMSG " + self.config.get_channel() + " :" + text[0:])
 
     def send_to_user(self, user, text):
         """
@@ -50,7 +50,7 @@ class Connection(object):
         :param data: needed because of concurrency, there can't be a global variable holding where messages came from
         :return:
         """
-        if data['channel'] == self.details.get_nick():
+        if data['channel'] == self.config.get_nick():
             self.send_to_user(data['nick'], text)
         else:
             self.send_channel(text)
@@ -63,7 +63,7 @@ class Connection(object):
         receive from Network
         """
         try:
-            data = self.irc.recv(4096)
+            data = self._irc.recv(4096)
             if len(data) == 0:
                 return False
         except socket.timeout:
@@ -107,6 +107,9 @@ class Connection(object):
 
         return True
 
+    def _notify(self):
+        pass
+
     def is_identified(self, user: str):
         self.send_to_user('NickServ', 'ACC ' + user)
         with self.condition_lock:
@@ -123,18 +126,20 @@ class Connection(object):
         """
         establish the connection
         """
-        self.irc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self._irc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-        self.irc.connect((self.details.get_server(), self.details.get_port()))
-        print(self.irc.recv(512))
-        self.irc.send("NICK ".encode() + self.details.get_nick().encode() + "\r\n".encode())
-        self.irc.send("USER botty botty botty :IRC Bot\r\n".encode())
-        self.irc.send("JOIN ".encode() + self.details.get_channel().encode() + '\r\n'.encode())
-        self.irc.send("WHO ".encode() + self.details.get_channel().encode() + '\r\n'.encode())
+        self._irc.connect((self.config.server, self.config.port))
+        print(self._irc.recv(512))
+        self._irc.send("NICK %s \r\n" % self.config.nick())
+        self._irc.send("USER botty botty botty :IRC Bot\r\n")
+        for c in self.config.channel:
+            name = c.name
+            self._irc.send("JOIN %s \r\n" % name)
+            self._irc.send("WHO %s \r\n" % name)
         _thread.start_new_thread(self.sender, ())
 
-    def __init__(self, set_details: ConnectionDetails):
-        self.details = set_details
+    def __init__(self, configuration: Config):
+        self.config = configuration
         self.ping_observable = PingObservable()
         self.priv_msg_observable = PrivmsgObservable()
         self.join_observable = JoinObservable()

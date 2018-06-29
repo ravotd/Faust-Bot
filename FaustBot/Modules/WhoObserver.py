@@ -44,5 +44,5 @@ class WhoObserver(MagicNumberObserverPrototype, PingObserverPrototype):
 
     def update_on_ping(self, data, connection: Connection):
         if self.pings_seen % 90 == 0:  # 90 * 2 min = 3 Stunden
-            connection.raw_send('WHO ' + connection.details.get_channel())
+            connection.raw_send('WHO ' + connection.config.get_channel())
             self.pings_seen += 1

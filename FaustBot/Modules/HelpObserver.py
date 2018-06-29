@@ -16,7 +16,7 @@ class HelpObserver(PrivMsgObserverPrototype):
         if not msg.startswith(".help"):
             return
 
-        if data["channel"] == connection.details.get_channel():
+        if data["channel"] == connection.config.get_channel():
             all_cmd = []
             for observer in connection.priv_msg_observable.get_observer():
                 cmds = observer.cmd()

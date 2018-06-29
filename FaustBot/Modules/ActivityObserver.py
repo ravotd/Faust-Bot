@@ -22,12 +22,12 @@ class ActivityObserver(PrivMsgObserverPrototype, JoinObserverPrototype, NickChan
 
     def update_on_join(self, data, connection: Connection):
         users = UserProvider()
-        if data['channel'] == connection.details.get_channel():
+        if data['channel'] == connection.config.get_channel():
             users.set_active(data['nick'])
 
     def update_on_priv_msg(self, data, connection: Connection):
         users = UserProvider()
-        if data['channel'] == connection.details.get_channel():
+        if data['channel'] == connection.config.get_channel():
             users.set_active(data['nick'])
             users.add_characters(data['nick'], len(data['message']))
 

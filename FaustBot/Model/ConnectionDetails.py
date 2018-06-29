@@ -1,3 +1,7 @@
+from deprecated import deprecated
+
+
+@deprecated(reason="Use Config instead")
 class ConnectionDetails(object):
     def get_server(self):
         """
