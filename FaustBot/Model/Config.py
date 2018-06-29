@@ -27,24 +27,15 @@ class Config(object):
         f = open(path, 'r')
         if not append:
             self._config_dict = {Config.CONFIG_PATH: path}
-        for l in f.readlines():
-            kv_pair = l.split(':')
-            if len(kv_pair) == 2:
-                self._config_dict[kv_pair[0].strip()] = kv_pair[1][:-1].strip()
+        cfg = ' '.join(f.readlines())
+        cfg = json.loads(cfg)
+        self._config_dict.update(cfg)
         channel = self._config_dict['channel']
-        channel = json.loads(channel)
         self._config_dict['channel'] = []
         for c in channel:
             self._config_dict['channel'].append(ChannelConfig(c))
 
     # <editor-fold name=Properties>
-    @property
-    def channel_groups(self):
-        return self.channel_groups
-
-    @channel_groups.setter
-    def channel_groups(self, value: {}):
-        self.channel_groups = value
 
     @property
     def port(self):
@@ -82,13 +73,13 @@ class Config(object):
 
 class ChannelConfig(object):
 
-    def __init__(self, channel_dict: dict, raw: bool = True):
-        if channel_dict:
+    def __init__(self, channel: dict, raw: bool = False):
+        if channel:
             if raw:
                 self._config_dict = {}
-                self._read_channel(channel_dict)
+                self._read_channel(channel)
             else:
-                self._config_dict = channel_dict
+                self._config_dict = channel
         else:
             self._config_dict = {}
 
@@ -99,7 +90,7 @@ class ChannelConfig(object):
         self._config_dict[key] = value
 
     def _read_channel(self, channel_dict: dict):
-        mods = channel_dict['mods'].split(',')
+        mods = channel_dict['mods']
         self._config_dict['mods'] = []
         for mod in mods:
             self._config_dict['mods'].append(mod.strip())
@@ -114,7 +105,7 @@ class ChannelConfig(object):
         if 'blacklist' not in channel_dict:
             self._config_dict['blacklist'] = []
         else:
-            blacklist = channel_dict['blacklist'].split(',')
+            blacklist = channel_dict['blacklist']
             self._config_dict['blacklist'] = []
             for module in blacklist:
                 self._config_dict['blacklist'].append(module.strip())

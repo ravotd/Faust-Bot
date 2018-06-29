@@ -8,6 +8,7 @@ from FaustBot.Modules import ActivityObserver, IdentNickServObserver, GiveCookie
 from FaustBot.Modules.CustomUserModules import GlossaryModule, ICDObserver, ModmailObserver
 from FaustBot.Modules.ModuleType import ModuleType
 
+
 class FaustBot(object):
     def __init__(self, config_path: str):
         self._config = Config(config_path)
@@ -54,7 +55,7 @@ class FaustBot(object):
 
     def add_module(self, module: ModulePrototype):
         if module.__class__.__name__ in self._config.blacklist:
-            print(module.__class__.__name__+ " not loaded because of blacklisting")
+            print(module.__class__.__name__ + " not loaded because of blacklisting")
             return
         for module_type in module.get_module_types():
             observable = self._get_observable_by_module_type(module_type)
@@ -82,6 +83,6 @@ class FaustBot(object):
 
         if module_type == ModuleType.ON_NOTICE:
             return self._connection.notice_observable
-        
+
         if module_type == ModuleType.ON_MAGIC_NUMBER:
             return self._connection.magic_number_observable
