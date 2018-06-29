@@ -1,0 +1,37 @@
+server: irc.freenode.org
+port: 6667
+nick: FaustBotDev
+channel:
+[
+    {
+        name: #superchannel,
+        group: super,
+        mods: [Mod, Supermod],
+        blacklist: [],
+        lang: de-de,
+        idle_time: 240,
+    },
+    {
+        name: #superchannel-alt,
+        group: super,
+        mods: [Mod, Supermod, EvilMod],
+        blacklist: [kicker],
+        lang: de-de,
+    },
+    {
+        name: #superchannel-active,
+        group: super,
+        mods: [Mod, Supermod, EvilMod],
+        blacklist: [],
+        lang: de-de,
+        idle_time: 15,
+    },
+    {
+        name: #faust-bot,
+        group: dev,
+        mods: [Mod, Supermod, EvilMod],
+        blacklist: [kicker],
+        lang: de-de,
+    }
+]
+
