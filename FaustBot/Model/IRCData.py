@@ -5,12 +5,27 @@ class IRCData(object):
         self._sender = ''
         self._nick = ''
         self._message = ''
+        self._user = ''
+        self._host = ''
         self._raw = raw
+        self._command = ''
         if len(self._raw.strip()) is not 0:
             self.parse()
 
-    def parse(self):
-        pass
+    def parse(self, raw: str = None):
+        if raw is not None:
+            self._raw = raw
+        prefix, self._command, self._channel, *self._message = self._raw.split(' ', maxsplit=3)
+        if len(self._message) is 0:
+            self._message = ''
+        else:
+            self._message = self._message[0]
+        host_mask = prefix.lstrip(':')
+        if '!' in prefix:
+            self._nick, user_host = host_mask.split('!')
+            self._user, self._host = user_host.split('@')
+        else:
+            self._nick = host_mask
 
     # <editor-fold desc=Properties>
     @property
@@ -52,4 +67,28 @@ class IRCData(object):
     @message.setter
     def message(self, value: str):
         self._message = value
+
+    @property
+    def user(self) -> str:
+        return self._user
+
+    @user.setter
+    def user(self, value: str):
+        self._user = value
+
+    @property
+    def host(self) -> str:
+        return self._host
+
+    @host.setter
+    def host(self, value: str):
+        self._host = value
+
+    @property
+    def command(self) -> str:
+        return self._command
+
+    @command.setter
+    def command(self, value: str):
+        self._command = value
     # </editor-fold>

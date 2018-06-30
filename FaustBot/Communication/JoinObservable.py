@@ -18,7 +18,6 @@ class JoinObservable(Observable):
                 'channel': channel, 'raw_nick': hostmask}
         self.notify_observers(data, connection)
 
-
     def notify_observers(self, data, connection):
         for observer in self._observers:
             _thread.start_new_thread(observer.__class__.update_on_join, (observer, data, connection))
