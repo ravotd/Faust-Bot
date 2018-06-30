@@ -52,7 +52,18 @@ def rpl_welcome():
 
 
 def ping():
-    pass
+    msg = 'PING :irc.funet.fi'
+    data = IRCData(msg)
+    assert data.command == 'PING'
+    assert data.nick == 'irc.funet.fi'
+
+
+def pong():
+    msg = 'PONG csd.bu.edu tolsun.oulu.fi'
+    data = IRCData(msg)
+    assert data.command == 'PONG'
+    assert data.nick == 'csd.bu.edu'
+    assert data.channel == 'tolsun.oulu.fi'
 
 
 def test():
@@ -62,6 +73,7 @@ def test():
     leave()
     rpl_welcome()
     ping()
+    pong()
 
 
 if __name__ == '__main__':

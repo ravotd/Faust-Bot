@@ -9,23 +9,38 @@ class IRCData(object):
         self._host = ''
         self._raw = raw
         self._command = ''
+        self._special_command = False
         if len(self._raw.strip()) is not 0:
             self.parse()
 
     def parse(self, raw: str = None):
         if raw is not None:
-            self._raw = raw
-        prefix, self._command, self._channel, *self._message = self._raw.split(' ', maxsplit=3)
-        if len(self._message) is 0:
-            self._message = ''
+            self.raw = raw
+        if self.raw.split(' ')[0].isupper():
+            self._parse_non_directed()
+            return
+        self.special_command = False
+        prefix, self.command, self.channel, *self.message = self._raw.split(' ', maxsplit=3)
+        if len(self.message) is 0:
+            self.message = ''
         else:
-            self._message = self._message[0]
+            self.message = self.message[0]
         host_mask = prefix.lstrip(':')
         if '!' in prefix:
-            self._nick, user_host = host_mask.split('!')
-            self._user, self._host = user_host.split('@')
+            self.nick, user_host = host_mask.split('!')
+            self.user, self.host = user_host.split('@')
         else:
-            self._nick = host_mask
+            self.nick = host_mask
+
+    def _parse_non_directed(self):
+        self.special_command = True
+        self.command, *rest = self.raw.split(' ', maxsplit=2)
+        if len(rest) <= 2:
+            self.nick = rest[0].lstrip(':')
+        if len(rest) == 2:
+            self.channel = rest[1].lstrip(':')
+        if len(rest) > 2:
+            self.message = rest[2]
 
     # <editor-fold desc=Properties>
     @property
@@ -91,4 +106,12 @@ class IRCData(object):
     @command.setter
     def command(self, value: str):
         self._command = value
+
+    @property
+    def special_command(self) -> bool:
+        return self._special_command
+
+    @special_command.setter
+    def special_command(self, value: bool):
+        self._special_command = value
     # </editor-fold>
