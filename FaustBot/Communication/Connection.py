@@ -2,6 +2,7 @@ import _thread
 import queue
 import socket
 import time
+from _ast import List
 from threading import Condition
 
 from FaustBot.Communication.JoinObservable import JoinObservable
@@ -29,7 +30,7 @@ class Connection(object):
             self._irc.send(msg)
             time.sleep(1)
 
-    def send_channel(self, text):
+    def send_channel(self, text: str):
         """
         Send to channel
         :return:
@@ -43,7 +44,7 @@ class Connection(object):
         """
         self.raw_send('PRIVMSG ' + user + ' :' + text)
 
-    def send_back(self, text, data):
+    def send_back(self, text: str, data: dict):
         """
         Send message to the channel the command got received in
         :param text:
@@ -74,6 +75,10 @@ class Connection(object):
         if data is None:
             return False
         # print('split: ')
+        self._notify(data_lines)
+        return True
+
+    def _notify(self, data_lines: List[str]):
         for data in data_lines:
             # print(data)
             data = data.rstrip()
@@ -105,10 +110,8 @@ class Connection(object):
                 except Exception:
                     pass
 
-        return True
-
-    def _notify(self):
-        pass
+    def _send_unbuffered(self, message: str):
+        self._irc.send(message.encode())
 
     def is_identified(self, user: str):
         self.send_to_user('NickServ', 'ACC ' + user)
@@ -130,12 +133,12 @@ class Connection(object):
 
         self._irc.connect((self.config.server, self.config.port))
         print(self._irc.recv(512))
-        self._irc.send("NICK %s \r\n" % self.config.nick())
-        self._irc.send("USER botty botty botty :IRC Bot\r\n")
+        self._send_unbuffered("NICK %s \r\n" % self.config.nick())
+        self._send_unbuffered("USER botty botty botty :IRC Bot\r\n")
         for c in self.config.channel:
             name = c.name
-            self._irc.send("JOIN %s \r\n" % name)
-            self._irc.send("WHO %s \r\n" % name)
+            self._send_unbuffered("JOIN %s \r\n" % name)
+            self._send_unbuffered("WHO %s \r\n" % name)
         _thread.start_new_thread(self.sender, ())
 
     def __init__(self, configuration: Config):
