@@ -1,4 +1,5 @@
 from FaustBot.Communication import Connection
+from FaustBot.Model.IRCData import IRCData
 from FaustBot.Model.RemoteUser import RemoteUser
 from FaustBot.Modules.MagicNumberObserverPrototype import MagicNumberObserverPrototype
 from FaustBot.Modules.ModuleType import ModuleType
@@ -25,15 +26,15 @@ class WhoObserver(MagicNumberObserverPrototype, PingObserverPrototype):
     def get_module_types():
         return [ModuleType.ON_MAGIC_NUMBER, ModuleType.ON_PING]
 
-    def update_on_magic_number(self, data, connection):
-        if data['number'] == '352':  # RPL_WHOREPLY
+    def update_on_magic_number(self, data: IRCData, connection):
+        if data.command == '352':  # RPL_WHOREPLY
             self.input_who(data, connection)
-        elif data['number'] == '315':  # RPL_ENDOFWHO
+        elif data.command == '315':  # RPL_ENDOFWHO
             self.end_who()
 
     def input_who(self, data, connection: Connection):
         # target #channel user host server nick status :0 gecos
-        target, channel, user, host, server, nick, *ign = data['arguments'].split(' ')
+        target, channel, user, host, server, nick, *ign = data.message.split(' ')
         self.pending_whos.append(RemoteUser(nick, user, host))
 
     def end_who(self):
@@ -43,6 +44,7 @@ class WhoObserver(MagicNumberObserverPrototype, PingObserverPrototype):
         self.pending_whos = []
 
     def update_on_ping(self, data, connection: Connection):
-        if self.pings_seen % 90 == 0:  # 90 * 2 min = 3 Stunden
-            connection.raw_send('WHO ' + connection.config.get_channel())
-            self.pings_seen += 1
+        for c in connection.config.channel:
+            if self.pings_seen % 90 == 0:  # 90 * 2 min = 3 Stunden
+                connection.raw_send('WHO ' + c.name)
+                self.pings_seen += 1

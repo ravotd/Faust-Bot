@@ -18,10 +18,6 @@ from FaustBot.StringBuffer import StringBuffer
 
 
 class Connection(object):
-    send_queue = queue.Queue()
-    config = None
-    _irc = None
-
     def _send_queue_worker(self):
         while True:
             msg = self.send_queue.get()
@@ -59,7 +55,7 @@ class Connection(object):
     def raw_send(self, message):
         self.send_queue.put(message.encode() + '\r\n'.encode())
 
-    def receive(self):
+    def receive(self) -> bool:
         """
         receive from Network
         """
@@ -84,31 +80,31 @@ class Connection(object):
             data = data.strip()
             self.data = IRCData(data)
 
-            if data.command == 'PING':
-                self.ping_observable.input(data, self)
-            elif data.command == 'JOIN':
-                self.join_observable.input(data, self)
-            elif data.command == 'PART' or data.command == 'QUIT':
-                self.leave_observable.input(data, self)
-            elif data.command == 'KICK':
-                self.kick_observable.input(data, self)
-            elif data.command == 'NICK':
-                self.nick_change_observable.input(data, self)
-            elif data.command == 'NOTICE':
-                self.notice_observable.input(data, self)
-            elif data.command == 'PRIVMSG':
-                self.priv_msg_observable.input(data, self)
+            if self.data.command == 'PING':
+                self.ping_observable.input(self.data, self)
+            elif self.data.command == 'JOIN':
+                self.join_observable.input(self.data, self)
+            elif self.data.command == 'PART' or self.data.command == 'QUIT':
+                self.leave_observable.input(self.data, self)
+            elif self.data.command == 'KICK':
+                self.kick_observable.input(self.data, self)
+            elif self.data.command == 'NICK':
+                self.nick_change_observable.input(self.data, self)
+            elif self.data.command == 'NOTICE':
+                self.notice_observable.input(self.data, self)
+            elif self.data.command == 'PRIVMSG':
+                self.priv_msg_observable.input(self.data, self)
             else:
                 try:
-                    int(data.command)
-                    self.magic_number_observable.input(data, self)
+                    int(self.data.command)
+                    self.magic_number_observable.input(self.data, self)
                 except Exception:
                     pass
 
     def _send_unbuffered(self, message: str):
         self._irc.send(message.encode())
 
-    def is_identified(self, user: str):
+    def is_identified(self, user: str) -> bool:
         self.user_privmsg('NickServ', 'ACC ' + user)
         with self.condition_lock:
             while user not in self.idented_look_up:
@@ -128,7 +124,7 @@ class Connection(object):
 
         self._irc.connect((self.config.server, self.config.port))
         print(self._irc.recv(512))
-        self._send_unbuffered("NICK %s \r\n" % self.config.nick())
+        self._send_unbuffered("NICK %s \r\n" % self.config.nick)
         self._send_unbuffered("USER botty botty botty :IRC Bot\r\n")
         for c in self.config.channel:
             name = c.name
@@ -138,6 +134,7 @@ class Connection(object):
 
     def __init__(self, configuration: Config):
         self.config = configuration
+        self.send_queue = queue.Queue()
         self.ping_observable = PingObservable()
         self.priv_msg_observable = PrivmsgObservable()
         self.join_observable = JoinObservable()

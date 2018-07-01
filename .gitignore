@@ -69,6 +69,7 @@ FaustBotVEnv/
 
 # Custom
 config.txt
+config.json
 .pid
 out.txt
 faust_bot.db
