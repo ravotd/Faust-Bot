@@ -1,5 +1,6 @@
 # from ..FaustBot import ModuleType
 from FaustBot.Communication.Connection import Connection
+from FaustBot.Model.IRCData import IRCData
 from FaustBot.Model.UserProvider import UserProvider
 from FaustBot.Modules.JoinObserverPrototype import JoinObserverPrototype
 from FaustBot.Modules.ModuleType import ModuleType
@@ -20,20 +21,22 @@ class ActivityObserver(PrivMsgObserverPrototype, JoinObserverPrototype, NickChan
     def help():
         return None
 
-    def update_on_join(self, data, connection: Connection):
+    def update_on_join(self, data: IRCData, connection: Connection):
         users = UserProvider()
-        if data['channel'] == connection.config.get_channel():
-            users.set_active(data['nick'])
+        channel = connection.config.get_channel_by_name(data.channel)
+        if channel is not None:
+            users.set_active(data.nick, data.channel)
 
-    def update_on_priv_msg(self, data, connection: Connection):
+    def update_on_priv_msg(self, data: IRCData, connection: Connection):
         users = UserProvider()
-        if data['channel'] == connection.config.get_channel():
-            users.set_active(data['nick'])
-            users.add_characters(data['nick'], len(data['message']))
+        channel = connection.config.get_channel_by_name(data.channel)
+        if channel is not None:
+            users.set_active(data.nick, data.channel)
+            users.add_characters(data.nick, len(data.message), data.channel)
 
     def update_on_nick_change(self, data, connection: Connection):
         users = UserProvider()
-        users.set_active(data['new_nick'])
+        users.set_active(data.nick, data.channel)
 
     @staticmethod
     def get_module_types():
