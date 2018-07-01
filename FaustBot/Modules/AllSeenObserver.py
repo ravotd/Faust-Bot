@@ -3,6 +3,7 @@ import time
 from collections import defaultdict
 
 from FaustBot.Communication.Connection import Connection
+from FaustBot.Model.IRCData import IRCData
 from FaustBot.Model.UserProvider import UserProvider
 from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 from FaustBot.Modules.UserList import UserList
@@ -11,32 +12,34 @@ from FaustBot.Modules.UserList import UserList
 class AllSeenObserver(PrivMsgObserverPrototype):
     @staticmethod
     def cmd():
-        return [".seen"]
+        return []
 
     @staticmethod
     def help():
-        return ".seen <nick> - um abzufragen wann <nick> zuletzt hier war"
+        return None
 
     def __init__(self, user_list: UserList):
         super().__init__()
         self.user_list = user_list
 
     def update_on_priv_msg(self, data, connection: Connection):
-        if data['message'].find('.allseen') == -1:
+        if data.message.find('.allseen') == -1:
+            return
+        users = self.user_list.userList[data.channel]
+        if users is None:
             return
         if not self._is_idented_mod(data, connection):
             return
         User_afk = defaultdict(int)
-        for who in self.user_list.userList.keys():
+        for who in users.keys():
             user_provider = UserProvider()
-            activity = user_provider.get_activity(who)
+            activity = user_provider.get_activity(who, data.channel)
             delta = time.time() - activity
             User_afk[who] = delta
-            print(who)
-            print(delta)
         for w in sorted(User_afk, key=User_afk.get):
             output = (w+":\t"+str(datetime.timedelta(seconds=User_afk[w])))
             connection.send_back(output, data)
 
-    def _is_idented_mod(self, data: dict, connection: Connection):
-        return data['nick'] in self._config.mods and connection.is_identified(data['nick'])
+    def _is_idented_mod(self, data: IRCData, connection: Connection):
+        mods = self._config.get_channel_by_name(data.channel).mods
+        return data.nick in mods and connection.is_identified(data.nick)

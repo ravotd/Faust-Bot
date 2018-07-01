@@ -1,3 +1,6 @@
+from FaustBot.Model.Config import Config
+
+
 class ModulePrototype(object):
     @staticmethod
     def cmd():
@@ -15,7 +18,7 @@ class ModulePrototype(object):
         self._config = None
 
     @property
-    def config(self):
+    def config(self) -> Config:
         return self._config
 
     @config.setter
