@@ -33,7 +33,7 @@ class DuckObserver(PrivMsgObserverPrototype, PingObserverPrototype):
                 connection.send_back("Dir fehlen leider die Rechte zum Starten der Jagd, " + data['nick'] + ".",data)
                 return
             self.active = 1
-            connection.send_channel("Jagd eröffnet")
+            connection.channel_privmsg("Jagd eröffnet")
             return
         if data['message'].find('.stophunt') != -1:
             if not self._is_idented_mod(data, connection):
@@ -42,7 +42,7 @@ class DuckObserver(PrivMsgObserverPrototype, PingObserverPrototype):
                 return
             self.active = 0
             self.duck_alive = 0
-            connection.send_channel("Jagd beended")
+            connection.channel_privmsg("Jagd beended")
             return
         if data['message'].find('.freunde') != -1:
             self.befriend(data, connection)
@@ -53,30 +53,34 @@ class DuckObserver(PrivMsgObserverPrototype, PingObserverPrototype):
         if self.duck_alive == 1:
             self.duck_alive = 0
             self.ducks_befriend[data['nick']] += 1
-            connection.send_channel(data['nick'] + " hat schon " + str(self.ducks_befriend[data['nick']]) + " befreundete Enten und " + str(self.ducks_hunt[data['nick']]) + " getötete Enten.")
+            connection.channel_privmsg(
+                data['nick'] + " hat schon " + str(self.ducks_befriend[data['nick']]) + " befreundete Enten und " + str(
+                    self.ducks_hunt[data['nick']]) + " getötete Enten.")
             return
         if (self.duck_alive == 0 and self.active == 1):
-            connection.send_channel(data['nick']+ " probiert eine nicht existente Ente zu befreunden")
+            connection.channel_privmsg(data['nick'] + " probiert eine nicht existente Ente zu befreunden")
         if self.active == 0:
-            connection.send_channel("Es läuft derzeit keine Entenjagd.")
+            connection.channel_privmsg("Es läuft derzeit keine Entenjagd.")
 
     def shoot(self, data, connection):
         if self.duck_alive == 1:
             self.duck_alive = 0
             self.ducks_hunt[data['nick']] += 1
-            connection.send_channel(data['nick'] + " hat schon " + str(self.ducks_befriend[data['nick']]) + " befreundete Enten und " + str(self.ducks_hunt[data['nick']]) + " getötete Enten.")
+            connection.channel_privmsg(
+                data['nick'] + " hat schon " + str(self.ducks_befriend[data['nick']]) + " befreundete Enten und " + str(
+                    self.ducks_hunt[data['nick']]) + " getötete Enten.")
             return
         if (self.duck_alive == 0 and self.active == 1):
-            connection.send_channel(data['nick']+ " schiesst ins Nichts")
+            connection.channel_privmsg(data['nick'] + " schiesst ins Nichts")
         if self.active == 0:
-            connection.send_channel("Es läuft derzeit keine Entenjagd.")
+            connection.channel_privmsg("Es läuft derzeit keine Entenjagd.")
 
     def update_on_ping(self, data, connection: Connection):
         if self.active == 0:
             return
         if 1 == randint(1,11):
             if self.duck_alive == 0:
-                connection.send_channel("*. *. *. * <<w°)> *. *. * Quack!")
+                connection.channel_privmsg("*. *. *. * <<w°)> *. *. * Quack!")
                 self.duck_alive = 1
 
     def _is_idented_mod(self, data: dict, connection: Connection):

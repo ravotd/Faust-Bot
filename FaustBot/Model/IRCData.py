@@ -16,7 +16,8 @@ class IRCData(object):
     def parse(self, raw: str = None):
         if raw is not None:
             self.raw = raw
-        if self.raw.split(' ')[0].isupper():
+        first_part = self.raw.split(' ', maxsplit=1)[0]
+        if first_part.isupper() or first_part.isnumeric():
             self._parse_non_directed()
             return
         self.special_command = False

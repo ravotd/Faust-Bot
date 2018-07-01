@@ -18,4 +18,4 @@ class ModmailObserver(PrivMsgObserverPrototype):
         print(mods)
         message = data['message'].split('.modmail ')[1]
         for mod in mods:
-            connection.send_to_user(mod, data['nick'] + ' meldet: ' + message)
+            connection.user_privmsg(mod, data['nick'] + ' meldet: ' + message)

@@ -28,7 +28,7 @@ class SeenObserver(PrivMsgObserverPrototype):
         output = i18n_server.get_text('seen', replacements=replacements,
                                       lang=self.config.lang)
         if not self._is_idented_mod(data, connection):
-            connection.send_channel(output)
+            connection.channel_privmsg(output)
             return
         connection.send_back(output, data)
 

@@ -1,3 +1,6 @@
+from FaustBot.Communication.Connection import Connection
+from FaustBot.Model.IRCData import IRCData
+
 
 class Observable(object):
     def __init__(self):
@@ -11,13 +14,13 @@ class Observable(object):
         return self._observers
 
     # data has to be a dictionary matching the structure of the query
-    def notify_observers(self, data, connection):
+    def notify_observers(self, data: IRCData, connection: Connection):
         # here implement some data handling. Fill self._data with the data received
         raise NotImplementedError("Some Observable doesn't know what to do with its input data")
 
-    def input(self, raw_data, connection):
+    def input(self, data: IRCData, connection: Connection):
         # here implement some data handling. Fill self._data with the data received
-        raise NotImplementedError("Some Observable doesn't know what to do with its input data")
+        self.notify_observers(data, connection)
 
     def rm_observer(self, observer):
         self._observers.remove(observer)

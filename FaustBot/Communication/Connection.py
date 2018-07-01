@@ -2,7 +2,6 @@ import _thread
 import queue
 import socket
 import time
-from _ast import List
 from threading import Condition
 
 from FaustBot.Communication.JoinObservable import JoinObservable
@@ -14,6 +13,7 @@ from FaustBot.Communication.NoticeObservable import NoticeObservable
 from FaustBot.Communication.PingObservable import PingObservable
 from FaustBot.Communication.PrivmsgObservable import PrivmsgObservable
 from FaustBot.Model.Config import Config
+from FaustBot.Model.IRCData import IRCData
 from FaustBot.StringBuffer import StringBuffer
 
 
@@ -22,7 +22,7 @@ class Connection(object):
     config = None
     _irc = None
 
-    def sender(self):
+    def _send_queue_worker(self):
         while True:
             msg = self.send_queue.get()
             if msg[-1] is not b'\n':
@@ -30,31 +30,31 @@ class Connection(object):
             self._irc.send(msg)
             time.sleep(1)
 
-    def send_channel(self, text: str):
+    def channel_privmsg(self, message: str, channel: str):
         """
         Send to channel
         :return:
         """
-        self.raw_send("PRIVMSG " + self.config.get_channel() + " :" + text[0:])
+        self.raw_send('PRIVMSG %s : %s' % (channel, message))
 
-    def send_to_user(self, user, text):
+    def user_privmsg(self, message: str, user: str):
         """
         Send to user
         :return:
         """
-        self.raw_send('PRIVMSG ' + user + ' :' + text)
+        self.raw_send('PRIVMSG %s : %s ' % (user, message))
 
-    def send_back(self, text: str, data: dict):
+    def send_back(self, message: str, received: IRCData):
         """
         Send message to the channel the command got received in
-        :param text:
-        :param data: needed because of concurrency, there can't be a global variable holding where messages came from
+        :param received:
+        :param message:
         :return:
         """
-        if data['channel'] == self.config.get_nick():
-            self.send_to_user(data['nick'], text)
+        if received.channel == self.config.nick:
+            self.user_privmsg(message, received.nick)
         else:
-            self.send_channel(text)
+            self.channel_privmsg(message, received.channel)
 
     def raw_send(self, message):
         self.send_queue.put(message.encode() + '\r\n'.encode())
@@ -78,34 +78,29 @@ class Connection(object):
         self._notify(data_lines)
         return True
 
-    def _notify(self, data_lines: List[str]):
+    def _notify(self, data_lines: iter):
         for data in data_lines:
             # print(data)
-            data = data.rstrip()
-            self.data = data
+            data = data.strip()
+            self.data = IRCData(data)
 
-            split = data.split(' ')
-            if not len(split) >= 2:
-                continue
-            command = split[1]
-            #         print(command)
-            if data.split(' ')[0] == 'PING':
+            if data.command == 'PING':
                 self.ping_observable.input(data, self)
-            elif command == 'JOIN':
+            elif data.command == 'JOIN':
                 self.join_observable.input(data, self)
-            elif command == 'PART' or command == 'QUIT':
+            elif data.command == 'PART' or data.command == 'QUIT':
                 self.leave_observable.input(data, self)
-            elif command == 'KICK':
+            elif data.command == 'KICK':
                 self.kick_observable.input(data, self)
-            elif command == 'NICK':
+            elif data.command == 'NICK':
                 self.nick_change_observable.input(data, self)
-            elif command == 'NOTICE':
+            elif data.command == 'NOTICE':
                 self.notice_observable.input(data, self)
-            elif command == 'PRIVMSG':
+            elif data.command == 'PRIVMSG':
                 self.priv_msg_observable.input(data, self)
             else:
                 try:
-                    int(command)
+                    int(data.command)
                     self.magic_number_observable.input(data, self)
                 except Exception:
                     pass
@@ -114,7 +109,7 @@ class Connection(object):
         self._irc.send(message.encode())
 
     def is_identified(self, user: str):
-        self.send_to_user('NickServ', 'ACC ' + user)
+        self.user_privmsg('NickServ', 'ACC ' + user)
         with self.condition_lock:
             while user not in self.idented_look_up:
                 self.condition_lock.wait()
@@ -139,7 +134,7 @@ class Connection(object):
             name = c.name
             self._send_unbuffered("JOIN %s \r\n" % name)
             self._send_unbuffered("WHO %s \r\n" % name)
-        _thread.start_new_thread(self.sender, ())
+        _thread.start_new_thread(self._send_queue_worker, ())
 
     def __init__(self, configuration: Config):
         self.config = configuration
