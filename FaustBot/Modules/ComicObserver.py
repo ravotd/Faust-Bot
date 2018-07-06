@@ -37,4 +37,4 @@ class ComicObserver(PrivMsgObserverPrototype):
             title = TitleObserver.getTitle(TitleObserver(), resource)
             connection.send_back(resource.geturl() + " " + title, data)
         else:
-            connection.send_back(ComicScraper.getRandomComic(comic), data)
+            connection.send_back(ComicScraper.get_random_comic(comic), data)

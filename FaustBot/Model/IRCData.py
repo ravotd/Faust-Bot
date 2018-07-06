@@ -53,14 +53,6 @@ class IRCData(object):
         self._channel = value
 
     @property
-    def sender(self) -> str:
-        return self._sender
-
-    @sender.setter
-    def sender(self, value: str):
-        self._sender = value
-
-    @property
     def raw(self) -> str:
         return self._raw
 
@@ -115,4 +107,10 @@ class IRCData(object):
     @special_command.setter
     def special_command(self, value: bool):
         self._special_command = value
+
+    def is_query(self) -> bool:
+        return not self._channel.startswith('#')
+
+    def is_channel(self) -> bool:
+        return not self.is_channel()
     # </editor-fold>
