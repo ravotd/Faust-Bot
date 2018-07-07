@@ -9,9 +9,14 @@ from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 
 
 class DuckObserver(PrivMsgObserverPrototype, PingObserverPrototype):
+    BEFRIEND = '.freunde'
+    SHOOT = '.schiessen'
+    START_HUNT = '.starthunt'
+    STOP_HUNT = '.stophunt'
+
     @staticmethod
     def cmd() -> List[str]:
-        return ['.freunde', '.schiessen', '.starthunt', '.stophunt']
+        return [DuckObserver.BEFRIEND, DuckObserver.SHOOT, DuckObserver.START_HUNT, DuckObserver.STOP_HUNT]
 
     @staticmethod
     def help() -> str:
@@ -28,13 +33,13 @@ class DuckObserver(PrivMsgObserverPrototype, PingObserverPrototype):
     def update_on_priv_msg(self, data, connection: Connection) -> None:
         if data.is_query():
             connection.send_back("channel command", data)
-        if data.message.find('.starthunt') != -1:
+        if data.message.find(DuckObserver.START_HUNT) != -1:
             self.start_hunt(data, connection)
-        elif data.message.find('.stophunt') != -1:
+        elif data.message.find(DuckObserver.STOP_HUNT) != -1:
             self.stop_hunt(data, connection)
-        elif data.message.find('.freunde') != -1:
+        elif data.message.find(DuckObserver.BEFRIEND) != -1:
             self.befriend(data, connection)
-        elif data.message.find('.schiessen') != -1:
+        elif data.message.find(DuckObserver.SHOOT) != -1:
             self.shoot(data, connection)
 
     def start_hunt(self, data, connection) -> bool:

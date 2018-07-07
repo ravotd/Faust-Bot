@@ -20,7 +20,6 @@ class WhoObserver(MagicNumberObserverPrototype, PingObserverPrototype):
         super().__init__()
         self.user_list = user_list
         self.pings_seen = 1
-        self.pending_whos = []
 
     @staticmethod
     def get_module_types():
@@ -29,19 +28,11 @@ class WhoObserver(MagicNumberObserverPrototype, PingObserverPrototype):
     def update_on_magic_number(self, data: IRCData, connection):
         if data.command == '352':  # RPL_WHOREPLY
             self.input_who(data, connection)
-        elif data.command == '315':  # RPL_ENDOFWHO
-            self.end_who()
 
     def input_who(self, data, connection: Connection):
         # target #channel user host server nick status :0 gecos
         target, channel, user, host, server, nick, *ign = data.message.split(' ')
-        self.pending_whos.append(RemoteUser(nick, user, host))
-
-    def end_who(self):
-        self.user_list.clear_list()
-        for remuser in self.pending_whos:
-            self.user_list.add_user(remuser)
-        self.pending_whos = []
+        self.user_list.update_user(RemoteUser(nick, user, host), channel)
 
     def update_on_ping(self, data, connection: Connection):
         for c in connection.config.channel:

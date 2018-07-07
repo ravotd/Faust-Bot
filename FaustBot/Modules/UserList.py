@@ -34,7 +34,7 @@ class UserList(JoinObserverPrototype, KickObserverPrototype, LeaveObserverProtot
         self._remove_user(data.nick, data.channel)
 
     def update_on_join(self, data, connection):
-        self._add_user(data)
+        self.add_user(data)
 
     def update_on_nick_change(self, data: IRCData, connection: Connection):
         channel_userlist = self.userList[data.channel]
@@ -45,19 +45,23 @@ class UserList(JoinObserverPrototype, KickObserverPrototype, LeaveObserverProtot
     def clear_list(self):
         self.userList = {}
 
-    def _add_user(self, data: IRCData):
+    def add_user(self, data: IRCData):
         user = RemoteUser(data.nick, data.user, data.host)
-        channel_userlist = self.userList[data.channel]
-        if channel_userlist is None:
-            channel_userlist = {}
-            self.userList[data.channel] = channel_userlist
-        channel_userlist[data.nick] = user
+        self.update_user(user, data.channel)
+
+    def update_user(self, user: RemoteUser, channel: str):
+        channel_userlist = self._get_channel_userlist(channel)
+        channel_userlist[user.nick] = user
 
     def _remove_user(self, nick: str, channel: str) -> Union[RemoteUser, None]:
-        channel_userlist = self.userList[channel]
-        if channel_userlist is not None:
-            if nick in channel_userlist:
-                user = channel_userlist[nick]
-                del channel_userlist[nick]
-                return user
+        channel_userlist = self._get_channel_userlist(channel)
+        if nick in channel_userlist:
+            user = channel_userlist[nick]
+            del channel_userlist[nick]
+            return user
         return None
+
+    def _get_channel_userlist(self, channel: str) -> dict:
+        if channel not in self.userList:
+            self.userList[channel] = {}
+        return self.userList[channel]
