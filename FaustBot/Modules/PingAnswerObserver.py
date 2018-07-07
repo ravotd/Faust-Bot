@@ -17,5 +17,5 @@ class ModulePing(PingObserverPrototype):
 
     def update_on_ping(self, data, connection: Connection):
         # print('Module Ping')
-        msg = 'PONG ' + data['server']
+        msg = 'PONG ' + data.nick
         connection.raw_send(msg)
