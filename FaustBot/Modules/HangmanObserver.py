@@ -1,81 +1,90 @@
+from typing import List
 
 from FaustBot.Communication.Connection import Connection
+from FaustBot.Model.IRCData import IRCData
 from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
+
+
+class Word(object):
+    def __init__(self, word):
+        self.tries_left = 11
+        self.word = word
+        self.guessed = ['-', '/', ' ', '_']
 
 
 class HangmanObserver(PrivMsgObserverPrototype):
     @staticmethod
-    def cmd():
+    def cmd() -> List[str]:
         return ['.guess', '.word', '.stop']
 
     @staticmethod
-    def help():
+    def help() -> str:
         return 'hangman game'
 
     def __init__(self):
         super().__init__()
-        self.word = ''
-        self.guesses = ['-','/',' ','_']
-        self.leftTrys = 0
+        self.words = {}
 
-    def update_on_priv_msg(self, data, connection: Connection):
-        if data['message'].find('.guess ') != -1:
-            self.guess(data,connection)
+    def update_on_priv_msg(self, data: IRCData, connection: Connection) -> None:
+        if data.message.find('.guess ') != -1:
+            self.guess(data, connection)
             return
-        if data['message'].find('.word ') != -1:
-            self.takeword(data, connection)
-        if data['message'].find('.stop') != -1:
-            connection.channel_privmsg("Spiel gestoppt das Wort war: " + self.word)
-            self.word = ''
-            self.guesses = []
-            self.leftTrys = 0
+        elif data.message.find('.word ') != -1:
+            self.enter_new_word(data, connection)
+        elif data.message.find('.stop') != -1:
+            self.stop_game(data, connection)
 
+    def stop_game(self, data: IRCData, connection: Connection) -> None:
+        if data.channel in self.words:
+            word = self.words[data.channel]
+            connection.send_back("Spiel gestoppt das Wort war: %s" % word.word, data)
+            del self.words[data.channel]
 
-    def guess(self, data,connection):
-        if data['channel'] != connection.details.get_channel():
-            connection.send_back("Sorry kein raten im Query", data)
+    def guess(self, data: IRCData, connection: Connection) -> None:
+        if data.is_query():
+            connection.send_back("Sorry, das Spiel läuft nur im Channel", data)
             return
-        tried =  data['message'].split(' ')[1].upper()
-        if self.leftTrys < 1:
-            connection.channel_privmsg("Flüstere mir ein neues Wort mit .word WORT")
+        word = self.words.get(data.channel)
+        current_try = data.message.split(' ')[1].upper()
+        if word is None:
+            connection.send_back("Flüstere mir ein neues Wort mit .word %s DEIN-WORT" % data.channel, data)
             return
-        if tried == self.word:
-            self.word = ''
-            connection.channel_privmsg("Korrekt: " + tried)
-            return
-        if tried in self.word:
-            self.guesses += tried
+        elif current_try == word.word:
+            connection.send_back("Korrekt: " + current_try, data)
+            del self.words[data.channel]
+        elif current_try in word.word:
+            word.guessed += current_try
+            self.send_stats(data.channel, connection)
         else:
-            self.leftTrys -= 1
-        connection.channel_privmsg(self.prepareWord())
+            word.tries_left -= 1
+            self.send_stats(data.channel, connection)
 
-    def takeword(self, data, connection):
-        if self.word == '':
-            log = open('HangmanLog','a')
-            log.write(data['nick']+' ; '+data['message'].split(' ')[1].upper()+'\n')
-            log.close
-            self.word = data['message'].split(' ')[1].upper()
-            self.guesses = ['-','/',' ','_']
-            self.leftTrys = 11
-            connection.send_back( "Danke für das Wort, es ist nun im Spiel!", data)
-            connection.channel_privmsg(self.prepareWord())
+    def enter_new_word(self, data, connection) -> None:
+        cmd, channel, new_word, *ign = data.message.split(' ', maxsplit=3)
+        if channel not in self.words:
+            word = Word(new_word)
+            self.words[channel] = word
+            connection.send_back("Danke für das Wort, es ist nun im Spiel!", data)
+            self.send_stats(channel, connection)
         else:
             connection.send_back("Sorry es läuft bereits ein Wort", data)
 
-    def prepareWord(self):
-        outWord = ""
+    def send_stats(self, channel: str, connection: Connection) -> None:
+        word_out = ""
         failedChars = 0
-        for char in self.word:
-            if char in self.guesses:
-                outWord += char + " "
+        word = self.words[channel]
+        for char in word.word:
+            if char in word.guessed:
+                word_out += char
             else:
-                outWord += "_ "
+                word_out += "_ "
                 failedChars += 1
         if failedChars == 0:
-            self.word = ''
-        if self.leftTrys == 0:
-            outWord = "Das richtige Wort wäre gewesen:" + self.word
-            self.word = ''
-            return outWord
-        outWord += "Verbleibende Rateversuche: "+str(self.leftTrys)
-        return outWord
+            msg = "Rätsel gelöst: %s - das Spiel ist beendet!" % word_out
+            del self.words[channel]
+        elif word.tries_left == 0:
+            msg = "Keine Versuche mehr übrig. Das richtige Wort wäre  %s  gewesen - das Spiel ist beendet!" % word.word
+            del self.words[channel]
+        else:
+            msg = "%s  Verbleibende Rateversuche: %d" % word_out, word.tries_left
+        connection.channel_privmsg(msg, channel)
