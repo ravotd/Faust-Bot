@@ -21,6 +21,7 @@ class FaustBot(object):
     def _setup(self):
         self._connection.establish()
         user_list = UserList.UserList()
+        self._connection.priv_msg_observable.define_user_list(user_list)
         self.add_module(user_list)
         self.add_module(ActivityObserver.ActivityObserver())
         self.add_module(WhoObserver.WhoObserver(user_list))
