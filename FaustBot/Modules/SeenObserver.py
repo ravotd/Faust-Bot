@@ -19,6 +19,8 @@ class SeenObserver(PrivMsgObserverPrototype):
     def update_on_priv_msg(self, data, connection: Connection):
         if data['message'].find('.seen ') == -1:
             return
+        if not self._is_idented_mod(data, connection):
+            return
         who = data['message'].split(' ')[1]
         user_provider = UserProvider()
         activity = user_provider.get_activity(who)
