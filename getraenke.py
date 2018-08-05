@@ -23,10 +23,10 @@ getraenke = ['einen Kaffee','eine Limonade','einen Kakao','einen Tee',
                      'eine Fritz!Cola', 'einen Ginger-Ale',
                      'ein Butterbier', 'ein Glas laktosefreie Milch',
                      'einen Lebertran', 'eine Caprisonne',
-                     'ein Kürbissaft', 'einen Kefir',
+                     'einen Kürbissaft', 'einen Kefir',
                      'einen Ayran', 'ein Glas Nihilismus', 'eine Sprite', 
                      'eine Fanta', 'einen Purple Flurp', 'einen Booster Energy',
                      'ein leckeres Wasser', 'einen Robby Bubble', 'ein Glas warme Milch',
                      'ein Glas Schlamm', 'ein Glas Regenwasser', 'ein halbes Glas Kokosnussmilch',
-                     'ein Glas Ingwerwasser','eine Tasse lauwarmen Sencha'
-                     'ein Glass Chai Latte mit Sojamilch','ein Glass kalten Sencha']
+                     'ein Glas Ingwerwasser','eine Tasse lauwarmen Sencha',
+                     'ein Glass Chai Latte mit Sojamilch','ein Tässchen kalten Sencha']
