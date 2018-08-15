@@ -1,10 +1,10 @@
 from datetime import datetime
 from enum import Enum
 
-from FaustBot.Communication.Communication import Connection
-
+from FaustBot.Communication.Connection import Connection
 from FaustBot.Model.Config import Config
 from FaustBot.Modules.JoinObserverPrototype import JoinObserverPrototype
+from FaustBot.Modules.ModuleType import ModuleType
 from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 
 """
@@ -45,7 +45,7 @@ class AntiSpamEntry(object):
     Entry collecting information about possible spammers.
     """
 
-    def __init__():
+    def __init__(self):
         super().__init__()
         self.user = ""
         self.warn_count = 0
@@ -57,7 +57,7 @@ class AntiSpamEntry(object):
         return self.user
 
     @user.setter
-    def user(self, user)
+    def user(self, user):
         self.user = user
     
     @property
@@ -65,10 +65,10 @@ class AntiSpamEntry(object):
         return self.warn_count
 
     @warn_count.setter
-    def warn_count(self, warn_count)
+    def warn_count(self, warn_count):
         self.warn_count = warn_count
 
-    def inc_warn_count(self)
+    def inc_warn_count(self):
         self.warn_count += 1
 
     @property
@@ -119,14 +119,14 @@ class AntiSpamObserver(PrivMsgObserverPrototype, JoinObserverPrototype):
     def update_on_join(self, data: dict, connection: Connection):
         raise NotImplementedError("TBD!")
 
-    def _is_spam(self, user: str, msg: str)
+    def _is_spam(self, user: str, msg: str):
         pass
 
-    def _handle_command(self, data: dict, connection: Connection)
+    def _handle_command(self, data: dict, connection: Connection):
         pass
 
     def _is_idented_mod(self, data: dict, connection: Connection):
         """
         Check wether the issuer of a module control command is a moderator or not
         """
-        return data['nick'] in self._config.mods and connection.is_identified(data['nick']
+        return data['nick'] in self._config.mods and connection.is_identified(data['nick'])

@@ -73,3 +73,4 @@ config.json
 .pid
 out.txt
 faust_bot.db
+venv

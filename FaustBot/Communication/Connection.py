@@ -14,7 +14,7 @@ from FaustBot.Communication.PingObservable import PingObservable
 from FaustBot.Communication.PrivmsgObservable import PrivmsgObservable
 from FaustBot.Model.Config import Config
 from FaustBot.Model.IRCData import IRCData
-from FaustBot.StringBuffer import StringBuffer
+from FaustBot.Util.StringBuffer import StringBuffer
 
 
 class Connection(object):
@@ -31,14 +31,14 @@ class Connection(object):
         Send to channel
         :return:
         """
-        self.raw_send('PRIVMSG %s : %s' % (channel, message))
+        self.raw_send('PRIVMSG %s :%s' % (channel, message))
 
     def user_privmsg(self, message: str, user: str):
         """
         Send to user
         :return:
         """
-        self.raw_send('PRIVMSG %s : %s ' % (user, message))
+        self.raw_send('PRIVMSG %s :%s ' % (user, message))
 
     def send_back(self, message: str, received: IRCData):
         """
@@ -47,7 +47,7 @@ class Connection(object):
         :param message:
         :return:
         """
-        if received.channel == self.config.nick:
+        if received.is_query():
             self.user_privmsg(message, received.nick)
         else:
             self.channel_privmsg(message, received.channel)

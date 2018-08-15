@@ -1,22 +1,25 @@
+from typing import List
+
 from FaustBot.Communication import Connection
+from FaustBot.Model.IRCData import IRCData
 from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 
 
 class HelpObserver(PrivMsgObserverPrototype):
     @staticmethod
-    def cmd():
+    def cmd() -> List[str]:
         return [".help"]
 
     @staticmethod
-    def help():
+    def help() -> str:
         return ".help - zeigt Hilftexte aller Module an"
 
-    def update_on_priv_msg(self, data, connection: Connection):
-        msg = data["message"]
+    def update_on_priv_msg(self, data: IRCData, connection: Connection) -> None:
+        msg = data.message
         if not msg.startswith(".help"):
             return
 
-        if data["channel"] == connection.config.get_channel():
+        if data.is_channel():
             all_cmd = []
             for observer in connection.priv_msg_observable.get_observer():
                 cmds = observer.cmd()

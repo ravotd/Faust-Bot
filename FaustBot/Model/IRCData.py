@@ -26,6 +26,7 @@ class IRCData(object):
             self.message = ''
         else:
             self.message = self.message[0]
+            self.message = self.message.lstrip(':')
         host_mask = prefix.lstrip(':')
         if '!' in prefix:
             self.nick, user_host = host_mask.split('!')
@@ -112,5 +113,5 @@ class IRCData(object):
         return not self._channel.startswith('#')
 
     def is_channel(self) -> bool:
-        return not self.is_channel()
+        return not self.is_query()
     # </editor-fold>
