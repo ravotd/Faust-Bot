@@ -53,6 +53,12 @@ class UserList(JoinObserverPrototype, KickObserverPrototype, LeaveObserverProtot
         channel_userlist = self._get_channel_userlist(channel)
         channel_userlist[user.nick] = user
 
+    def get_user(self, channel: str, nick: str):
+        users = self._get_channel_userlist(channel)
+        if users is None:
+            return None
+        return users.get(nick, None)
+
     def _remove_user(self, nick: str, channel: str) -> Union[RemoteUser, None]:
         channel_userlist = self._get_channel_userlist(channel)
         if nick in channel_userlist:
