@@ -1,5 +1,6 @@
 import random
 import time
+from collections import defaultdict
 
 from FaustBot.Communication.Connection import Connection
 from FaustBot.Model.UserProvider import UserProvider
