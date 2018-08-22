@@ -7,7 +7,7 @@ mainfile, initializes everything
 # function declarations
 from argparse import ArgumentParser
 
-from FaustBot.FaustBot import FaustBot
+from faustbot.faustbot import FaustBot
 
 if __name__ == "__main__":
     arg_parser = ArgumentParser(description="FautBot - ")
