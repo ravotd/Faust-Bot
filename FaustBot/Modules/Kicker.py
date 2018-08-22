@@ -1,6 +1,5 @@
 import random
 import time
-from collections import defaultdict
 
 from FaustBot.Communication.Connection import Connection
 from FaustBot.Model.UserProvider import UserProvider
@@ -18,9 +17,8 @@ class Kicker(PingObserverPrototype):
     def help():
         return None
 
-    def __init__(self, user_list: UserList, idle_time: int):
+    def __init__(self, user_list: UserList):
         super().__init__()
-        self.idle_time = idle_time
         self.user_list = user_list
         self.warned_users = {}
         self._still_working = False
@@ -35,12 +33,13 @@ class Kicker(PingObserverPrototype):
         self._still_working = False
 
     def check_channel_users(self, channel: str, connection: Connection):
+        idle_time = connection.config.get_channel_by_name(channel).idle_time
         for user in self.user_list.userList[channel].keys():
             offline_time = Kicker.get_offline_time(user)
-            if offline_time < self.idle_time:
+            if offline_time < idle_time:
                 self._set_user_counter(channel, user, 0)
             host = self.user_list.get_user(channel, user)
-            if offline_time > self.idle_time \
+            if offline_time > idle_time \
                     and not user == connection.config.get_nick() \
                     and 'freenode/staff' not in host \
                     and 'freenode/utility-bot' not in host:
