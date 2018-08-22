@@ -1,6 +1,6 @@
-from FaustBot.Communication.Connection import Connection
-from FaustBot.Modules.ModulePrototype import ModulePrototype
-from FaustBot.Modules.ModuleType import ModuleType
+from faustbot.communication.connection import Connection
+from faustbot.modules.module_type import ModuleType
+from faustbot.modules.prototypes.module_prototype import ModulePrototype
 
 
 class JoinObserverPrototype(ModulePrototype):
