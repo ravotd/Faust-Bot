@@ -1,4 +1,5 @@
 from faustbot.communication.connection import Connection
+from faustbot.model.irc_data import IRCData
 from faustbot.modules.prototypes.privmsg_observer_prototype import PrivMsgObserverPrototype
 
 
@@ -28,5 +29,6 @@ class SeenObserver(PrivMsgObserverPrototype):
         #     return
         # connection.send_back(output, data)
 
-    def _is_idented_mod(self, data: dict, connection: Connection):
-        return data['nick'] in self._config.mods and connection.is_identified(data['nick'])
+    def _is_idented_mod(self, data: IRCData, connection: Connection):
+        # return data.nick in self._config.mods and connection.is_identified(data['nick'])
+        pass

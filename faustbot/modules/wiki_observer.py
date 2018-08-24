@@ -1,6 +1,8 @@
 from wikipedia import wikipedia
 
+from faustbot.communication.connection import Connection
 from faustbot.model.i18n import i18n
+from faustbot.model.irc_data import IRCData
 from faustbot.modules.prototypes.privmsg_observer_prototype import PrivMsgObserverPrototype
 
 
@@ -13,22 +15,21 @@ class WikiObserver(PrivMsgObserverPrototype):
     def help():
         return ".w <term> - fragt Wikipediaartikel zu <term> ab"
 
-    def update_on_priv_msg(self, data, connection):
-
-        if data['message'].find('.w ') == -1:
+    def update_on_priv_msg(self, data: IRCData, connection: Connection):
+        if data.message.find('.w ') == -1:
             return
+        lang = connection.config.get_channel_by_name(data.channel).lang
         i18n_server = i18n()
-        w = wikipedia.set_lang(i18n_server.get_text('wiki_lang', lang=self.config.lang))
-        q = data['message'].split(' ')
+        w = wikipedia.set_lang(i18n_server.get_text('wiki_lang', lang=lang))
+        q = data.message.split(' ')
         query = ''
         for word in q:
             if word.strip() != '.w':
                 query += word + ' '
         w = wikipedia.search(query)
-        if w.__len__() == 0:  # TODO BUG BELOW, ERROR MESSAGE NOT SHOWN!
-            connection.send_back(data['nick'] + ', ' +
-                                 i18n_server.get_text('wiki_fail',
-                                                      lang=self.config.lang),
+        if len(w) == 0:  # TODO BUG BELOW, ERROR MESSAGE NOT SHOWN!
+            connection.send_back(data.nick + ', ' +
+                                 i18n_server.get_text('wiki_fail', lang=lang),
                                  data)
             return
         try:

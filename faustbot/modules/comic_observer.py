@@ -5,7 +5,6 @@ from comics import *
 from faustbot.communication.connection import Connection
 from faustbot.modules.comic_scraper import ComicScraper
 from faustbot.modules.prototypes.privmsg_observer_prototype import PrivMsgObserverPrototype
-from faustbot.modules.title_observer import TitleObserver
 
 
 class ComicObserver(PrivMsgObserverPrototype):
@@ -34,7 +33,7 @@ class ComicObserver(PrivMsgObserverPrototype):
             headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64)'}
             req = urllib.request.Request(comic, None, headers)
             resource = urllib.request.urlopen(req)
-            title = TitleObserver.getTitle(TitleObserver(), resource)
+            title = get_title(resource)
             connection.send_back(resource.geturl() + " " + title, data)
         else:
             connection.send_back(ComicScraper.get_random_comic(comic), data)

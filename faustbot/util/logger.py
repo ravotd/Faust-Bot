@@ -1,3 +1,0 @@
-
-class Logger(object):
-    pass

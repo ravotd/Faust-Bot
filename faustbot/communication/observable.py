@@ -23,3 +23,7 @@ class Observable(object):
 
     def rm_observer(self, observer):
         self._observers.remove(observer)
+
+    # if module.__class__.__name__ in self._config.blacklist:
+    #    print(module.__class__.__name__ + " not loaded because of blacklisting")
+    #    return
