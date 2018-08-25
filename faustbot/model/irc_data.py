@@ -2,7 +2,7 @@ class IRCData(object):
 
     def __init__(self, raw=''):
         self._channel = ''
-        self._sender = ''
+        # self._sender = ''
         self._nick = ''
         self._message = ''
         self._user = ''

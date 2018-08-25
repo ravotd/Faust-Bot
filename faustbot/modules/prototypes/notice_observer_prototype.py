@@ -1,4 +1,3 @@
-from faustbot.communication import connection
 from faustbot.modules.module_type import ModuleType
 from faustbot.modules.prototypes.module_prototype import ModulePrototype
 
@@ -19,5 +18,5 @@ class NoticeObserverPrototype(ModulePrototype):
     def __init__(self):
         super().__init__()
 
-    def update_on_notice(self, data, connection: connection):
+    def update_on_notice(self, data, connection):
         raise NotImplementedError('Needs to be implemented by csubclasses!')

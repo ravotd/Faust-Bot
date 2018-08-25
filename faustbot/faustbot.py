@@ -5,7 +5,7 @@ from faustbot.model.config import Config
 from faustbot.model.user_list import UserList
 from faustbot.modules import activity_observer, ident_nickserv_observer, cookie_observer, who_observer, \
     ping_observer, drink_observer, food_observer, comic_observer, introduction_observer, hangman_observer, \
-    duck_observer, all_seen_observer, love_peace_observer, free_hugs_observer, title_observer, wiki_observer
+    duck_observer, all_seen_observer, love_peace_observer, free_hugs_observer, title_observer, wiki_observer, kicker
 from faustbot.modules.module_type import ModuleType
 from faustbot.modules.prototypes import module_prototype
 from faustbot.util.logging import enable_debug_mode, get_logger
@@ -32,7 +32,7 @@ class FaustBot(object):
         self.add_module(who_observer.WhoObserver(user_list))
         self.add_module(all_seen_observer.AllSeenObserver(user_list))
         self.add_module(ping_observer.ModulePing())
-        # self.add_module(Kicker.Kicker(user_list, self._config.idle_time))
+        self.add_module(kicker.Kicker(user_list))
         # self.add_module(SeenObserver.SeenObserver())
         self.add_module(title_observer.TitleObserver())
         self.add_module(wiki_observer.WikiObserver())
@@ -59,7 +59,7 @@ class FaustBot(object):
                 return
 
     def add_module(self, module: module_prototype):
-        self._logger.info('loaded module: {}' % module.__class__.__name__)
+        self._logger.info('loaded module: %s' % module.__class__.__name__)
         for module_type in module.get_module_types():
             observable = self._get_observable_by_module_type(module_type)
             observable.add_observer(module)

@@ -14,6 +14,7 @@ from faustbot.communication.ping_observable import PingObservable
 from faustbot.communication.privmsg_observable import PrivmsgObservable
 from faustbot.model.config import Config
 from faustbot.model.irc_data import IRCData
+from faustbot.util import logging
 from faustbot.util.buffer import StringBuffer
 
 
@@ -66,20 +67,19 @@ class Connection(object):
         except socket.timeout:
             return False
         data = data.decode('UTF-8', errors='replace')
-        # print('received: \n' + data)
+        self._logger.debug('received: ' + data)
         data_lines = self._receiver_buffer.append(data)
         if data is None:
             return False
-        # print('split: ')
         self._notify(data_lines)
         return True
 
     def _notify(self, data_lines: iter):
         for data in data_lines:
-            # print(data)
             data = data.strip()
             self.data = IRCData(data)
-
+            self._logger.debug('Received message from %s in channel %s: %s' % (self.data.nick, self.data.channel,
+                                                                               self.data.message))
             if self.data.command == 'PING':
                 self.ping_observable.input(self.data, self)
             elif self.data.command == 'JOIN':
@@ -98,8 +98,8 @@ class Connection(object):
                 try:
                     int(self.data.command)
                     self.magic_number_observable.input(self.data, self)
-                except Exception:
-                    pass
+                except Exception as e:
+                    self._logger.error(e)
 
     def _send_unbuffered(self, message: str):
         self._irc.send(message.encode())
@@ -123,7 +123,7 @@ class Connection(object):
         self._irc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
         self._irc.connect((self.config.server, self.config.port))
-        print(self._irc.recv(512))
+        self._logger.info(self._irc.recv(512))
         self._send_unbuffered("NICK %s \r\n" % self.config.nick)
         self._send_unbuffered("USER botty botty botty :IRC Bot\r\n")
         for c in self.config.channel:
@@ -133,6 +133,8 @@ class Connection(object):
         _thread.start_new_thread(self._send_queue_worker, ())
 
     def __init__(self, configuration: Config):
+        self._logger = logging.get_logger(Connection.__name__)
+        self._irc = None
         self.config = configuration
         self.send_queue = queue.Queue()
         self.ping_observable = PingObservable()

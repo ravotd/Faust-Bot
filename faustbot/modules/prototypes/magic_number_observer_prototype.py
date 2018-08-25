@@ -1,4 +1,3 @@
-from faustbot.communication.connection import Connection
 from faustbot.modules.module_type import ModuleType
 from faustbot.modules.prototypes.module_prototype import ModulePrototype
 
@@ -23,5 +22,5 @@ class MagicNumberObserverPrototype(ModulePrototype):
     def __init__(self):
         super().__init__()
 
-    def update_on_magic_number(self, data, connection: Connection):
+    def update_on_magic_number(self, data, connection):
         raise NotImplementedError("Some module doesn't do anything")

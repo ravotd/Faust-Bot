@@ -5,6 +5,7 @@ from urllib import request
 
 from faustbot.communication.connection import Connection
 from faustbot.modules.prototypes.privmsg_observer_prototype import PrivMsgObserverPrototype
+from faustbot.util import logging
 
 
 class TitleObserver(PrivMsgObserverPrototype):
@@ -20,19 +21,20 @@ class TitleObserver(PrivMsgObserverPrototype):
         regex = "(?P<url>https?://[^\s]+)"
         url = re.search(regex, data.message)
         if url is not None:
+            logger = logging.get_logger(self.__name__)
             url = url.group()
-            print(url)
+            logger.debug('found url: %s', url)
             try:
                 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64)', 'Accept-Language': 'de'}
                 url = url
                 req = urllib.request.Request(url, None, headers)
                 resource = urllib.request.urlopen(req)
                 title = TitleObserver.get_title(resource)
-                print(title)
+                logger.debug('fetched title for %s: %s', url, title)
                 title = title[:350]
                 connection.send_back(title, data)
             except Exception as exc:
-                print(exc)
+                logger.exception(exc)
                 pass
 
     @staticmethod
