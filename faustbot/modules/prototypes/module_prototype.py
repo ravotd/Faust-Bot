@@ -11,6 +11,10 @@ class ModulePrototype(object):
         raise NotImplementedError("This method needs to be implemented by a subclass!")
 
     @staticmethod
+    def is_channel_only():
+        return True
+
+    @staticmethod
     def help():
         raise NotImplementedError("Needs to be implemented by subclasses")
 

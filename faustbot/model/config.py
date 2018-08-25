@@ -91,7 +91,7 @@ class ChannelConfig(object):
 
     @blacklist.setter
     def blacklist(self, value: list):
-        self.blacklist = value
+        self._config_dict['blacklist'] = value
     # </editor-fold>
 
 
