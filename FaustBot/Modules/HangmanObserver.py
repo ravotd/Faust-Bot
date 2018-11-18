@@ -25,7 +25,7 @@ class HangmanObserver(PrivMsgObserverPrototype):
         if data['message'].find('.word ') != -1:
             self.takeword(data, connection)
         if data['message'].find('.stop') != -1:
-            connection.send_channel("Spiel gestoppt das Wort war: " + self.word)
+            connection.send_channel("Spiel gestoppt. Das Wort war: " + self.word)
             self.word = ''
             self.guesses = []
             self.leftTrys = 0
@@ -72,7 +72,9 @@ class HangmanObserver(PrivMsgObserverPrototype):
                 outWord += "_ "
                 failedChars += 1
         if failedChars == 0:
+            outWord = "Das ist Korrekt: "+self.word
             self.word = ''
+            return outWord
         if self.leftTrys == 0:
             outWord = "Das richtige Wort wäre gewesen:" + self.word
             self.word = ''
