@@ -72,7 +72,7 @@ class HangmanObserver(PrivMsgObserverPrototype):
                 outWord += "_ "
                 failedChars += 1
         if failedChars == 0:
-            outWord = "Das ist Korrekt: "+self.word
+            outWord = "Das ist korrekt: "+self.word
             self.word = ''
             return outWord
         if self.leftTrys == 0:
