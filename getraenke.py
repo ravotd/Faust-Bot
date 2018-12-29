@@ -11,7 +11,7 @@ getraenke = ['einen Kaffee','eine Limonade','einen Kakao','einen Tee',
                      'einen Mango-Melonesmoothie','ein Glas Hoffnung',
                      'einen frischen Pfefferminztee','eine Eisschokolade',
                      'einen Eiskaffee','einen kalten Milchshake',
-                     'eine kalte Afri Cola','ein lauwarmes Spezi',
+                     'eine kalte Afri Cola','ein Soja-Milch Milchkaffee',
                      'ein Glas Joylent', 'einen Monster Energy Drink',
                      'einen Fraktal Allmachtstrank', 'einen Heiltrank',
                      'einen großen Becher Blumenwasser', 'einen Erdbeershake',
@@ -29,4 +29,5 @@ getraenke = ['einen Kaffee','eine Limonade','einen Kakao','einen Tee',
                      'ein leckeres Wasser', 'einen Robby Bubble', 'ein Glas warme Milch',
                      'ein Glas Schlamm', 'ein Glas Regenwasser', 'ein halbes Glas Kokosnussmilch',
                      'ein Glas Ingwerwasser','eine Tasse lauwarmen Sencha',
-                     'ein Glass Chai Latte mit Sojamilch','ein Tässchen kalten Sencha']
+                     'ein Glass Chai Latte mit Sojamilch','ein Tässchen kalten Sencha'
+                     'einen Cappucino','eine Tasse Cashew-Milch']
