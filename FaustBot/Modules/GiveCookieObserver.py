@@ -4,7 +4,7 @@ from FaustBot.Communication import Connection
 from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 
 kekse = ['einen Schokoladenkeks', 'einen Vanillekeks', 'einen Doppelkeks', 'keinen Keks',
-         'einen Keks', 'einen Erdbeerkeks', 'einen Schokoladen Cheescake keks',
+         'einen Keks', 'einen Erdbeerkeks', 'einen Schokoladen-Cheesecake-Keks',
          'einen Glückskeks', 'einen Scherzkeks', 'einen Unglückskeks']
 
 
