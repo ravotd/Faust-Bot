@@ -17,6 +17,7 @@ class HangmanObserver(PrivMsgObserverPrototype):
         self.word = ''
         self.guesses = ['-','/',' ','_']
         self.leftTrys = 0
+        self.wrongGuesses = []
 
     def update_on_priv_msg(self, data, connection: Connection):
         if data['message'].find('.guess ') != -1:
@@ -29,7 +30,18 @@ class HangmanObserver(PrivMsgObserverPrototype):
             self.word = ''
             self.guesses = []
             self.leftTrys = 0
+            self.wrongGuesses =[]
+        if data['message'].find('.hint') != -1:
+            self.hint(data, connection)
 
+    def hint(self,data,connection):
+        wrongGuessesString = "Falsch geratene Buchstaben bis jetzt:"
+        for w in self.wrongGuesses:
+            if w == self.wrongGuesses[0]:
+                wrongGuessesString += w
+            else:
+                wrongGuessesString += "," + w
+        connection.send_back(wrongGuessesString, data)
 
     def guess(self, data,connection):
         if data['channel'] != connection.details.get_channel():
@@ -44,9 +56,10 @@ class HangmanObserver(PrivMsgObserverPrototype):
             connection.send_channel("Korrekt: "+ tried)
             return
         if tried in self.word:
-            self.guesses += tried
+            self.guesses.append(tried)
         else:
             self.leftTrys -= 1
+            self.wrongGuesses.append(tried)
         connection.send_channel(self.prepareWord())
 
     def takeword(self, data, connection):
@@ -56,8 +69,10 @@ class HangmanObserver(PrivMsgObserverPrototype):
             log.close
             self.word = data['message'].split(' ')[1].upper()
             self.guesses = ['-','/',' ','_']
+            self.wrongGuesses = []
             self.leftTrys = 11
             connection.send_back( "Danke für das Wort, es ist nun im Spiel!", data)
+            connection.send_channel("Das Wort ist von: "+data['nick'])
             connection.send_channel(self.prepareWord())
         else:
             connection.send_back("Sorry es läuft bereits ein Wort", data)
