@@ -35,7 +35,7 @@ class HangmanObserver(PrivMsgObserverPrototype):
             self.hint(data, connection)
 
     def hint(self,data,connection):
-        wrongGuessesString = "Falsch geratene Buchstaben bis jetzt:"
+        wrongGuessesString = "Falsch geratene Buchstaben bis jetzt: "
         for w in self.wrongGuesses:
             if w == self.wrongGuesses[0]:
                 wrongGuessesString += w
@@ -53,7 +53,7 @@ class HangmanObserver(PrivMsgObserverPrototype):
             return
         if tried == self.word:
             self.word = ''
-            connection.send_channel("Korrekt: "+ tried)
+            connection.send_channel("Das ist korrekt: "+ tried)
             return
         if tried in self.word:
             self.guesses.append(tried)
