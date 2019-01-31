@@ -6,7 +6,7 @@ from collections import defaultdict
 class HangmanObserver(PrivMsgObserverPrototype):
     @staticmethod
     def cmd():
-        return ['.guess', '.word', '.stop']
+        return ['.guess', '.word', '.stop','.hint','.score','.spielregeln']
 
     @staticmethod
     def help():
@@ -38,6 +38,8 @@ class HangmanObserver(PrivMsgObserverPrototype):
             self.hint(data, connection)
         if data['message'].find('.score') != -1:
             self.printScore(data, connection)
+        if data['message'].find('.spielregeln') != -1:
+            self.spielregeln(data, connection)
 
     def printScore (self,data,connection):
         connection.send_back(data['nick']+" hat einen Score von: "+str(self.score[data['nick']]), data)
@@ -116,3 +118,15 @@ class HangmanObserver(PrivMsgObserverPrototype):
             if char not in self.guesses:
                 failedChars += 1
         return failedChars
+
+    def spielregeln(self, data, connection):
+        connection.send_back("""Wort starten mit ".word Wort" im Query mit dem Bot""", data)
+        connection.send_back("""Raten mit ".guess Buchstabe" im Channel""", data)
+        connection.send_back("""Geraten werden können einzelne Buchstaben oder das ganze Wort.""", data)
+        connection.send_back("""Alle dürfen durcheinander raten. Es gibt keine Reihenfolge.""", data)
+        connection.send_back("""".hint" gibt alle bereits falsch geratenen Buchstaben aus.""", data)
+        connection.send_back("""Bei 2 verbleibenden Versuchen darf nach einem Tipp vom Steller des Wortes gefragt werden.""", data)
+        connection.send_back("""Wer ein Wort errät, darf das nächste stellen.""" , data)
+        connection.send_back("""Wird ein Wort nicht gelöst, darf derjenige, der es gestellt hat, nochmal.""" , data)
+        connection.send_back("""Zulässig sind alle Wörter, die deutsch oder im deutschen Sprachraum geläufig sind, mit Ausnahme von fsk18 Begriffen (diese dürfen in #autistenchat-fsk18 gespielt werden, sofern kein Thema läuft).""" , data)
+        connection.send_back("""Ein richtig geratener Buchstabe gibt einen Punkt, eine lösung 5 und ein falscher einenen Punkt abzug, die Aktuelle Score kann mit ".score" abgefragt werden""" , data)
