@@ -45,6 +45,7 @@ class FaustBot(object):
         self.add_module(HelpObserver.HelpObserver())
         self.add_module(IntroductionObserver.IntroductionObserver(user_list))
         self.add_module(DuckObserver.DuckObserver())
+
     def run(self):
         self._setup()
         running = True
