@@ -142,5 +142,3 @@ class HangmanObserver(PrivMsgObserverPrototype):
         connection.send_back("""Zulässig sind alle Wörter, die deutsch oder im deutschen Sprachraum geläufig sind, 
         mit Ausnahme von fsk18 Begriffen (diese dürfen in #autistenchat-fsk18 gespielt werden, sofern kein Thema 
         läuft).""", data)
-        connection.send_back("""Ein richtig geratener Buchstabe gibt einen Punkt, eine lösung 5 und ein falscher 
-        einenen Punkt abzug, die Aktuelle Score kann mit ".score" abgefragt werden""", data)
