@@ -144,7 +144,7 @@ class HangmanObserver(PrivMsgObserverPrototype):
                 outWord = "Bitte gib ein neues Wort mit .word im Query an."
                 return outWord
         if self.tries_left == 0:
-            self.score[self.worder] += 5
+            self.score[self.worder] += 11
             outWord = "Das richtige Wort wäre gewesen:" + self.word
             self.word = ''
             return outWord
