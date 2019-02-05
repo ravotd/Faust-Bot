@@ -134,13 +134,15 @@ class HangmanObserver(PrivMsgObserverPrototype):
             else:
                 outWord += "_ "
                 failedChars += 1
-        if failedChars == 0 and len(self.word > 0):
-            outWord = "Das ist korrekt: "+self.word
-            self.score[data['nick']] += 5
-            self.word = ''
-            return outWord
-        else
-            outWord = "Bitte gib ein neues Wort mit .word im Query an."
+        if failedChars == 0:
+            if len(self.word) > 0:
+                outWord = "Das ist korrekt: "+self.word
+                self.score[data['nick']] += 5
+                self.word = ''
+                return outWord
+            else:
+                outWord = "Bitte gib ein neues Wort mit .word im Query an."
+                return outWord
         if self.tries_left == 0:
             self.score[self.worder] += 5
             outWord = "Das richtige Wort wäre gewesen:" + self.word
@@ -161,7 +163,7 @@ class HangmanObserver(PrivMsgObserverPrototype):
 
     def rules(self, data, connection):
         if data['channel'] == connection.details.get_channel():
-            connection.send_back("Spielregeln bitte im Query abfragen")
+            connection.send_back("Spielregeln bitte im Query abfragen",data)
             return
         connection.send_back("""Wort starten mit ".word Wort" im Query mit dem Bot""", data)
         connection.send_back("""Raten mit ".guess Buchstabe" im Channel""", data)
