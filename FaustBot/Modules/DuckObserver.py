@@ -61,7 +61,7 @@ class DuckObserver(PrivMsgObserverPrototype, PingObserverPrototype):
             connection.send_channel("Es läuft derzeit keine Entenjagd.")
     def shoot(self, data, connection):
         if self.duck_alive == 1:
-            if randint(100) >97:
+            if randint(1,100) >97:
                 connection.send_channel(data['nick'] + " trifft daneben")
             else:
                 self.duck_alive = 0
