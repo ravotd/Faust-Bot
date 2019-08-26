@@ -8,7 +8,7 @@ from collections import defaultdict
 class DuckObserver(PrivMsgObserverPrototype, PingObserverPrototype):
     @staticmethod
     def cmd():
-        return ['.freunde', '.schiessen', '.starthunt','.stophunt']
+        return ['.freunde', '.schiessen', '.starthunt','.stophunt','.ducks']
 
     @staticmethod
     def help():
@@ -42,6 +42,8 @@ class DuckObserver(PrivMsgObserverPrototype, PingObserverPrototype):
             self.duck_alive = 0
             connection.send_channel("Jagd beended")
             return
+        if data['message'].find('.ducks') != -1:
+            connection.send_channel(data['nick'] + " hat schon " + str(self.ducks_befriend[data['nick']]) + " befreundete Enten und " + str(self.ducks_hunt[data['nick']]) + " getötete Enten.")
         if data['message'].find('.freunde') != -1:
             self.befriend(data, connection)
         if data['message'].find('.schiessen') != -1:
@@ -57,12 +59,14 @@ class DuckObserver(PrivMsgObserverPrototype, PingObserverPrototype):
             connection.send_channel(data['nick']+ " probiert eine nicht existente Ente zu befreunden")
         if self.active == 0:
             connection.send_channel("Es läuft derzeit keine Entenjagd.")
-
     def shoot(self, data, connection):
         if self.duck_alive == 1:
-            self.duck_alive = 0
-            self.ducks_hunt[data['nick']] += 1
-            connection.send_channel(data['nick'] + " hat schon " + str(self.ducks_befriend[data['nick']]) + " befreundete Enten und " + str(self.ducks_hunt[data['nick']]) + " getötete Enten.")
+            if randint(100) >97:
+                connection.send_channel(data['nick'] + " trifft daneben")
+            else:
+                self.duck_alive = 0
+                self.ducks_hunt[data['nick']] += 1
+                connection.send_channel(data['nick'] + " hat schon " + str(self.ducks_befriend[data['nick']]) + " befreundete Enten und " + str(self.ducks_hunt[data['nick']]) + " getötete Enten.")
             return
         if (self.duck_alive == 0 and self.active == 1):
             connection.send_channel(data['nick']+ " schiesst ins Nichts")
