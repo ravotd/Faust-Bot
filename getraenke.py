@@ -30,4 +30,6 @@ getraenke = ['einen Kaffee','eine Limonade','einen Kakao','einen Tee',
                      'ein Glas Schlamm', 'ein Glas Regenwasser', 'ein halbes Glas Kokosnussmilch',
                      'ein Glas Ingwerwasser','eine Tasse lauwarmen Sencha',
                      'ein Glas Chai Latte mit Sojamilch','ein Tässchen kalten Sencha',
-                     'einen Cappuccino','eine Tasse Cashew-Milch']
+                     'einen Cappuccino','eine Tasse Cashew-Milch',
+                     'eine Karaffe Hoffnung', 'eine Kanne Zuversicht','ein Glas Zuversicht',
+                     'ein Soja-Chai-Latte (Kids Temperature)']
