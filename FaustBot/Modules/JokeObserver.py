@@ -67,7 +67,7 @@ jokes = [['Was ist orange und geht über die Berge?'
 ,'Ein Klopfsalat.']
 ['as ist braun, sehr zäh und fliegt umher?'
 ,'Eine Ledermaus.']
-['Was macht 'Muh' und hilft beim Anziehen?'
+['Was macht "Muh" und hilft beim Anziehen?'
 ,'Ein Kuhlöffel.']
 ['Was ist viereckig, hat Noppen und einen Sprachfehler?'
 ,'Ein Legosteniker.']
