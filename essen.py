@@ -14,4 +14,5 @@ essen = ['einen Wirsingeintopf', 'einen Lahmacun', 'eine Portion Kartoffelbrei',
                      'ein paar Mini-Frühlingsrollen', 'einen Glückskeks mit dem Spruch \"Du wirst heute nicht satt.\" ',
                      'würziges Kassler mit Sauerkraut', 'ein Schälchen Apfelmus', 'Bratkartoffeln', 'asiatisches Wokgemüse',
                      'einen fruchtigen Lolli', 'einen Teller mit süßem Milchreis', 'eine Lasagne', 'chinesisch gebratene Nudeln',
-                     'ein Thunfisch-Baguette', 'fünf mexikanische Tacos', 'einen Blaubeermuffin mit Sahne', 'eine Hand voll alte Erdnüsse']
+                     'ein Thunfisch-Baguette', 'fünf mexikanische Tacos', 'einen Blaubeermuffin mit Sahne', 'eine Hand voll alte Erdnüsse',
+                     'ein Durianeis am Stiel']
