@@ -45,19 +45,25 @@ class HangmanObserver(PrivMsgObserverPrototype):
             self.print_score(data, connection)
         if data['message'].find('.spielregeln') != -1:
             self.rules(data, connection)
+        if data['message'].find('.look') != -1:
+            self.look(data, connection)
 
+    def look(self,data, connection):
+        connection.send_channel(self.prepare_word(data))
     def print_score(self, data, connection):
         connection.send_back(data['nick']+" hat einen Score von: " + str(self.score[data['nick']]), data)
 
     def hint(self, data, connection):
         wrongGuessesString = ""
+        if len(self.wrong_guessed) == 0 and len(self.wrongly_guessedWords) == 0:
+            wrongGuessesString = "Noch keine falschen Buchstaben."
         if len(self.wrong_guessed) > 0:
             wrongGuessesString += "Falsch geratene Buchstaben bis jetzt: "
             for w in self.wrong_guessed:
                 if w == self.wrong_guessed[0]:
                     wrongGuessesString += w
                 else:
-                    wrongGuessesString += "," + w
+                    wrongGuessesString += ", " + w
         
         # Append wrongly guessed words    
         for w in self.wrongly_guessedWords:
@@ -145,7 +151,7 @@ class HangmanObserver(PrivMsgObserverPrototype):
                 return outWord
         if self.tries_left == 0:
             self.score[self.worder] += 11
-            outWord = "Das richtige Wort wäre gewesen:" + self.word
+            outWord = "Das richtige Wort wäre gewesen: " + self.word
             self.word = ''
             return outWord
         outWord += "Verbleibende Rateversuche: "+str(self.tries_left)
@@ -174,6 +180,5 @@ class HangmanObserver(PrivMsgObserverPrototype):
         werden.""", data)
         connection.send_back("""Wer ein Wort errät, darf das nächste stellen.""", data)
         connection.send_back("""Wird ein Wort nicht gelöst, darf derjenige, der es gestellt hat, nochmal.""", data)
-        connection.send_back("""Zulässig sind alle Wörter, die deutsch oder im deutschen Sprachraum geläufig sind, 
-        mit Ausnahme von fsk18 Begriffen (diese dürfen in #autistenchat-fsk18 gespielt werden, sofern kein Thema 
-        läuft).""", data)
+        connection.send_back("""Zulässig sind alle Wörter, die deutsch oder im deutschen Sprachraum geläufig sind.""", data)
+        connection.send_back("""mit Ausnahme von fsk18 Begriffen (diese dürfen in #autistenchat-fsk18 gespielt werden, sofern kein Thema läuft).""", data)
