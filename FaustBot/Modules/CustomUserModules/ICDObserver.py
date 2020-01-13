@@ -23,8 +23,6 @@ class ICDObserver(PrivMsgObserverPrototype):
         return 0
 
     def update_on_priv_msg(self, data, connection: Connection):
-        regex = "(?P<url>https?://[^\s]+)"
-        message = re.sub(regex, ' ', data['message'])
         if data['channel'] != connection.details.get_channel():
             return
         regex = r'\b(\w\d{2}\.?\d?)\b'
