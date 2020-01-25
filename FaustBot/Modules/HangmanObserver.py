@@ -49,6 +49,7 @@ class HangmanObserver(PrivMsgObserverPrototype):
             self.look(data, connection)
 
     def look(self,data, connection):
+        connection.send_channel("Das Wort kommt von: "+self.worder )
         connection.send_channel(self.prepare_word(data))
     def print_score(self, data, connection):
         connection.send_back(data['nick']+" hat einen Score von: " + str(self.score[data['nick']]), data)
