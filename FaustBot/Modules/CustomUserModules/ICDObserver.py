@@ -26,7 +26,7 @@ class ICDObserver(PrivMsgObserverPrototype):
         if data['channel'] != connection.details.get_channel():
             return
         regex = r'\b(\w\d{2}\.?\d?)\b'
-        codes = re.findall(regex, message)
+        codes = re.findall(regex, data['message'])
         for code in codes:
             code = code.capitalize()
             text = self.get_icd(code)
