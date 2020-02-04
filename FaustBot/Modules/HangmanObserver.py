@@ -39,6 +39,7 @@ class HangmanObserver(PrivMsgObserverPrototype):
             self.wrong_guessed = []
             self.worder = ''
             self.wrongly_guessedWords = []
+            self.worder = ''
         if data['message'].find('.hint') != -1:
             self.hint(data, connection)
         if data['message'].find('.score') != -1:
@@ -49,8 +50,10 @@ class HangmanObserver(PrivMsgObserverPrototype):
             self.look(data, connection)
 
     def look(self,data, connection):
-        connection.send_channel("Das Wort kommt von: "+self.worder )
+        if self.worder != '':
+            connection.send_channel("Das Wort kommt von: "+self.worder )
         connection.send_channel(self.prepare_word(data))
+
     def print_score(self, data, connection):
         connection.send_back(data['nick']+" hat einen Score von: " + str(self.score[data['nick']]), data)
 
@@ -90,6 +93,7 @@ class HangmanObserver(PrivMsgObserverPrototype):
             score = (word_unique_chars / 10) * self.count_missing_unique()
             self.score[data['nick']] += int(score * 10)
             self.word = ''
+            self.worder = ''
             connection.send_channel("Das ist korrekt: " + guess)
             return
         if guess in self.word:
@@ -146,6 +150,7 @@ class HangmanObserver(PrivMsgObserverPrototype):
                 outWord = "Das ist korrekt: "+self.word
                 self.score[data['nick']] += 5
                 self.word = ''
+                self.worder = ''
                 return outWord
             else:
                 outWord = "Bitte gib ein neues Wort mit .word im Query an."
@@ -154,6 +159,7 @@ class HangmanObserver(PrivMsgObserverPrototype):
             self.score[self.worder] += 11
             outWord = "Das richtige Wort wäre gewesen: " + self.word
             self.word = ''
+            self.worder = ''
             return outWord
         outWord += "Verbleibende Rateversuche: "+str(self.tries_left)
         return outWord
