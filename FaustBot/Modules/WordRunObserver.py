@@ -56,10 +56,10 @@ class WordRunObserver(PrivMsgObserverPrototype):
     def check_word(self,player , message, connection):
         for word in message.split():
             if self.gamestatus == 1:
-                if word.startswith(self.syllable):
+                if word.upper().startswith(self.syllable.upper()):
                     self.add_to_dict(player, word, connection)
             if self.gamestatus == 2:
-                if word.endswith(self.syllable):
+                if word.upper().endswith(self.syllable.upper()):
                     self.add_to_dict(player, word, connection)
 
     def add_to_dict(self, nick, word, connection):
@@ -78,9 +78,9 @@ class WordRunObserver(PrivMsgObserverPrototype):
             connection.send_channel("Das Wort muss mit " + self.syllable + "- beginnen")
         if self.gamestatus == 2:
             connection.send_channel("Das Wort muss mit -" + self.syllable + " enden")
-        sleep(240)
-        connection.send_channel("Noch eine Minute")
         sleep(60)
+        connection.send_channel("Noch 30 Sekunden")
+        sleep(30)
         player_score = defaultdict(int)
         s = "Folgende Ergebnisse: "
         for p in self.player.keys():
@@ -88,7 +88,7 @@ class WordRunObserver(PrivMsgObserverPrototype):
                 print(p+" "+w)
                 player_score[p] += 1
         for p in self.player.keys():
-            s = s + p + " : "+str(player_score[p])+ " "
+            s = s + p + " : "+str(player_score[p])+ "; "
         connection.send_channel(s)
         self.gamestatus = 0
         self.player = {}
