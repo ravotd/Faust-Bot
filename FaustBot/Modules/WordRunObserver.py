@@ -65,7 +65,7 @@ class WordRunObserver(PrivMsgObserverPrototype):
     def add_to_dict(self, nick, word, connection):
         for p in self.player.keys():
             for w in self.player[p]:
-                if w == word:
+                if w.upper() == word.upper():
                     connection.send_channel("Das Wort "+word+" wurde bereits von "+p+ " genannt")
                     return
         if nick not in self.player:
