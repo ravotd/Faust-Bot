@@ -78,7 +78,7 @@ class WordRunObserver(PrivMsgObserverPrototype):
             connection.send_channel("Das Wort muss mit " + self.syllable + "- beginnen")
         if self.gamestatus == 2:
             connection.send_channel("Das Wort muss mit -" + self.syllable + " enden")
-        sleep(60)
+        sleep(150)
         connection.send_channel("Noch 30 Sekunden")
         sleep(30)
         player_score = defaultdict(int)
@@ -92,8 +92,3 @@ class WordRunObserver(PrivMsgObserverPrototype):
         connection.send_channel(s)
         self.gamestatus = 0
         self.player = {}
-
-
-
-
-
