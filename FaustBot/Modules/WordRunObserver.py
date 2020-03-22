@@ -55,6 +55,8 @@ class WordRunObserver(PrivMsgObserverPrototype):
 
     def check_word(self,player , message, connection):
         for word in message.split():
+            if word == '.a':
+                continue
             if self.gamestatus == 1:
                 if word.upper().startswith(self.syllable.upper()):
                     self.add_to_dict(player, word, connection)

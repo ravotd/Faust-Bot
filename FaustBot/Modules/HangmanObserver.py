@@ -53,6 +53,7 @@ class HangmanObserver(PrivMsgObserverPrototype):
         if self.worder != '':
             connection.send_channel("Das Wort kommt von: "+self.worder )
         connection.send_channel(self.prepare_word(data))
+        self.hint(data,connection)
 
     def print_score(self, data, connection):
         connection.send_back(data['nick']+" hat einen Score von: " + str(self.score[data['nick']]), data)
@@ -77,8 +78,10 @@ class HangmanObserver(PrivMsgObserverPrototype):
                 wrongGuessesString += "Falsche Wörter: " + w
             else:
                 wrongGuessesString += ", " + w
-                
-        connection.send_back(wrongGuessesString, data)
+        if self.worder == "":
+            wrongGuessesString = ""
+        else:
+            connection.send_back(wrongGuessesString, data)
 
     def guess(self, data, connection):
         if data['channel'] != connection.details.get_channel():
