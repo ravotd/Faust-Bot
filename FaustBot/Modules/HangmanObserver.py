@@ -3,8 +3,8 @@ from FaustBot.Communication.Connection import Connection
 from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 from collections import defaultdict
 from threading import Lock
-
-
+import csv
+import random
 class HangmanObserver(PrivMsgObserverPrototype):
     @staticmethod
     def cmd():
@@ -31,6 +31,8 @@ class HangmanObserver(PrivMsgObserverPrototype):
             return
         if data['message'].find('.word ') != -1:
             self.take_word(data, connection)
+        if data['message'].find('han') != -1:
+            self.start_solo_game(data, connection)
         if data['message'].find('.stop') != -1 and not data['message'].find('.stophunt') != -1:
             connection.send_channel("Spiel gestoppt. Das Wort war: " + self.word)
             self.word = ''
@@ -135,6 +137,25 @@ class HangmanObserver(PrivMsgObserverPrototype):
             connection.send_back("Danke für das Wort, es ist nun im Spiel!", data)
             connection.send_channel("Das Wort ist von: "+data['nick'])
             self.worder = data['nick']
+            connection.send_channel(self.prepare_word(data))
+        else:
+            connection.send_back("Sorry es läuft bereits ein Wort", data)
+
+    def start_solo_game(self, data, connection):
+        if self.word == '':
+            wordList = open("HangmanLog")
+            wordListWords = csv.reader(wordList, delimiter=';', quotechar='|')
+            randomChoicePool = []
+            for word in wordListWords:
+                randomChoicePool.append(word[1].strip())
+            self.word = random.choice(randomChoicePool)
+            self.guesses = ['-', '/', ' ', '_']
+            self.wrong_guessed = []
+            self.tries_left = 11
+            self.wrongly_guessedWords = []
+            connection.send_back("Danke für das Wort, es ist nun im Spiel!", data)
+            connection.send_channel("Das Wort ist von: Botty")
+            self.worder = "Botty"
             connection.send_channel(self.prepare_word(data))
         else:
             connection.send_back("Sorry es läuft bereits ein Wort", data)
