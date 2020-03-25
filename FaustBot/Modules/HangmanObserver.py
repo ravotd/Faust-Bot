@@ -153,7 +153,7 @@ class HangmanObserver(PrivMsgObserverPrototype):
             self.wrong_guessed = []
             self.tries_left = 11
             self.wrongly_guessedWords = []
-            connection.send_channel("Das Wort wurde automatisch aus einem Vergangenen Spiel übernommen von: Botty")
+            connection.send_channel("Automatisch gewähltes Wort")
             self.worder = "Botty"
             connection.send_channel(self.prepare_word(data))
         else:
