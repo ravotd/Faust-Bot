@@ -150,8 +150,6 @@ class HangmanObserver(PrivMsgObserverPrototype):
                 randomChoicePool.append(word[1].strip())
             wordList.close()
             self.word = random.choice(randomChoicePool)
-            while len(self.word) < 5:
-                random.random.choice(randomChoicePool)
             self.guesses = ['-', '/', ' ', '_']
             self.wrong_guessed = []
             self.tries_left = 11
