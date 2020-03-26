@@ -4,7 +4,8 @@ from FaustBot.Model.ConnectionDetails import ConnectionDetails
 from FaustBot.Modules import ActivityObserver, IdentNickServObserver, GiveCookieObserver, LoveAndPeaceObserver, \
     FreeHugsObserver, WhoObserver, Kicker, ModulePrototype, PingAnswerObserver, SeenObserver, TitleObserver, \
     UserList, WikiObserver, GiveDrinkObserver, GiveFoodObserver, ComicObserver, HelpObserver, \
-    IntroductionObserver, HangmanObserver, DuckObserver, AllSeenObserver, JokeObserver,TellObserver, WordRunObserver
+    IntroductionObserver, HangmanObserver, DuckObserver, AllSeenObserver, JokeObserver,TellObserver, WordRunObserver,\
+    GiveIceObserver
 from FaustBot.Modules.CustomUserModules import GlossaryModule, ICDObserver, ModmailObserver
 from FaustBot.Modules.ModuleType import ModuleType
 
@@ -48,6 +49,7 @@ class FaustBot(object):
         self.add_module(JokeObserver.JokeObserver())
         self.add_module(TellObserver.TellObserver())
         self.add_module(WordRunObserver.WordRunObserver())
+        self.add_module(GiveIceObserver.GiveIceObserver())
 
     def run(self):
         self._setup()
