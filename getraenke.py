@@ -32,4 +32,10 @@ getraenke = ['einen Kaffee','eine Limonade','einen Kakao','einen Tee',
                      'ein Glas Chai Latte mit Sojamilch','ein Tässchen kalten Sencha',
                      'einen Cappuccino','eine Tasse Cashew-Milch',
                      'eine Karaffe Hoffnung', 'eine Kanne Zuversicht','ein Glas Zuversicht',
-                     'ein Soja-Chai-Latte (Kids Temperature)']
+                     'ein Soja-Chai-Latte (Kids Temperature)', 'eine Flasche Paulaner Spezi',
+                     'ein Pappbecher Soja-Kakao','eine Flasche Bionade Holunder',
+                     'einen Eiskalten Tehere', 'eine Runde Wasser für alle',
+                     'ein kalt gezogener Grüner Tee','ein Glas Brakwasser',
+                     'ein Pappbecher frischen Kaffe mit Sojamilch','ein Becher des Lieblingsgetränkes',
+                     'ein Glas frisch gepressten Traubensaft'
+                ]

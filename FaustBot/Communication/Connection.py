@@ -24,7 +24,7 @@ class Connection(object):
     def sender(self):
         while True:
             msg = self.send_queue.get()
-            if msg[-1] is not b'\n':
+            if msg[-1] != b'\n':
                 msg = msg + b'\n'
             self.irc.send(msg)
             time.sleep(1)
@@ -140,7 +140,7 @@ class Connection(object):
         self.irc.connect((self.details.get_server(), self.details.get_port()))
         print(self.irc.recv(512))
         self.irc.send("NICK ".encode() + self.details.get_nick().encode() + "\r\n".encode())
-        self.irc.send("USER botty botty botty :IRC Bot\r\n".encode())
+        self.irc.send("USER botty botty botty :Botty \n".encode())
         self.irc.send("JOIN ".encode() + self.details.get_channel().encode() + '\r\n'.encode())
         self.irc.send("WHO ".encode() + self.details.get_channel().encode() + '\r\n'.encode())
         _thread.start_new_thread(self.sender, ())
