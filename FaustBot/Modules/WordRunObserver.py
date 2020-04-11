@@ -42,14 +42,14 @@ class WordRunObserver(PrivMsgObserverPrototype):
 
     def begin_word(self, data, connection):
         if self.gamestatus != 0:
-            connection.send_channel("Es läuft bereits eine Spiel")
+            connection.send_channel("Es läuft bereits ein Spiel")
             return
         self.gamestatus = 1
         self.handle_game(data,connection)
 
     def end_word(self, data, connection):
         if self.gamestatus != 0:
-            connection.send_channel("Es läuft bereits eine Spiel")
+            connection.send_channel("Es läuft bereits ein Spiel")
             return
         self.gamestatus = 2
         self.handle_game(data,connection)
