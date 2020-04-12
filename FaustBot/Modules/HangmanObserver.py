@@ -1,6 +1,7 @@
 
 from FaustBot.Communication.Connection import Connection
 from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
+from FaustBot.Model.ScoreProvider import ScoreProvider
 from collections import defaultdict
 from threading import Lock
 import csv
@@ -21,7 +22,6 @@ class HangmanObserver(PrivMsgObserverPrototype):
         self.guesses = ['-', '/', ' ', '_']
         self.tries_left = 0
         self.wrong_guessed = []
-        self.score = defaultdict(int)
         self.worder = ''
         self.wrongly_guessedWords = []
 
@@ -50,6 +50,13 @@ class HangmanObserver(PrivMsgObserverPrototype):
             self.rules(data, connection)
         if data['message'].find('.look') != -1:
             self.look(data, connection)
+        if data['message'].find('.resetscore') != -1:
+            self.reset(data,connection)
+
+    def reset(self,data,connection):
+        score_provider = ScoreProvider()
+        score_provider.delete_score(data['nick'])
+        connection.send_back("Dein Score wurde gelöscht "+data['nick'], data)
 
     def look(self,data, connection):
         if self.worder != '':
@@ -58,7 +65,9 @@ class HangmanObserver(PrivMsgObserverPrototype):
         self.hint(data,connection)
 
     def print_score(self, data, connection):
-        connection.send_back(data['nick']+" hat einen Score von: " + str(self.score[data['nick']]), data)
+        punkte = self.getScore(data['nick'])
+        if punkte is not None:
+            connection.send_back(data['nick']+" hat einen Score von: " + str(punkte), data)
 
     def hint(self, data, connection):
         wrongGuessesString = ""
@@ -96,20 +105,20 @@ class HangmanObserver(PrivMsgObserverPrototype):
         word_unique_chars = len(set(self.word))
         if guess == self.word:
             score = (word_unique_chars / 10) * self.count_missing_unique()
-            self.score[data['nick']] += int(score * 10)
+            self.addToScore(data['nick'], int(score * 10))
             self.word = ''
             self.worder = ''
             connection.send_channel("Das ist korrekt: " + guess)
             return
         if guess in self.word:
-            self.score[data['nick']] += int((word_unique_chars / 20) * 10)
+            self.addToScore(data['nick'],int((word_unique_chars / 20) * 10))
             self.guesses.append(guess)
         else:
             self.tries_left -= 1
             punishment_factor = 1
             if guess in self.guesses:
                 punishment_factor = 2
-            self.score[data['nick']] -= int((word_unique_chars / 20) * punishment_factor * 10)
+            self.addToScore(data['nick'], -1*(int((word_unique_chars / 20) * punishment_factor * 10)))
             
             # append thread safe wrongly guessed characters and words
             HangmanObserver.lock.acquire()
@@ -172,7 +181,7 @@ class HangmanObserver(PrivMsgObserverPrototype):
         if failedChars == 0:
             if len(self.word) > 0:
                 outWord = "Das ist korrekt: "+self.word
-                self.score[data['nick']] += 5
+                self.addToScore(data['nick'], 5)
                 self.word = ''
                 self.worder = ''
                 return outWord
@@ -180,7 +189,7 @@ class HangmanObserver(PrivMsgObserverPrototype):
                 outWord = "Bitte gib ein neues Wort mit .word im Query an."
                 return outWord
         if self.tries_left == 0:
-            self.score[self.worder] += 11
+            self.addToScore(self.worder,11)
             outWord = "Das richtige Wort wäre gewesen: " + self.word
             self.word = ''
             self.worder = ''
@@ -213,3 +222,19 @@ class HangmanObserver(PrivMsgObserverPrototype):
         connection.send_back("""Wird ein Wort nicht gelöst, darf derjenige, der es gestellt hat, nochmal.""", data)
         connection.send_back("""Zulässig sind alle Wörter, die deutsch oder im deutschen Sprachraum geläufig sind.""", data)
         connection.send_back("""mit Ausnahme von fsk18 Begriffen (diese dürfen in #autistenchat-fsk18 gespielt werden, sofern kein Thema läuft).""", data)
+
+    def getScore(self, nick:str):
+        score_provider = ScoreProvider()
+        score = score_provider.get_score(nick)
+        if score is not None:
+            return score[1]        
+        else:
+            return 0
+    
+    def writeScore(self, nick:str, score:int):
+        score_provider = ScoreProvider()
+        score_provider.save_or_replace(nick,score)
+    
+    def addToScore(self, nick:str, add_score: int):
+        score = self.getScore(nick)
+        self.writeScore(nick, score + add_score)

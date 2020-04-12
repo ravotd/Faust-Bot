@@ -15,7 +15,7 @@ class IntroductionObserver(PrivMsgObserverPrototype):
 
     @staticmethod
     def help():
-        return ".me - kann von registrierten Nutzern verwendet werden um eine Vorstellung zu speichern00"
+        return ".me - kann von registrierten Nutzern verwendet werden um eine Vorstellung zu speichern"
 
     def update_on_priv_msg(self, data, connection: Connection):
         msg = data["message"]
