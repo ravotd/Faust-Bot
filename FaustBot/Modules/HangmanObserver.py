@@ -6,6 +6,7 @@ from collections import defaultdict
 from threading import Lock
 import csv
 import random
+
 class HangmanObserver(PrivMsgObserverPrototype):
     @staticmethod
     def cmd():
@@ -66,8 +67,7 @@ class HangmanObserver(PrivMsgObserverPrototype):
 
     def print_score(self, data, connection):
         punkte = self.getScore(data['nick'])
-        if punkte is not None:
-            connection.send_back(data['nick']+" hat einen Score von: " + str(punkte), data)
+        connection.send_back(data['nick']+" hat einen Hangman-Score von: " + str(punkte), data)
 
     def hint(self, data, connection):
         wrongGuessesString = ""
@@ -94,6 +94,25 @@ class HangmanObserver(PrivMsgObserverPrototype):
         else:
             connection.send_back(wrongGuessesString, data)
 
+    def start_solo_game(self, data, connection):
+        if self.word == '':
+            wordList = open("HangmanLog")
+            wordListWords = csv.reader(wordList, delimiter=';', quotechar='|')
+            randomChoicePool = []
+            for word in wordListWords:
+                randomChoicePool.append(word[1].strip())
+            wordList.close()
+            self.word = random.choice(randomChoicePool)
+            self.guesses = ['-', '/', ' ', '_']
+            self.wrong_guessed = []
+            self.tries_left = 11
+            self.wrongly_guessedWords = []
+            connection.send_channel("Automatisch gewähltes Wort")
+            self.worder = "Botty"
+            connection.send_channel(self.prepare_word(data))
+        else:
+            connection.send_back("Sorry es läuft bereits ein Wort", data)
+
     def guess(self, data, connection):
         if data['channel'] != connection.details.get_channel():
             connection.send_back("Sorry kein raten im Query", data)
@@ -118,8 +137,9 @@ class HangmanObserver(PrivMsgObserverPrototype):
             punishment_factor = 1
             if guess in self.guesses:
                 punishment_factor = 2
-            self.addToScore(data['nick'], -1*(int((word_unique_chars / 20) * punishment_factor * 10)))
-            
+            self.addToScore(data['nick'], -1)
+            #(int((word_unique_chars / 20) * punishment_factor * 10))
+
             # append thread safe wrongly guessed characters and words
             HangmanObserver.lock.acquire()
             try:
@@ -129,8 +149,8 @@ class HangmanObserver(PrivMsgObserverPrototype):
                     else:
                         self.wrongly_guessedWords.append(guess)
             finally:
-                HangmanObserver.lock.release()        
-            
+                HangmanObserver.lock.release()
+
         connection.send_channel(self.prepare_word(data))
 
     def take_word(self, data, connection):
@@ -146,25 +166,6 @@ class HangmanObserver(PrivMsgObserverPrototype):
             connection.send_back("Danke für das Wort, es ist nun im Spiel!", data)
             connection.send_channel("Das Wort ist von: "+data['nick'])
             self.worder = data['nick']
-            connection.send_channel(self.prepare_word(data))
-        else:
-            connection.send_back("Sorry es läuft bereits ein Wort", data)
-
-    def start_solo_game(self, data, connection):
-        if self.word == '':
-            wordList = open("HangmanLog")
-            wordListWords = csv.reader(wordList, delimiter=';', quotechar='|')
-            randomChoicePool = []
-            for word in wordListWords:
-                randomChoicePool.append(word[1].strip())
-            wordList.close()
-            self.word = random.choice(randomChoicePool)
-            self.guesses = ['-', '/', ' ', '_']
-            self.wrong_guessed = []
-            self.tries_left = 11
-            self.wrongly_guessedWords = []
-            connection.send_channel("Automatisch gewähltes Wort")
-            self.worder = "Botty"
             connection.send_channel(self.prepare_word(data))
         else:
             connection.send_back("Sorry es läuft bereits ein Wort", data)
@@ -233,7 +234,7 @@ class HangmanObserver(PrivMsgObserverPrototype):
     
     def writeScore(self, nick:str, score:int):
         score_provider = ScoreProvider()
-        score_provider.save_or_replace(nick,score)
+        score_provider.save_or_replace(nick, score)
     
     def addToScore(self, nick:str, add_score: int):
         score = self.getScore(nick)
