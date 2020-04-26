@@ -19,7 +19,18 @@ class GiveDrinkToObserver(PrivMsgObserverPrototype):
             return
         receiver = data['message'].split()[1]
         if receiver == data['nick']:
-            connection.send_back('Bitte nutze .drink um dir selbst ein Getränk zu besiorgen', data)
+            connection.send_back('Bitte nutze .drink um dir selbst ein Getränk zu besorgen', data)
             return
+        type = data['message'].split()[2]
+        if type is not None:
+            matchingDrinks = []
+            for drink in getraenke:
+                if type in drink:
+                    matchingDrinks.append(drink)
+            if matchingDrinks:
+                connection.send_back(
+                    '\001ACTION serviert ' + receiver + ' ' + random.choice(matchingDrinks) + '. Schöne Grüße von ' + data[
+                        'nick'] + '\001', data)
+                return
         connection.send_back('\001ACTION serviert ' + receiver + ' ' + random.choice(getraenke) + '. Schöne Grüße von '+data['nick']+'\001', data)
 

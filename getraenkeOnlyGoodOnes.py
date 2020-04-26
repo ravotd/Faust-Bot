@@ -10,7 +10,7 @@ getraenke = ['einen Kaffee in einer Tasse aus blauem Porzelan','eine Limonade in
              'einen frischen Pfefferminztee','eine Eisschokolade mit Sahne','einen Eiskaffee mit Sahne',
              'einen kalten Milchshake mit deinem Lieblingseis',
              'eine kalte Afri Cola','ein Sojamilch Milchkaffee mit einem Keks neben der Tasse',
-             'einen Soja Latte Machiato mit einem Keks neben der Tasse', 'einen Monster Energy Drink aus der Dose',
+             'einen Soja Latte Machiato mit einem Keks neben der Tasse', 'einen Monster Energy Drink in der Dose',
              'einen Blaubeersmoothie','ein kaltes Spezi mit einer Scheibe Zitrone am Rand', 'eine Karaffe kaltes Sprudelwasser',
              'einen großen Becher Kirsch-Banane-Nektar',
              'einen kalten Rockstar Energy', 'eine Mio Mio Mate',
