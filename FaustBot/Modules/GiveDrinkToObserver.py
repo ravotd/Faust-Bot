@@ -30,7 +30,7 @@ class GiveDrinkToObserver(PrivMsgObserverPrototype):
         if type is not None:
             matchingDrinks = []
             for drink in getraenke:
-                if type in drink:
+                if type.lower() in drink.lower():
                     matchingDrinks.append(drink)
             if matchingDrinks:
                 connection.send_back(
