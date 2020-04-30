@@ -6,6 +6,9 @@ from FaustBot.Communication.Connection import Connection
 from FaustBot.Model.UserProvider import UserProvider
 from FaustBot.Modules.UserList import UserList
 from getraenke import getraenke
+from essen import essen
+from icecreamlist import icecream
+
 from ..Modules.PingObserverPrototype import PingObserverPrototype
 
 
@@ -35,7 +38,7 @@ class Kicker(PingObserverPrototype):
                     and 'freenode/staff' not in host and 'freenode/utility-bot' not in host:
                 if self.warned_users[user] % 30 == 0:
                     connection.send_channel(
-                        '\001ACTION schenkt ' + user + ' ' + random.choice(getraenke) + ' ein.\001')
+                        '\001ACTION serviert ' + user + ' ' + random.choice(getraenke+essen+icecream) + '.\001')
                 self.warned_users[user] += 1
                 if self.warned_users[user] % 29 == 0:
                     connection.raw_send("KICK " + connection.details.get_channel() + " " + user +
