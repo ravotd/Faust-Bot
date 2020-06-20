@@ -2,7 +2,7 @@ icecream = [
     'drei Kugeln Schokoladeneis', 'eine Tüte Stracciatellaeis', 
     'einen Becher Himbeereis', 'ein Schälchen Mango-Erdbeer-Eis', 
     'ein Schälchen Heidelbeer-Pfirsich-Eis', 'ein Wassermeloneneis am Stiel', 
-    'eine Tüte Erdbeereis', 'Erdbeereis mit frischen Erdbeeren','zwei Kugeln Bananeneis'
+    'eine Tüte Erdbeereis', 'Erdbeereis mit frischen Erdbeeren','zwei Kugeln Bananeneis',
     'einen Becher Joghurteis', '6 Kugeln Heidelbeereis in einer glutenfreien Tüte',
     'Erdbeer-Joghurt-Eis mit bunten Streuseln', 'ein Kokoseis',
     'einen Eimer Schlumpfeis', 'eine Kugel Vanilleeis',
@@ -23,5 +23,7 @@ icecream = [
     'ein Durianeis am Stiel', 'ein Himbeereis', 'einen Eiskaffee',
     'einen gefrorenen Keks', 'ein Packung Ben and Jerry\'s Cookie Dough',
     'ein Walnusseis', 'ein Pistazieneis', 'ein Haselusseis',
-    'ein Schwimmbecken voll Brombeereis'
+    'ein Schwimmbecken voll Brombeereis','ein Glas mit Wasser mit binären Eiswürfeln',
+    'einen frisch aufgeschlagenen Matcha in einer Teeschale',
+    'Einen geschäumten Matcha in einer Teeschale',
     ]
