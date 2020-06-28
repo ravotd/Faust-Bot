@@ -123,14 +123,15 @@ class HangmanObserver(PrivMsgObserverPrototype):
             return
         word_unique_chars = len(set(self.word))
         if guess == self.word:
-            score = (word_unique_chars / 10) * self.count_missing_unique()
-            self.addToScore(data['nick'], int(score * 10))
+            score = word_unique_chars * self.count_missing_unique()
+            self.addToScore(data['nick'], int(score))
             self.word = ''
             self.worder = ''
             connection.send_channel("Das ist korrekt: " + guess)
             return
         if guess in self.word:
-            self.addToScore(data['nick'],int((word_unique_chars / 20) * 10))
+            score = word_unique_chars / 2
+            self.addToScore(data['nick'], int(score))
             self.guesses.append(guess)
         else:
             self.tries_left -= 1
