@@ -22,6 +22,10 @@ getraenke = ['einen Kaffee in einer Tasse aus blauem Porzelan','eine Limonade in
              'eine edle Tasse Soja-Kakao','eine Flasche Bionade Holunder',
              'einen eiskalten Tehere',
              'einen kalt gezogenen grünen Tee',
-             'eine edle Tasse frischen Kaffee mit Sojamilch','ein Glas frisch gepressten Traubensaft'
-             'ein Wasser in einem Glas mit einem schönen Schirmchen','einen geschäumten Matcha in einer Teeschale'
-                ]
+             'eine edle Tasse frischen Kaffee mit Sojamilch','ein Glas frisch gepressten Traubensaft',
+             'ein Wasser in einem Glas mit einem schönen Schirmchen','einen geschäumten Matcha in einer Teeschale',
+             'ein verziertes Glas mit kalter Hafermilchschokolade','eine große Flasche Fassbrause mit Ploppverschluss',
+             'einen frisch aufgeschlagenen Matcha in einer Teeschale',
+             'einen geschäumten Matcha in einer Teeschale'
+             ]
+

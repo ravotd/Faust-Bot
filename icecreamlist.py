@@ -24,6 +24,5 @@ icecream = [
     'einen gefrorenen Keks', 'ein Packung Ben and Jerry\'s Cookie Dough',
     'ein Walnusseis', 'ein Pistazieneis', 'ein Haselusseis',
     'ein Schwimmbecken voll Brombeereis','ein Glas mit Wasser mit binären Eiswürfeln',
-    'einen frisch aufgeschlagenen Matcha in einer Teeschale',
-    'Einen geschäumten Matcha in einer Teeschale',
+    'einen Coppa del Nono', 'ein Bum bum'
     ]

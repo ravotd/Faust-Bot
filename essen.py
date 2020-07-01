@@ -15,4 +15,4 @@ essen = ['einen Wirsingeintopf', 'einen Lahmacun', 'eine Portion Kartoffelbrei',
                      'würziges Kassler mit Sauerkraut', 'ein Schälchen Apfelmus', 'Bratkartoffeln', 'asiatisches Wokgemüse',
                      'einen fruchtigen Lolli', 'einen Teller mit süßem Milchreis', 'eine Lasagne', 'chinesisch gebratene Nudeln',
                      'ein Thunfisch-Baguette', 'fünf mexikanische Tacos', 'einen Blaubeermuffin mit Sahne', 'eine Hand voll alte Erdnüsse',
-                     'ein Durianeis am Stiel']
+                     'ein Durianeis am Stiel','eine Mango', 'einen Erdnussbutterriegel']
