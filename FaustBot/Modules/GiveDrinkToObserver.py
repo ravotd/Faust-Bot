@@ -2,8 +2,10 @@ import random
 
 from FaustBot.Communication.Connection import Connection
 from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
-from getraenkeOnlyGoodOnes import getraenke
-
+from getraenkeOnlyGoodOnes import getraenkegoodones
+from getraenke import getraenke
+from essen import essen
+from icecreamlist import icecream
 
 class GiveDrinkToObserver(PrivMsgObserverPrototype):
     @staticmethod
@@ -29,7 +31,7 @@ class GiveDrinkToObserver(PrivMsgObserverPrototype):
         type = data['message'].split()[2]
         if type is not None:
             matchingDrinks = []
-            for drink in getraenke:
+            for drink in getraenkegoodones:
                 if type.lower() in drink.lower():
                     matchingDrinks.append(drink)
             if matchingDrinks:
@@ -37,5 +39,14 @@ class GiveDrinkToObserver(PrivMsgObserverPrototype):
                     '\001ACTION serviert ' + receiver + ' ' + random.choice(matchingDrinks) + '. Schöne Grüße von ' + data[
                         'nick'] + '\001', data)
                 return
-        connection.send_back('\001ACTION serviert ' + receiver + ' ' + random.choice(getraenke) + '. Schöne Grüße von '+data['nick']+'\001', data)
+            for drink in getraenke+essen+icecream:
+                if type.lower() in drink.lower():
+                    matchingDrinks.append(drink)
+            if matchingDrinks:
+                connection.send_back(
+                    '\001ACTION serviert ' + receiver + ' ' + random.choice(matchingDrinks) + '. Schöne Grüße von ' +
+                    data[
+                        'nick'] + '\001', data)
+                return
+        connection.send_back('\001ACTION serviert ' + receiver + ' ' + random.choice(getraenkegoodones) + '. Schöne Grüße von '+data['nick']+'\001', data)
 

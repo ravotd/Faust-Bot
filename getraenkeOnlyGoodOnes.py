@@ -1,4 +1,4 @@
-getraenke = ['einen Kaffee in einer Tasse aus blauem Porzelan','eine Limonade in einem Cocktailglas mit Schirmchen',
+getraenkegoodones = ['einen Kaffee in einer Tasse aus blauem Porzelan','eine Limonade in einem Cocktailglas mit Schirmchen',
              'einen Kakao in einer großen lila Tasse mit Löffel','einen losen Tee in einem Gaiwan',
              'eine Cola mit einer Scheibe Zitrone in einem Glas mit Schirmchen',
              'kaltes Wasser','kalten selbsgemachten Eistee',
