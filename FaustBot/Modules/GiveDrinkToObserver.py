@@ -17,7 +17,7 @@ class GiveDrinkToObserver(PrivMsgObserverPrototype):
         return ".givedrink NUTZER - schenkt jemand anders ein Getränke aus"
 
     def update_on_priv_msg(self, data: dict, connection: Connection):
-        if data['message'].find('.givedrink') == -1:
+        if data['message'].find('.give') == -1:
             return
         receiver = data['message'].split()[1]
         if receiver == data['nick']:
