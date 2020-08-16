@@ -27,6 +27,8 @@ getraenkegoodones = ['einen Kaffee in einer Tasse aus blauem Porzelan','eine Lim
              'ein verziertes Glas mit kalter Hafermilchschokolade','eine große Flasche Fassbrause mit Ploppverschluss',
              'einen frisch aufgeschlagenen Matcha in einer Teeschale',
              'einen geschäumten Matcha in einer Teeschale', 'eine Tasse Glück in einer großen Tasse mit Füchsen drauf',
-             'einen Bubble Tea in einem verschnörkelten Glas mit großem Strohhalm'
+             'einen Bubble Tea in einem verschnörkelten Glas mit großem Strohhalm','einen  Rührkuchen',
+             'einen veganen Glutenfreien Karottenkuchen', "einen saftigen Schokokuchen", "eine Kirschtorte",
+             "einen Apfelkuchen", "einen Pudding-Streuselkuchen", "einen Rhababerstreusekuchen"
              ]
 
