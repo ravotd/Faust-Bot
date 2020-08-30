@@ -48,5 +48,9 @@ class GiveDrinkToObserver(PrivMsgObserverPrototype):
                     data[
                         'nick'] + '\001', data)
                 return
+            else:
+                connection.send_back(
+                    'Tut mir leid ' + data['nick'] + ', '+ type+' haben wir nicht auf der Karte!', data)
+                return
         connection.send_back('\001ACTION serviert ' + receiver + ' ' + random.choice(getraenkegoodones) + '. Schöne Grüße von '+data['nick']+'\001', data)
 
