@@ -22,7 +22,7 @@ icecream = [
     'einen Kiwislushy', 'einen Kirschshlushy', 'einen Eiszapfenslushy', 'ein Softeis',
     'ein Durianeis am Stiel', 'ein Himbeereis', 'einen Eiskaffee',
     'einen gefrorenen Keks', 'ein Packung Ben and Jerry\'s Cookie Dough',
-    'ein Walnusseis', 'ein Pistazieneis', 'ein Haselusseis',
+    'ein Walnusseis', 'ein Pistazieneis', 'ein Haselnusseis',
     'ein Schwimmbecken voll Brombeereis','ein Glas mit Wasser mit binären Eiswürfeln',
     'einen Coppa del Nono', 'ein Bum bum'
     ]

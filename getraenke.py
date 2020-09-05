@@ -38,5 +38,6 @@ getraenke = ['einen Kaffee','eine Limonade','einen Kakao','einen Tee',
                      'einen kalt gezogenen grünen Tee','ein Glas Brackwasser',
                      'einen Pappbecher frischen Kaffee mit Sojamilch','einen Becher des Lieblingsgetränkes',
                      'ein Glas frisch gepressten Traubensaft','ein Glas mit zimmerwarmer Hafermilchschokolade',
-                     'eine Bierglas mit Fassbrause','einen Bubble Tea in einem billigen Plastikbecher'
+                     'eine Bierglas mit Fassbrause','einen Bubble Tea in einem billigen Plastikbecher',
+                     'eine Tasse Roibostee'
                 ]
