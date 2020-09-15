@@ -24,7 +24,7 @@ class HanDatabaseProvider(object):
         cursor.execute(HanDatabaseProvider._GET_RANDOM_WORD)
         return cursor.fetchone()
 
-    def get_hanWord(self, HanWord: str):
+    def get_hanWord(self, HanWord):
         """
 
         :param abbreviation:
@@ -34,7 +34,7 @@ class HanDatabaseProvider(object):
         cursor.execute(HanDatabaseProvider._GET_WORD, (HanWord.upper(),))
         return cursor.fetchone()
 
-    def addWord(self, HanWord: str):
+    def addWord(self, HanWord):
         """
 
         :param abbreviation:
@@ -48,7 +48,7 @@ class HanDatabaseProvider(object):
         cursor.execute(HanDatabaseProvider._INSERT_WORD, data)
         self._database_connection.commit()
 
-    def delete_hanWord(self, HanWord: str):
+    def delete_hanWord(self, HanWord):
         cursor = self._database_connection.cursor()
         cursor.execute(HanDatabaseProvider._DELETE_WORD, (HanWord.strip(),))
         self._database_connection.commit()
