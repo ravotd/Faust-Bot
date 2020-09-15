@@ -2,6 +2,7 @@
 from FaustBot.Communication.Connection import Connection
 from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 from FaustBot.Model.ScoreProvider import ScoreProvider
+from FaustBot.Model.HanDatabaseProvider import HanDatabaseProvider
 from collections import defaultdict
 from threading import Lock
 import csv
@@ -32,7 +33,7 @@ class HangmanObserver(PrivMsgObserverPrototype):
             return
         if data['message'].find('.word ') != -1:
             self.take_word(data, connection)
-        if data['message'].find('.han') != -1:
+        if data['message'].find('.han') != -1 and not data['message'].find('.handelete') != -1:
             self.start_solo_game(data, connection)
         if data['message'].find('.stop') != -1 and not data['message'].find('.stophunt') != -1:
             connection.send_channel("Spiel gestoppt. Das Wort war: " + self.word)
@@ -53,6 +54,14 @@ class HangmanObserver(PrivMsgObserverPrototype):
             self.look(data, connection)
         if data['message'].find('.resetscore') != -1:
             self.reset(data,connection)
+        if data['message'].find('.handelete') != -1:
+            self.delete_HanWord(data, connection)
+
+    def delete_HanWord(self,data,connection):
+        if not self._is_idented_mod(data, connection):
+            return
+        if data['message'].split(' ')[1] is not None:
+            self.deleteHanWord(data['message'].split(' ')[1].upper())
 
     def reset(self,data,connection):
         score_provider = ScoreProvider()
@@ -96,13 +105,7 @@ class HangmanObserver(PrivMsgObserverPrototype):
 
     def start_solo_game(self, data, connection):
         if self.word == '':
-            wordList = open("HangmanLog")
-            wordListWords = csv.reader(wordList, delimiter=';', quotechar='|')
-            randomChoicePool = []
-            for word in wordListWords:
-                randomChoicePool.append(word[1].strip())
-            wordList.close()
-            self.word = random.choice(randomChoicePool)
+            self.word = self.getRandomHanWord()
             self.guesses = ['-', '/', ' ', '_']
             self.wrong_guessed = []
             self.tries_left = 11
@@ -156,6 +159,8 @@ class HangmanObserver(PrivMsgObserverPrototype):
 
     def take_word(self, data, connection):
         if self.word == '':
+            if data['message'].split(' ')[1] is not None:
+                self.addHanWord(data['message'].split(' ')[1].upper())
             log = open('HangmanLog', 'a')
             log.write(data['nick'] + ' ; ' + data['message'].split(' ')[1].upper() + '\n')
             log.close()
@@ -240,3 +245,22 @@ class HangmanObserver(PrivMsgObserverPrototype):
     def addToScore(self, nick:str, add_score: int):
         score = self.getScore(nick)
         self.writeScore(nick, score + add_score)
+
+    def addHanWord(self, hanWord:str):
+        hanDB = HanDatabaseProvider()
+        hanDB.addWord(hanWord.strip().upper())
+
+    def getRandomHanWord(self):
+        hanDB = HanDatabaseProvider()
+        word = hanDB.get_random_word()
+        if word is not None:
+            return word[0].upper()
+        else:
+            return "dummywort".upper()
+
+    def deleteHanWord(self, hanWord:str):
+        hanDB = HanDatabaseProvider()
+        hanDB.delete_hanWord(hanWord.strip().upper())
+
+    def _is_idented_mod(self, data: dict, connection: Connection):
+        return data['nick'] in self._config.mods and connection.is_idented(data['nick'])
