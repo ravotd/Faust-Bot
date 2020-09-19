@@ -62,6 +62,7 @@ class HangmanObserver(PrivMsgObserverPrototype):
             return
         if data['message'].split(' ')[1] is not None:
             self.deleteHanWord(data['message'].split(' ')[1].upper())
+            connection.send_back("Das Wort"+data['message'].split(' ')[1].upper()+" wurde gelöscht, " + data['nick'], data)
 
     def reset(self,data,connection):
         score_provider = ScoreProvider()
