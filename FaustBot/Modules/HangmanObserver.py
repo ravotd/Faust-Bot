@@ -59,6 +59,8 @@ class HangmanObserver(PrivMsgObserverPrototype):
 
     def delete_HanWord(self,data,connection):
         if not self._is_idented_mod(data, connection):
+            connection.send_back(
+                "Du hast keine Berechtigung Wörter zu löschen" + data['nick'], data)
             return
         if data['message'].split(' ')[1] is not None:
             self.deleteHanWord(data['message'].split(' ')[1].upper())
