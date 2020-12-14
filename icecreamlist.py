@@ -19,7 +19,7 @@ icecream = [
     'ein Cornetto Schoko vegan', 'ein Cornetto Schoko', 'ein Cornetto Erdbeer vegan',
     'ein Cornetto Erdbeer', 'Spaghettieis', 'einen Haufen Eiswürfel', 'ein Bum Bum',
     'ein warmes Kirscheis', 'ein Eis', 'ein Kaffeeeis', 'einen Apfelslushy',
-    'einen Kiwislushy', 'einen Kirschshlushy', 'einen Eiszapfenslushy', 'ein Softeis',
+    'einen Kiwislushy', 'einen Kirschslushy', 'einen Eiszapfenslushy', 'ein Softeis',
     'ein Durianeis am Stiel', 'ein Himbeereis', 'einen Eiskaffee',
     'einen gefrorenen Keks', 'ein Packung Ben and Jerry\'s Cookie Dough',
     'ein Walnusseis', 'ein Pistazieneis', 'ein Haselnusseis',
