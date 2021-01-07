@@ -25,7 +25,7 @@ class GiveDrinkToObserver(PrivMsgObserverPrototype):
             return
         if len(data['message'].split()) < 3:
             connection.send_back(
-                '\001ACTION serviert ' + receiver + ' ' + random.choice(getraenke) + '. Schöne Grüße von ' + data[
+                '\001ACTION serviert ' + receiver + ' ' + random.choice(getraenkegoodones) + '. Schöne Grüße von ' + data[
                     'nick'] + '\001', data)
             return
         type = data['message'].split()[2]
