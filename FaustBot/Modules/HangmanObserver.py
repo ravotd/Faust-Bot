@@ -231,7 +231,6 @@ class HangmanObserver(PrivMsgObserverPrototype):
         connection.send_back("""Wer ein Wort errät, darf das nächste stellen.""", data)
         connection.send_back("""Wird ein Wort nicht gelöst, darf derjenige, der es gestellt hat, nochmal.""", data)
         connection.send_back("""Zulässig sind alle Wörter, die deutsch oder im deutschen Sprachraum geläufig sind.""", data)
-        connection.send_back("""mit Ausnahme von fsk18 Begriffen (diese dürfen in #autistenchat-fsk18 gespielt werden, sofern kein Thema läuft).""", data)
 
     def getScore(self, nick:str):
         score_provider = ScoreProvider()
