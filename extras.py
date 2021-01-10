@@ -1,0 +1,1 @@
+giveextras=['eine Rolle Toilettenpapier', 'eine Schmerztablette', 'eine Packung Girlanden']

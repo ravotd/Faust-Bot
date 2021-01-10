@@ -6,6 +6,7 @@ from getraenkeOnlyGoodOnes import getraenkegoodones
 from getraenke import getraenke
 from essen import essen
 from icecreamlist import icecream
+from extras import giveextras
 
 class GiveDrinkToObserver(PrivMsgObserverPrototype):
     @staticmethod
@@ -39,7 +40,7 @@ class GiveDrinkToObserver(PrivMsgObserverPrototype):
                     '\001ACTION serviert ' + receiver + ' ' + random.choice(matchingDrinks) + '. Schöne Grüße von ' + data[
                         'nick'] + '\001', data)
                 return
-            for drink in getraenke+essen+icecream:
+            for drink in getraenke+essen+icecream+giveextras:
                 if type.lower() in drink.lower():
                     matchingDrinks.append(drink)
             if matchingDrinks:
