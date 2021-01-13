@@ -16,4 +16,5 @@ essen = ['einen Wirsingeintopf', 'einen Lahmacun', 'eine Portion Kartoffelbrei',
                      'einen fruchtigen Lolli', 'einen Teller mit süßem Milchreis', 'eine Lasagne', 'chinesisch gebratene Nudeln',
                      'ein Thunfisch-Baguette', 'fünf mexikanische Tacos', 'einen Blaubeermuffin mit Sahne', 'eine Hand voll alte Erdnüsse',
                      'ein Durianeis am Stiel','eine Mango', 'einen Erdnussbutterriegel', 'einen Eiersalat mit glutenfreiem Brötchen',
-                     'eine Schachtel Lebkuchen']
+                     'eine Schachtel Lebkuchen', 'eine Portion Falafel mit Hummus', 'ein feuriges Chilli con Soja']
+
