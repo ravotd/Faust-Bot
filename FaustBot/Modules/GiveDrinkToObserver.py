@@ -7,6 +7,9 @@ from getraenke import getraenke
 from essen import essen
 from icecreamlist import icecream
 from extras import giveextras
+kekse = ['einen Schokoladenkeks', 'einen Vanillekeks', 'einen Doppelkeks', 'keinen Keks',
+         'einen Keks', 'einen Erdbeerkeks', 'einen Schokoladen-Cheesecake-Keks',
+         'einen Glückskeks', 'einen Scherzkeks', 'einen Unglückskeks']
 
 class GiveDrinkToObserver(PrivMsgObserverPrototype):
     @staticmethod
@@ -38,6 +41,26 @@ class GiveDrinkToObserver(PrivMsgObserverPrototype):
             if matchingDrinks:
                 connection.send_back(
                     '\001ACTION serviert ' + receiver + ' ' + random.choice(matchingDrinks) + '. Schöne Grüße von ' + data[
+                        'nick'] + '\001', data)
+                return
+            if type.lower() == "drink":
+                connection.send_back(
+                    '\001ACTION serviert ' + receiver + ' ' + random.choice(getraenke) + '. Schöne Grüße von ' +
+                    data[
+                        'nick'] + '\001', data)
+                return
+
+            if type.lower() == "food":
+                connection.send_back(
+                    '\001ACTION serviert ' + receiver + ' ' + random.choice(essen) + '. Schöne Grüße von ' +
+                    data[
+                        'nick'] + '\001', data)
+                return
+
+            if type.lower() == "cookie":
+                connection.send_back(
+                    '\001ACTION serviert ' + receiver + ' ' + random.choice(kekse) + '. Schöne Grüße von ' +
+                    data[
                         'nick'] + '\001', data)
                 return
             for drink in getraenke+essen+icecream+giveextras:
