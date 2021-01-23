@@ -1,7 +1,7 @@
 
 essen = ['einen Wirsingeintopf', 'einen Lahmacun', 'eine Portion Kartoffelbrei',
                      'Spinat', 'Astronautenfutter', 'ein Snickers', 'einen Mars-Riegel', 'eine Brezel',
-                     'eine Portion Gagh', 'Filet Mignon', 'einen Döner', 'ein Teller Spaghetti Bolognese',
+                     'eine Portion Gagh', 'ein Filet Mignon', 'einen Döner', 'ein Teller Spaghetti Bolognese',
                      'ein Teller Spaghetti mit Käsesahnesoße', 'einen Obstteller', 'eine Hand voll Gummibärchen',
                      'ein gummiartiges Hühnchen', 'eine Schale mit Kartoffelchips', 'zwei Käsebrote',
                      'Okonomiyaki', 'zwei Stück Erdbeertorte', 'feuriges Chili con Carne', 'ein fluffiges Rührei',

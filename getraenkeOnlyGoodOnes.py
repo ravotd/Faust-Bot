@@ -10,7 +10,7 @@ getraenkegoodones = ['einen Kaffee in einer Tasse aus blauem Porzelan','eine Lim
              'einen frischen Pfefferminztee','eine Eisschokolade mit Sahne','einen Eiskaffee mit Sahne',
              'einen kalten Milchshake mit deinem Lieblingseis',
              'eine kalte Afri Cola','einen Sojamilch Milchkaffee mit einem Keks neben der Tasse',
-             'einen Soja Latte Machiato mit einem Keks neben der Tasse', 'einen Monster Energy Drink in der Dose',
+             'einen Soja Latte Macchiato mit einem Keks neben der Tasse', 'einen Monster Energy Drink in der Dose',
              'einen Blaubeersmoothie','ein kaltes Spezi mit einer Scheibe Zitrone am Rand', 'eine Karaffe kaltes Sprudelwasser',
              'einen großen Becher Kirsch-Banane-Nektar',
              'einen kalten Rockstar Energy', 'eine Flasche Mio Mio Mate',
@@ -30,6 +30,6 @@ getraenkegoodones = ['einen Kaffee in einer Tasse aus blauem Porzelan','eine Lim
              'einen Bubble Tea in einem verschnörkelten Glas mit großem Strohhalm','einen  Rührkuchen',
              'einen veganen Glutenfreien Karottenkuchen', "einen saftigen Schokokuchen", "eine Kirschtorte",
              "einen Apfelkuchen", "einen Pudding-Streuselkuchen", "einen Rhababerstreusekuchen",
-             'ein Glaß kalten Roibos Tee mit Vanille verfeinert'
+             'ein Glaß kalten Roibos Tee mit Vanille verfeinert','eine bunt karierte Tasse Kaffee'
              ]
 
