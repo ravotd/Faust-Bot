@@ -2,7 +2,7 @@
 from FaustBot.Communication.Connection import Connection
 from FaustBot.Modules.PrivMsgObserverPrototype import PrivMsgObserverPrototype
 from random import randrange
-
+from time import sleep
 class MathRunObserver(PrivMsgObserverPrototype):
     @staticmethod
     def cmd():
@@ -17,15 +17,13 @@ class MathRunObserver(PrivMsgObserverPrototype):
         self.players = {}
         self.solutionForGame = 0
         self.type = 0
-
+        self.running = False
 
     def update_on_priv_msg(self, data, connection: Connection):
         if data['message'].find('.s ') != -1 :
             self.solution(data, connection)
         if data['message'].find('.startMath') != -1:
             self.start_math(data, connection)
-        if data['message'].find('.stopMath') != -1:
-            self.stop_math(data, connection)
 
     def solution(self, data, connection):
         nick = data["nick"]
@@ -52,6 +50,9 @@ class MathRunObserver(PrivMsgObserverPrototype):
         if operation == 2:
             self.solutionForGame = summand1 + summand2
             connection.send_channel(str(summand1) +" + "+str(summand2) +" = ?")
+        if not self.running:
+            self.running = True
+            self.stop_Timer(data, connection)
 
     def stop_math(self, data, connection):
         for player in self.players.keys():
@@ -60,3 +61,8 @@ class MathRunObserver(PrivMsgObserverPrototype):
         self.players = {}
         self.solutionForGame = 0
         self.type = 0
+        self.running = False
+
+    def stop_Timer(self, data, connection):
+        sleep(120)
+        self.stop_math(data, connection)
