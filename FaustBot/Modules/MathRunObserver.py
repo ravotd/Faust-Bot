@@ -18,6 +18,7 @@ class MathRunObserver(PrivMsgObserverPrototype):
         self.solutionForGame = 0
         self.type = 0
         self.running = False
+        self.oldSolution = 0
 
     def update_on_priv_msg(self, data, connection: Connection):
         if data['message'].find('.s ') != -1 :
@@ -36,7 +37,14 @@ class MathRunObserver(PrivMsgObserverPrototype):
             if nick not in self.players:
                 self.players[nick] = 0
             self.players[nick] += 1
+            self.oldSolution = self.solutionForGame
             self.start_math(data, connection)
+            return
+        if solutionByPlayer == str(self.oldSolution):
+            connection.send_channel("Korrekte Lösung für das Problem davor " + nick)
+            if nick not in self.players:
+                self.players[nick] = 0
+            self.players[nick] += 1
             return
         connection.send_channel("Sorry die Lösung ist falsch "+nick )
 
