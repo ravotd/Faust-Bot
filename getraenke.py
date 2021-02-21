@@ -39,5 +39,9 @@ getraenke = ['einen Kaffee','eine Limonade','einen Kakao','einen Tee',
                      'einen Pappbecher frischen Kaffee mit Sojamilch','einen Becher des Lieblingsgetränkes',
                      'ein Glas frisch gepressten Traubensaft','ein Glas mit zimmerwarmer Hafermilchschokolade',
                      'eine Bierglas mit Fassbrause','einen Bubble Tea in einem billigen Plastikbecher',
-                     'eine Tasse Roibostee'
+                     'eine Tasse Roibostee', 'ein Rainbow-Cocktail', 'einen virgin Sunrise', 'eine Dose Monster rehab'
+                     'eine Energy-Cola', 'eine Apfelschorle','einen Birnensaft','einen Mangosaft',
+                     'ein Glas Holunderblütensirup', 'eine Sauerkirschlimo', 'ein Glaß gefrorenes Wasser',
+                     'eine bunte Tasse fairtrade Bohnenkaffe','einen Maracujasaft','ein Glas Luft',
+                     'ein Glas Fairtrade Limonade'
                 ]

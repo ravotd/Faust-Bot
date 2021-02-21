@@ -16,5 +16,15 @@ essen = ['einen Wirsingeintopf', 'einen Lahmacun', 'eine Portion Kartoffelbrei',
                      'einen fruchtigen Lolli', 'einen Teller mit süßem Milchreis', 'eine Lasagne', 'chinesisch gebratene Nudeln',
                      'ein Thunfisch-Baguette', 'fünf mexikanische Tacos', 'einen Blaubeermuffin mit Sahne', 'eine Hand voll alte Erdnüsse',
                      'ein Durianeis am Stiel','eine Mango', 'einen Erdnussbutterriegel', 'einen Eiersalat mit glutenfreiem Brötchen',
-                     'eine Schachtel Lebkuchen', 'eine Portion Falafel mit Hummus', 'ein feuriges Chilli con Soja']
+                     'eine Schachtel Lebkuchen', 'eine Portion Falafel mit Hummus', 'ein feuriges Chilli con Soja',
+                     'einen Teller getrocknete Jackfruchtstücke', 'eine Packung Choco-Fresh','ein Teller Spagetti Gorgonzola Sosse',
+                     'fein geschnittene Karottenstückchen mit laktosefreiem Frischkäse','ein halbes Grillhuhn',
+                     'eine Dose Surströmming','einen Steckerlfisch', 'einen Big King','ein Teller voll Buritos',
+                     'eine Portion handgerolltes Sushi','ein Butterbrot', 'eine Schnittlauch Brezel','einen Teller szegediner Gulasch',
+                     'eine Portion Avocado Maki','eine Spinatlasagne','ein Teller vegetarisch gefüllte Paprika',
+                     'ein Teller gefüllte Zucchini','ein Schinken-Käse-Omlett','ein Chop Suey',
+                     'ein großes Stück Turducken','einen Teller Spageti Aglio e Olio','Nudeln mit Pesto',
+                     'ein Teller Paella'
+         ]
+
 

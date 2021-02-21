@@ -30,6 +30,7 @@ getraenkegoodones = ['einen Kaffee in einer Tasse aus blauem Porzelan','eine Lim
              'einen Bubble Tea in einem verschnörkelten Glas mit großem Strohhalm','einen  Rührkuchen',
              'einen veganen Glutenfreien Karottenkuchen', "einen saftigen Schokokuchen", "eine Kirschtorte",
              "einen Apfelkuchen", "einen Pudding-Streuselkuchen", "einen Rhababerstreusekuchen",
-             'ein Glaß kalten Roibos Tee mit Vanille verfeinert','eine bunt karierte Tasse Kaffee'
+             'ein Glaß kalten Roibos Tee mit Vanille verfeinert','eine bunt karierte Tasse Kaffee', 'einen Rainbow Cocktail in einem hohen Glaß mit Schirmchen',
+            'eine frisch gepresste Apfelschorle'
              ]
 

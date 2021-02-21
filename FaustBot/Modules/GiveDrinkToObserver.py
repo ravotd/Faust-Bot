@@ -7,7 +7,7 @@ from getraenke import getraenke
 from essen import essen
 from icecreamlist import icecream
 from extras import giveextras
-kekse = ['einen Schokoladenkeks', 'einen Vanillekeks', 'einen Doppelkeks', 
+kekse = ['einen Schokoladenkeks', 'einen Vanillekeks', 'einen Doppelkeks',
          'einen Keks', 'einen Erdbeerkeks', 'einen Schokoladen-Cheesecake-Keks',
          'einen Glückskeks', 'einen Scherzkeks', 'einen Unglückskeks']
 
