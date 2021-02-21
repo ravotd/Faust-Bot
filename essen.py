@@ -24,7 +24,8 @@ essen = ['einen Wirsingeintopf', 'einen Lahmacun', 'eine Portion Kartoffelbrei',
                      'eine Portion Avocado Maki','eine Spinatlasagne','ein Teller vegetarisch gefüllte Paprika',
                      'ein Teller gefüllte Zucchini','ein Schinken-Käse-Omlett','ein Chop Suey',
                      'ein großes Stück Turducken','einen Teller Spageti Aglio e Olio','Nudeln mit Pesto',
-                     'ein Teller Paella'
+                     'ein Teller Paella','einen Berg Pfannkuchen','ein Teller Belgische Waffeln mit Schokosoße',
+                     'eine Waffel mit Puderzucker'
          ]
 
 
