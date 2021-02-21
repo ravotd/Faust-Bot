@@ -30,7 +30,7 @@ class ComicObserver(PrivMsgObserverPrototype):
         #Choose from the joined list
         comic = random.choice(all_comics)
         
-        #Check which type of comic it is: If it's one that doesn't need a scaper, get the url and return it.
+        #Check which type of comic it is: If it's one that doesn't need a scraper, get the url and return it.
         #If it needs a scraper, use ComicScraper to scrape the comic.
         #If you want to add custom comic scrapers: Look at ComicScraper.py and insert your functionality.
         if not comic in scraper_comics:

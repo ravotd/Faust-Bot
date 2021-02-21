@@ -35,7 +35,8 @@ class HangmanObserver(PrivMsgObserverPrototype):
             self.take_word(data, connection)
         if data['message'].find('.han') != -1 and not data['message'].find('.handelete') != -1:
             self.start_solo_game(data, connection)
-        if data['message'].find('.stop') != -1 and not data['message'].find('.stophunt') != -1:
+        if data['message'].find('.stop') != -1 and not data['message'].find('.stophunt') != -1 \
+                and not data['message'].find('.stopMath') != -1:
             connection.send_channel("Spiel gestoppt. Das Wort war: " + self.word)
             self.word = ''
             self.guesses = []
