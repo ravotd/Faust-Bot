@@ -21,10 +21,10 @@ icecream = [
     'ein warmes Kirscheis', 'ein Eis', 'ein Kaffeeeis', 'einen Apfelslushy',
     'einen Kiwislushy', 'einen Kirschslushy', 'einen Eiszapfenslushy', 'ein Softeis',
     'ein Durianeis am Stiel', 'ein Himbeereis', 'einen Eiskaffee',
-    'einen gefrorenen Keks', 'ein Packung Ben and Jerry\'s Cookie Dough',
+    'einen gefrorenen Keks', 'eine Packung Ben and Jerry\'s Cookie Dough',
     'ein Walnusseis', 'ein Pistazieneis', 'ein Haselnusseis',
-    'ein Schwimmbecken voll Brombeereis','ein Glas mit Wasser mit binären Eiswürfeln',
-    'einen Coppa del Nono', 'ein veganes Zitroneneis', 'ein grünes Wassereis', 'ein Jolly',
-    'ein Twinni', 'ein Tschisi', 'ein Plattfuß', 'ein Supertwister', 'ein Twister'
-    'ein Fruchtzwerg Eis am Stil','ein Honigmeloneneisbecher', 'ein Honigmeloneneis',
+    'ein Schwimmbecken voll Brombeereis','ein Glas Wasser mit binären Eiswürfeln',
+    'einen Coppa del Nonno', 'ein veganes Zitroneneis', 'ein grünes Wassereis', 'ein Jolly',
+    'ein Twinni', 'ein Tschisi', 'einen Plattfuß', 'ein Supertwister', 'ein Twister'
+    'ein Fruchtzwerg-Eis am Stiel','einen Honigmeloneneisbecher', 'ein Honigmeloneneis',
 ]
