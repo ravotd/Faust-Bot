@@ -25,6 +25,11 @@ class GiveDrinkToObserver(PrivMsgObserverPrototype):
             return
         receiver = data['message'].split()[1]
         if receiver == data['nick']:
+            type = data['message'].split()[2]
+            if type is not None:
+                if type.lower() == "kaffee":
+                    connection.send_back('Fehler 418 Ich bin eine Teekanne', data)
+                    return
             connection.send_back('Bitte nutze .drink um dir selbst ein Getränk zu besorgen', data)
             return
         if len(data['message'].split()) < 3:
