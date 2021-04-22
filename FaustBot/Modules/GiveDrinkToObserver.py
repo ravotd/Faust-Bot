@@ -68,6 +68,13 @@ class GiveDrinkToObserver(PrivMsgObserverPrototype):
                     data[
                         'nick'] + '\001', data)
                 return
+
+            if type.lower() == "massage":
+                connection.send_back(
+                    '\001ACTION knetet ' + receiver + ' feste den Rücken durch. ' +
+                    data[
+                        'nick'] + 'meinte ich solle was gutes tun. \001', data)
+                return
             for drink in getraenke+essen+icecream+giveextras:
                 if type.lower() in drink.lower():
                     matchingDrinks.append(drink)
