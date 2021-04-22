@@ -43,5 +43,6 @@ getraenke = ['einen Kaffee','eine Limonade','einen Kakao','einen Tee',
                      'eine Energy-Cola', 'eine Apfelschorle','einen Birnensaft','einen Mangosaft',
                      'ein Glas Holunderblütensirup', 'eine Sauerkirschlimo', 'ein Glas gefrorenes Wasser',
                      'eine bunte Tasse fairtrade Bohnenkaffee','einen Maracujasaft','ein Glas Luft',
-                     'ein Glas fairtrade Limonade'
+                     'ein Glas fairtrade Limonade','eine Cola Light', 'ein Glas Fanta light',
+                     'ein Glas Sprite light', 'ein Glas Spezi light'
                 ]

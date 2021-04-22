@@ -26,7 +26,8 @@ essen = ['einen Wirsingeintopf', 'einen Lahmacun', 'eine Portion Kartoffelbrei',
                      'ein großes Stück Turducken','einen Teller Spageti Aglio e Olio','Nudeln mit Pesto',
                      'ein Teller Paella','einen Berg Pfannkuchen','ein Teller Belgische Waffeln mit Schokosoße',
                      'eine Waffel mit Puderzucker', 'Grießbrei mit Amarena Kirschen',
-                     'einen Kaiserschmarrn mit Apfelmus', 'Palatschinken mit Marillenmarmelade und Staubzucker'
+                     'einen Kaiserschmarrn mit Apfelmus', 'Palatschinken mit Marillenmarmelade und Staubzucker',
+                     'eine Tüte Maiswaffeln'
          ]
 
 
