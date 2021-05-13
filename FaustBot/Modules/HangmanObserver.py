@@ -7,6 +7,8 @@ from collections import defaultdict
 from threading import Lock
 import csv
 import random
+import time
+import datetime
 
 class HangmanObserver(PrivMsgObserverPrototype):
     @staticmethod
@@ -26,6 +28,7 @@ class HangmanObserver(PrivMsgObserverPrototype):
         self.wrong_guessed = []
         self.worder = ''
         self.wrongly_guessedWords = []
+        self.time = time.time()
 
     def update_on_priv_msg(self, data, connection: Connection):
         if data['message'].find('.guess ') != -1:
@@ -33,11 +36,14 @@ class HangmanObserver(PrivMsgObserverPrototype):
             return
         if data['message'].find('.word ') != -1:
             self.take_word(data, connection)
-        if data['message'].find('.han') != -1 and not data['message'].find('.handelete') != -1:
+        if data['message'].find('.han') != -1 and not data['message'].find('.handelete')!= -1 and not data['message'].find('hanadd'
+        ) != -1:
             self.start_solo_game(data, connection)
+        if data['message'].find('hanadd') != -1:
+            self.han_user_add(data, connection)
         if data['message'].find('.stop') != -1 and not data['message'].find('.stophunt') != -1 \
                 and not data['message'].find('.stopMath') != -1:
-            connection.send_channel("Spiel gestoppt. Das Wort war: " + self.word)
+            connection.send_channel("Spiel gestoppt. Das Wort war: " + self.word + " in: "+self.timeRelapsedString())
             self.word = ''
             self.guesses = []
             self.tries_left = 0
@@ -109,6 +115,7 @@ class HangmanObserver(PrivMsgObserverPrototype):
 
     def start_solo_game(self, data, connection):
         if self.word == '':
+            self.time = time.time()
             self.word = self.getRandomHanWord()
             self.guesses = ['-', '/', ' ', '_']
             self.wrong_guessed = []
@@ -134,7 +141,7 @@ class HangmanObserver(PrivMsgObserverPrototype):
             self.addToScore(data['nick'], int(score))
             self.word = ''
             self.worder = ''
-            connection.send_channel("Das ist korrekt: " + guess + " gelöst hat: "+data["nick"])
+            connection.send_channel("Das ist korrekt: " + guess + " gelöst hat: "+data["nick"]+ " in: "+self.timeRelapsedString())
             return
         if guess in self.word:
             if guess not in self.guesses:
@@ -164,6 +171,7 @@ class HangmanObserver(PrivMsgObserverPrototype):
 
     def take_word(self, data, connection):
         if self.word == '':
+            self.time =time.time()
             if data['message'].split(' ')[1] is not None:
                 self.addHanWord(data['message'].split(' ')[1].upper())
             log = open('HangmanLog', 'a')
@@ -180,7 +188,10 @@ class HangmanObserver(PrivMsgObserverPrototype):
             connection.send_channel(self.prepare_word(data))
         else:
             connection.send_back("Sorry es läuft bereits ein Wort", data)
-
+    def han_user_add(self, data, connection):
+        if data['message'].split(' ')[1] is not None:
+            self.addHanWord(data['message'].split(' ')[1].upper())
+            connection.send_channel("Das Wort "+data['message'].split(' ')[1].upper() +" wurde von "+ data['nick']+ " hinzugefüht")
     def prepare_word(self, data):
         outWord = ""
         failedChars = 0
@@ -192,7 +203,7 @@ class HangmanObserver(PrivMsgObserverPrototype):
                 failedChars += 1
         if failedChars == 0:
             if len(self.word) > 0:
-                outWord = "Das ist korrekt: " + self.word + " gelöst hat: "+data["nick"]
+                outWord = "Das ist korrekt: " + self.word + " gelöst hat: "+data["nick"]+ " in : "+self.timeRelapsedString()
                 self.addToScore(data['nick'], 5)
                 self.word = ''
                 self.worder = ''
@@ -202,7 +213,7 @@ class HangmanObserver(PrivMsgObserverPrototype):
                 return outWord
         if self.tries_left == 0:
             self.addToScore(self.worder,11)
-            outWord = "Das richtige Wort wäre gewesen: " + self.word
+            outWord = "Das richtige Wort wäre gewesen: " + self.word + " in: "+self.timeRelapsedString()
             self.word = ''
             self.worder = ''
             return outWord
@@ -268,3 +279,7 @@ class HangmanObserver(PrivMsgObserverPrototype):
 
     def _is_idented_mod(self, data: dict, connection: Connection):
         return data['nick'] in self._config.mods and connection.is_idented(data['nick'])
+
+    def timeRelapsedString(self):
+        delta = time.time()-self.time
+        return str(datetime.timedelta(seconds= delta))
