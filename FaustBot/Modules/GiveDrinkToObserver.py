@@ -73,7 +73,7 @@ class GiveDrinkToObserver(PrivMsgObserverPrototype):
                 connection.send_back(
                     '\001ACTION knetet ' + receiver + ' feste den Rücken durch. ' +
                     data[
-                        'nick'] + 'meinte ich solle was gutes tun. \001', data)
+                        'nick'] + ' meinte ich solle dir was gutes tun. \001', data)
                 return
             for drink in getraenke+essen+icecream+giveextras:
                 if type.lower() in drink.lower():
