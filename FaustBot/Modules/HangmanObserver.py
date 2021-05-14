@@ -191,7 +191,7 @@ class HangmanObserver(PrivMsgObserverPrototype):
     def han_user_add(self, data, connection):
         if data['message'].split(' ')[1] is not None:
             self.addHanWord(data['message'].split(' ')[1].upper())
-            connection.send_channel("Das Wort "+data['message'].split(' ')[1].upper() +" wurde von "+ data['nick']+ " hinzugefüht")
+            connection.send_channel("Das Wort "+data['message'].split(' ')[1].upper() +" wurde von "+ data['nick']+ " hinzugefügt")
     def prepare_word(self, data):
         outWord = ""
         failedChars = 0
