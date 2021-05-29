@@ -25,6 +25,6 @@ icecream = [
     'ein Walnusseis', 'ein Pistazieneis', 'ein Haselnusseis',
     'ein Schwimmbecken voll Brombeereis','ein Glas Wasser mit binären Eiswürfeln',
     'einen Coppa del Nonno', 'ein veganes Zitroneneis', 'ein grünes Wassereis', 'ein Jolly',
-    'ein Twinni', 'ein Tschisi', 'einen Plattfuß', 'ein Supertwister', 'ein Twister'
+    'ein Twinni', 'ein Tschisi', 'einen Plattfuß', 'ein Supertwister', 'ein Twister',
     'ein Fruchtzwerg-Eis am Stiel','einen Honigmeloneneisbecher', 'ein Honigmeloneneis',
 ]
