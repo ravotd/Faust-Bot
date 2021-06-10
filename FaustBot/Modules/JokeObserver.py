@@ -41,31 +41,31 @@ jokes = [['Was ist orange und geht über die Berge?'
 ,'Eine Velone.']
 ,['Was ist orange, tiefergelegt und hat einen Spoiler?'
 ,'Ein Mantarinchen']
-,['as ist gelb, krumm und schwimmt auf dem Wasser?'
+,['Was ist gelb, krumm und schwimmt auf dem Wasser?'
 ,'Eine Schwanane']
 ,['Was ist orange und steckt traurig in der Erde?'
 ,'Ein Trübchen.']
 ,['Was ist orange, sauer und kann keine Minute ruhig sitzen?'
 ,'Eine Zappelsine.']
-,['Was ist haarig und wird in der Pfanne fritiert?'
+,['Was ist haarig und wird in der Pfanne frittiert?'
 ,'Bartkartoffeln.']
 ,['Was ist gesund und kräftig und spielt den Beleidigten?'
 ,'Ein Schmollkornbrot.']
-,['Was steht im Schlafzimmer des Metzgers neben dem Bett ?'
+,['Was steht im Schlafzimmer des Metzgers neben dem Bett?'
 ,'Ein Schlachttischlämpchen.']
 ,['Was ist grün, sauer und versteckt sich vor der Polizei?'
 ,'Ein Essig-Schurke.']
 ,['Was ist orange, rund und versteckt sich vor der Polizei?'
 ,'Ein Vandalinchen.']
-,['Was ist grün um schaut durchs Schlüsselloch?'
+,['Was ist grün und schaut durchs Schlüsselloch?'
 ,'Ein Spionat']
-,['Was ist gross, grau und telefoniert aus Afrika?'
+,['Was ist groß, grau und telefoniert aus Afrika?'
 ,'Ein Telefant.']
 ,['Was ist gelb und flattert im Wind?'
 ,'Eine Fahnane.']
 ,['Was ist grün und klopft an die Tür?'
 ,'Ein Klopfsalat.']
-,['as ist braun, sehr zäh und fliegt umher?'
+,['Was ist braun, sehr zäh und fliegt umher?'
 ,'Eine Ledermaus.']
 ,['Was macht "Muh" und hilft beim Anziehen?'
 ,'Ein Kuhlöffel.']
@@ -87,11 +87,11 @@ jokes = [['Was ist orange und geht über die Berge?'
 ,'Ein Tarzipan.']
 ,['Was ist braun und klebt an der Wand?'
 ,'Ein Klebkuchen']
-,['Was ist rot und läuft die Strasse auf und ab?'
+,['Was ist rot und läuft die Straße auf und ab?'
 ,'Eine Hagenutte.']
-,['Was ist weiss und läuft die Strasse auf und ab?'
+,['Was ist weiss und läuft die Straße auf und ab?'
 ,'Schneeflittchen.']
-,['Was ist grün und läuft die Strasse auf und ab?'
+,['Was ist grün und läuft die Straße auf und ab?'
 ,'Eine Frosch-tituierte.']
 ,['Was ist braun und trägt Strapse?'
 ,'Ein Haselnüttchen.']
@@ -100,7 +100,7 @@ jokes = [['Was ist orange und geht über die Berge?'
 ,['Was leuchtet und geht fremd?'
 ,'Ein Schlampion.']
 ,['Was ist gelb und rutscht den Hang hinunter?'
-,'Ein Cremischlitten.']
+,'Ein Cremeschlitten.']
 ,['Was ist weiss und tanzt ums Feuer?'
 ,'Rumpelpilzchen.']
 ,['Was ist weiss und liegt schnarchend auf der Wiese?'
@@ -113,7 +113,7 @@ jokes = [['Was ist orange und geht über die Berge?'
 ,'Ein Schnurz.']
 ,['Was ist unordentlich und gibt Licht?'
 ,'Eine Schlampe.']
-,['Was ist blöd, süss und bunt?'
+,['Was ist blöd, süß und bunt?'
 ,'Ein Dummibärchen.']
 ,['Was trägt einen Frack und hilft im Haushalt?'
 ,'Ein Diener Schnitzel.']
@@ -123,8 +123,6 @@ jokes = [['Was ist orange und geht über die Berge?'
 ,'Eine Banone']
 ,['Was kommt nach Elch?'
 ,'Zwölch']
-,['Was ist pink und behindert?'
-,'Ein Flamongo']
 ,['Was liegt am Strand und spricht undeutlich?'
 ,'Eine Nuschel']
 ,['Was hüpft über die Wiese und raucht?'
@@ -139,7 +137,7 @@ jokes = [['Was ist orange und geht über die Berge?'
 ,'Ein Sattelschlepper']
 ,['Was ist grün und trägt Kopftuch?'
 ,'Eine Gürkin']
-,['Was ist rot und sitzt unterm tisch?'
+,['Was ist rot und sitzt unterm Tisch?'
 ,'Ne Paprikantin']
 ,['Was ist schwarz-weiß und kommt nicht vom Fleck?'
 ,'Ein Klebra']
@@ -155,41 +153,41 @@ jokes = [['Was ist orange und geht über die Berge?'
 ,'Die Essbahn']
 ,['Was fährt unter der Erde und macht Muh?'
 ,'Die Kuhbahn']
-,['Was wühlt den Himmel auf ?'
+,['Was wühlt den Himmel auf?'
 ,'Ein Pflugzeug']
 ,['Welche Frucht wächst im Gerichtssaal?'
 ,'Advokado']
 ,['Wie nennt man einen “scharfen” Mann mit Kilt?'
 ,'Chilischotte']
-,['was lebt im Meer und kann gut rechnen?'
+,['Was lebt im Meer und kann gut rechnen?'
 ,'Der Octoplus']
-,['was ist tiefergelegt und schwimmt unter wasser?'
+,['Was ist tiefergelegt und schwimmt unter wasser?'
 ,'Der Tunefisch']
-,['was ist unter der Erde und stinkt?'
+,['Was ist unter der Erde und stinkt?'
 ,'Eine Furzel']
-,['von was wird man nachts beobachtet?'
+,['Von was wird man nachts beobachtet?'
 ,'Vom Spannbettlaken']
-,['wo wohnen die meisten Katzen?'
+,['Wo wohnen die meisten Katzen?'
 ,'Im Miezhaus']
-,['warum ging der Luftballon kaputt?'
+,['Warum ging der Luftballon kaputt?'
 ,'Aus Platzgründen']
-,['wie nennt man einen ausgehungerten Frosch?'
+,['Wie nennt man einen ausgehungerten Frosch?'
 ,'Magerquak']
-,['was macht ein Dieb im Zirkus?'
+,['Was macht ein Dieb im Zirkus?'
 ,'Clown']
-,['was macht ein Clown im Büro?'
+,['Was macht ein Clown im Büro?'
 ,'Faxen']
-,['wie nennt man eine Zauberin in der Wüste?'
+,['Wie nennt man eine Zauberin in der Wüste?'
 ,'Sand Witch']
-,['wo betrinkt sich eine Mücke?'
+,['Wo betrinkt sich eine Mücke?'
 ,'In Sekt']
-,['warum können Seeräuber keine Kreise berechnen?'
+,['Warum können Seeräuber keine Kreise berechnen?'
 ,'Weil sie pi raten']
-,['was sitzt in der Savanne und wäscht sich?'
+,['Was sitzt in der Savanne und wäscht sich?'
 ,'Die Hygiäne']
-,['was sitzt im Dschungel und spielt unfair?'
+,['Was sitzt im Dschungel und spielt unfair?'
 ,'Mogli']
-,['wie nennt man den Paarungsruf von Leutstofflampen?'
+,['Wie nennt man den Paarungsruf von Leutstofflampen?'
 ,'Neonröhren']]
 
 
