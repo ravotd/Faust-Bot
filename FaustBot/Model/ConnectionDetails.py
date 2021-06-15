@@ -29,5 +29,10 @@ class ConnectionDetails(object):
     def get_mods(self):
         return self._data['mods']
 
+    def get_pwd(self):
+        if self._data['pwd'] is None:
+            return ''
+        return self._data['pwd']
+
     def __init__(self, config):
         self._data = config

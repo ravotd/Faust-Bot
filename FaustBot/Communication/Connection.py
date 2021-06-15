@@ -69,7 +69,7 @@ class Connection(object):
         except socket.timeout:
             return False
         data = data.decode('UTF-8', errors='replace')
-        # print('received: \n' + data)
+        #print('received: \n' + data)
         data_lines = self._receiver_buffer.append(data)
         if data is None:
             return False
@@ -138,12 +138,15 @@ class Connection(object):
         self.irc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
         self.irc.connect((self.details.get_server(), self.details.get_port()))
-        print(self.irc.recv(512))
+        #print(self.irc.recv(512))
         self.irc.send("NICK ".encode() + self.details.get_nick().encode() + "\r\n".encode())
         self.irc.send("USER botty botty botty :Botty \n".encode())
         self.irc.send("JOIN ".encode() + self.details.get_channel().encode() + '\r\n'.encode())
         self.irc.send("WHO ".encode() + self.details.get_channel().encode() + '\r\n'.encode())
         self.irc.send("MODE ".encode()+self.details.get_nick().encode()+" -R".encode()+'\r\n'.encode())
+        if (self.details.get_pwd() != ''):
+            self.send_to_user("NICKSERV","identify "+self.details.get_nick()+" " +self.details.get_pwd()+' ')
+
         _thread.start_new_thread(self.sender, ())
 
     def __init__(self, set_details: ConnectionDetails):

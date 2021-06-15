@@ -18,6 +18,7 @@ class Config(object):
             return None
 
     def __setitem__(self, key: str, value: str):
+        print (key +' '+ value+'\n\r')
         self._config_dict[key] = value
 
     def read_config(self, path: str, append=True):
@@ -71,3 +72,7 @@ class Config(object):
     @property
     def blacklist(self):
         return self._config_dict['blacklist']
+
+    @property
+    def pwd(self):
+        return self._config_dict['pwd']
