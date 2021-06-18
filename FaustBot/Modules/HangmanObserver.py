@@ -142,6 +142,7 @@ class HangmanObserver(PrivMsgObserverPrototype):
             self.word = ''
             self.worder = ''
             connection.send_channel("Das ist korrekt: " + guess + " gelöst hat: "+data["nick"]+ " in: "+self.timeRelapsedString())
+            self.giveExtraPointsInTime(data["nick"])
             return
         if guess in self.word:
             if guess not in self.guesses:
@@ -204,6 +205,7 @@ class HangmanObserver(PrivMsgObserverPrototype):
         if failedChars == 0:
             if len(self.word) > 0:
                 outWord = "Das ist korrekt: " + self.word + " gelöst hat: "+data["nick"]+ " in : "+self.timeRelapsedString()
+                self.giveExtraPointsInTime(data["nick"])
                 self.addToScore(data['nick'], 5)
                 self.word = ''
                 self.worder = ''
@@ -283,3 +285,10 @@ class HangmanObserver(PrivMsgObserverPrototype):
     def timeRelapsedString(self):
         delta = time.time()-self.time
         return str(datetime.timedelta(seconds= delta))
+
+    def giveExtraPointsInTime(self, nick):
+        delta = time.time()-self.time
+        if delta <30:
+            self.addToScore(nick, 5)
+        if delta <60:
+            self.addToScore(nick, 5)
