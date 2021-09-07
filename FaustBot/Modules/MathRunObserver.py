@@ -21,10 +21,12 @@ class MathRunObserver(PrivMsgObserverPrototype):
         self.oldSolution = 0
 
     def update_on_priv_msg(self, data, connection: Connection):
-        if data['message'].find('.s ') != -1 :
+        if data['message'].find('.s ') != -1 and self.running:
             self.solution(data, connection)
         if data['message'].find('.startMath') != -1:
             self.start_math(data, connection)
+        if data['message'].find('.stopMath') != -1 and self.running:
+            self.stop_math(data, connection)
 
     def solution(self, data, connection):
         nick = data["nick"]
@@ -49,6 +51,9 @@ class MathRunObserver(PrivMsgObserverPrototype):
         connection.send_channel("Sorry die Lösung ist falsch "+nick )
 
     def start_math(self, data, connection):
+        if self.running:
+            connection.send_back("Es läuft bereits ein Rechenspiel, beende dieses erst per .stopMath.", data)
+            return
         summand1 = randrange(1,100)
         summand2 = randrange(1,11)
         operation = randrange(1,3)
